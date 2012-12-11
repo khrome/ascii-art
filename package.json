@@ -1,0 +1,31 @@
+{
+    "name": "ascii-art",
+    "homepage": "https://github.com/khrome/ascii-art",
+    "version": "0.0.1-alpha",
+    "main": "ascii-art.js",
+    "description": "A package for ansi codes, figlet fonts, and ascii art",
+    "keywords": [
+        "ascii",
+        "figlet",
+        "ansi"
+    ],
+    "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
+    "contributors": [],
+    "bugs": {
+        "url": "https://github.com/khrome/ascii-art/issues"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/khrome/ascii-art.git"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "mocha": "*",
+        "should": "*"
+    },
+    "optionalDependencies": {},
+    "engines": {
+        "node": "*"
+    }
+}
