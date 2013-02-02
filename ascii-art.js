@@ -138,7 +138,67 @@ AsciiArt.Figlet = {
         });
     }
 };
-AsciiArt.font = AsciiArt.Figlet.write;
+//todo: optional styling on font callback
+var combine = function(blockOne, blockTwo, style){
+    var linesOne = blockOne.split("\n");
+    var linesTwo = blockTwo.split("\n");
+    var diff = Math.max(linesOne.length - linesTwo.length, 0);
+    linesOne.forEach(function(line, index){
+        if(index >= diff){
+            if(style){
+                linesOne[index] = linesOne[index]+AsciiArt.ansiCodes(linesTwo[index-diff], style);
+            }else{
+                linesOne[index] = linesOne[index]+linesTwo[index-diff];
+            }
+        }
+    });
+    return linesOne.join("\n");
+};
+var fontChain = function(){
+    var cb;
+    var chain = [];
+    var result;
+    var check = function(){
+        if(!this.checking) this.checking = true;
+        if(result && cb && chain.length === 0) cb(result);
+        if(chain.length){
+            var item = chain.shift();
+            AsciiArt.Figlet.write(item.text, item.font, function(text){
+                result = combine(result||(new Array(text.split("\n").length)).join("\n"), text, item.style);
+                check();
+            });
+        }
+    }
+    ob = this;
+    this.font = function(str, fontName, style, callback){
+        if(typeof style == 'function'){
+            callback = style;
+            style = undefined;
+        }
+        if(callback) cb = callback;
+        chain.push({
+            font : fontName,
+            text : str,
+            style : style
+        });
+        if(!this.checking) check();
+        return ob;
+    };
+    return this;
+};
+
+AsciiArt.font = function(str, fontName, style, callback){
+    if(!callback){
+        var chain = fontChain();
+        return chain.font(str, fontName, style);
+    }else{
+        return AsciiArt.Figlet.write(str, fontName, function(text){
+            if(style) text = AsciiArt.ansiCodes(text, style);
+            callback(text);
+        });
+    }
+}
+//AsciiArt.font = AsciiArt.Figlet.write;
 AsciiArt.style = AsciiArt.ansiCodes;
 //todo: AsciiArt.image
 module.exports = AsciiArt;

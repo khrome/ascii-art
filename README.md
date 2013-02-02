@@ -5,7 +5,7 @@ A bunch of utilities for outputting textual art
 
 Figlet fonts
 ------------
-A slight mod of [Figlet.js](https://github.com/scottgonzalez/figlet-js)
+A slight mod of [Figlet.js](https://github.com/scottgonzalez/figlet-js) which I hope will make it to NPM in pure js form someday, rather than requiring a command line dependency.
 
 Figlet fonts are an ASCII art font standard, widely used for terminal output.
 
@@ -48,7 +48,25 @@ Control styles are: off, hidden
     
 Images
 ------
-Will be coming soon!
+Will be coming soon™!
+
+Chaining
+--------
+
+The font method also allows you to optionally pass styles and supports chaining, so if I want something a little more complex I could do something like this:
+
+    art.font('Prompt', 'Basic', 'red').font('v1', 'Doom', 'magenta', function(rendered){
+        console.log(rendered);
+    });
+
+and that will look like this (in color, of course) and it will totally respect the multiline chars and add in ansi codes per line, so things look how you'd expect:
+
+    d8888b. d8888b.  .d88b.  .88b  d88. d8888b. d888888b         __  
+    88  `8D 88  `8D .8P  Y8. 88'YbdP`88 88  `8D `~~88~~'        /  | 
+    88oodD' 88oobY' 88    88 88  88  88 88oodD'    88    __   __`| | 
+    88~~~   88`8b   88    88 88  88  88 88~~~      88    \ \ / / | | 
+    88      88 `88. `8b  d8' 88  88  88 88         88     \ V / _| |_
+    88      88   YD  `Y88P'  YP  YP  YP 88         YP      \_/  \___/
     
 Hope that helps, please report any rough edges!
 
