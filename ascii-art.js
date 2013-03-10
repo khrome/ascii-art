@@ -3,7 +3,7 @@ var AsciiArt = {
     valueScales : {
         variant1 : ' .,:;i1tfLCG08@'.split(''),
         variant2 : '@%#*+=-:. '.split('').reverse(),
-        variant3 : '#´´¨¨¯¯$$¿0oo¡++=-,.    '.split('').reverse(),
+        variant3 : '#ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½$$ï¿½0ooï¿½++=-,.    '.split('').reverse(),
         variant4 : '#WMBRXVYIti+=;:,. '.split('').reverse(),
         'ultra-wide' : ('MMMMMMM@@@@@@@WWWWWWWWWBBBBBBBB000000008888888ZZZZZZZZZaZaaaaaa2222222SSS'
             +'SSSSXXXXXXXXXXX7777777rrrrrrr;;;;;;;;iiiiiiiii:::::::,:,,,,,,.........       ').split('').reverse(),
@@ -159,7 +159,7 @@ var fontChain = function(){
     var chain = [];
     var result;
     var check = function(){
-        if(!this.checking) this.checking = true;
+        if(!fontChain.checking) fontChain.checking = true;
         if(result && cb && chain.length === 0) cb(result);
         if(chain.length){
             var item = chain.shift();
@@ -169,7 +169,7 @@ var fontChain = function(){
             });
         }
     }
-    ob = this;
+    var ob = this;
     this.font = function(str, fontName, style, callback){
         if(typeof style == 'function'){
             callback = style;
@@ -181,7 +181,7 @@ var fontChain = function(){
             text : str,
             style : style
         });
-        if(!this.checking) check();
+        if(!fontChain.checking) check();
         return ob;
     };
     return this;
@@ -189,7 +189,7 @@ var fontChain = function(){
 
 AsciiArt.font = function(str, fontName, style, callback){
     if(!callback){
-        var chain = fontChain();
+        var chain = fontChain.apply({});
         return chain.font(str, fontName, style);
     }else{
         return AsciiArt.Figlet.write(str, fontName, function(text){
