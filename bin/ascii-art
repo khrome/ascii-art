@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+var argv;
+var yargs = require('yargs');
+var fs = require('fs');
+var art = require('../ascii-art');
+yargs.usage('Usage: $0 <command> [options]')
+yargs.command('image', 'convert an image to ascii')
+    .demand(1)
+    .example('$0 image -f foo.jpg ', 'count the lines in the given file')
+    .demand('f')
+    	.alias('f', 'file')
+    	.nargs('f', 1)
+    	.describe('f', 'Load a file')
+    .alias('o', 'output')
+    	.nargs('o', 1)
+    	.describe('o', 'Save to a file')
+    .alias('a', 'alphabet')
+    	.alias('a', 'alpha')
+    	.nargs('a', 1)
+    	.choices('a', Object.keys(art.valueScales))
+    	.describe('a', 'Which alphabet to use')
+    .help('h')
+    .alias('h', 'help')
+    .epilog('©2016 - Abbey Hawk Sparrow');
+argv = yargs.argv;
+var action = argv._.pop();
+switch(action){
+	case 'image':
+		var options = {
+			filepath: argv.f
+		};
+		if(argv.a) options.alphabet = argv.a;
+		var image = new art.Image(options);
+		image.write(function(err, rendered){
+			if(argv.o){
+				fs.writeFile(argv.o, rendered);
+			}else{
+				console.log(rendered);
+			}
+		})
+		break;
+}
