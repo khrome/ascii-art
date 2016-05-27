@@ -1,7 +1,7 @@
 {
     "name": "ascii-art",
     "homepage": "https://github.com/khrome/ascii-art",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "main": "ascii-art.js",
     "description": "A package for ansi codes, figlet fonts, and ascii art",
     "keywords": [

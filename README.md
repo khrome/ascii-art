@@ -72,6 +72,13 @@ You just need to do something like this:
 
 ![Image Output](http://outsider.industries/assets/docs/metropolis.png)
 
+Binary
+------
+You can run ascii-art as a commandline converter:
+
+	ascii-art image -f path/to/my/file.jpg
+
+
 Chaining
 --------
 
@@ -108,7 +115,7 @@ Testing
 -------
 In the root directory run:
 
-	mocha
+	npm run test
 	
 Please make sure to run the test suite before submitting a patch. Thanks!
 

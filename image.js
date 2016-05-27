@@ -213,10 +213,10 @@ AsciiArt.Image.getTerminalColor = function(r, g, b, options){
 }
 
 AsciiArt.Image.renderers = {};
-var dir = fs.readdirSync('./renderers');
+var dir = fs.readdirSync(__dirname+'/renderers');
 dir.forEach(function(file){
 	var name = file.substring(0, file.indexOf('.'));
-	AsciiArt.Image.renderers[name] = require('./renderers/'+file);
+	AsciiArt.Image.renderers[name] = require(__dirname+'/renderers/'+file);
 });
 AsciiArt.Image.setInstance = function(art){
 	Object.keys(AsciiArt.Image.renderers).forEach(function(name){
