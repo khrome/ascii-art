@@ -48,7 +48,27 @@ Control styles are: off, hidden
     
 Images
 ------
-Will be coming soon™!
+Images require [canvas]() but only optionally upon first reference of `art.Image()` the constructor takes an options argument
+
+- alphabet : requires one of `variant1`, `variant2`, `variant3`, `variant4`, `ultra-wide`, `wide`, `hatching`, `bits`, `binary`, `greyscale`, `blocks`
+- filepath(*required*) : the path of the image
+- distance : a function which takes in 6 args (2x rgb) and returns a measure of distance between these two colors
+
+So for example, say we want to generate a copy of a metropolis poster:
+
+![Image Output](http://outsider.industries/assets/docs/metropolis.jpg)
+
+You just need to do something like this:
+
+	var image = new art.Image({
+		filepath: '~/Images/metropolis.jpg',
+		alphabet:'variant4'
+	});
+	image.write(function(err, rendered){
+		console.log(rendered);
+	})
+
+![Image Output](http://outsider.industries/assets/docs/metropolis.png)
 
 Chaining
 --------
@@ -68,6 +88,34 @@ and that will look like this (in color, of course) and it will totally respect t
     88      88 `88. `8b  d8' 88  88  88 88         88     \ V / _| |_
     88      88   YD  `Y88P'  YP  YP  YP 88         YP      \_/  \___/
     
+Of course to match the `.font()` chain, there is also an `image()` chain, you can blend them like so:
+
+    art.image({
+    	width : 40,
+    	filepath : parentDir+'/Images/initech.png',
+    	alphabet : 'wide'
+    }).font('INITECH', 'Doom', 'cyan', function(ascii){
+		console.log(ascii);
+    });
+    
+Which produces something like:
+
+![Mixed Content Example](http://outsider.industries/assets/docs/initech.png);
+
+Testing
+-------
+In the root directory run:
+
+	mocha
+	
+Please make sure to run the test suite before submitting a patch. Thanks!
+
+Sample
+------
+To view a sample of graphics try:
+
+	npm run sample
+
 Hope that helps, please report any rough edges!
 
 Enjoy,

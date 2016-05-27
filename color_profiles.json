@@ -1,0 +1,20 @@
+{
+	"darwin" : {
+		 "black" : [37, 188, 36],
+		 "red" : [194, 54, 33],
+		 "green" : [37, 188, 36],
+		 "yellow" : [173, 173, 39],
+		 "blue" : [73, 46, 225],
+		 "magenta": [211, 56, 211],
+		 "cyan": [51, 187, 200],
+		 "white": [203, 204, 205],
+		 "bright_black": [129, 131, 131],
+		 "bright_red": [252,57,31],
+		 "bright_green": [49, 231, 34],
+		 "bright_yellow": [234, 236, 35],
+		 "bright_blue": [88, 51, 255],
+		 "bright_magenta": [249, 53, 248],
+		 "bright_cyan": [20, 240, 240],
+		 "bright_white": [233, 235, 235]
+	}
+}

@@ -1,7 +1,7 @@
 {
     "name": "ascii-art",
     "homepage": "https://github.com/khrome/ascii-art",
-    "version": "0.0.3-alpha",
+    "version": "1.0.0",
     "main": "ascii-art.js",
     "description": "A package for ansi codes, figlet fonts, and ascii art",
     "keywords": [
@@ -22,10 +22,18 @@
     "dependencies": {},
     "devDependencies": {
         "mocha": "*",
+        "color-difference": "*",
         "should": "*"
     },
-    "optionalDependencies": {},
+    "optionalDependencies": {
+	    "canvas": "*",
+    },
     "engines": {
         "node": "*"
+    },
+    "scripts" : {
+	    "test" : "mocha",
+	    "test-data" : "node generate.js save",
+	    "sample" : "node generate.js"
     }
 }

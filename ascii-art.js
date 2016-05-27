@@ -3,7 +3,7 @@ var AsciiArt = {
     valueScales : {
         variant1 : ' .,:;i1tfLCG08@'.split(''),
         variant2 : '@%#*+=-:. '.split('').reverse(),
-        variant3 : '#������$$�0oo�++=-,.    '.split('').reverse(),
+        variant3 : '#¥¥®®ØØ$$ø0oo°++=-,.    '.split('').reverse(),
         variant4 : '#WMBRXVYIti+=;:,. '.split('').reverse(),
         'ultra-wide' : ('MMMMMMM@@@@@@@WWWWWWWWWBBBBBBBB000000008888888ZZZZZZZZZaZaaaaaa2222222SSS'
             +'SSSSXXXXXXXXXXX7777777rrrrrrr;;;;;;;;iiiiiiiii:::::::,:,,,,,,.........       ').split('').reverse(),
@@ -11,7 +11,8 @@ var AsciiArt = {
         hatching : '##XXxxx+++===---;;,,...    '.split('').reverse(),
         bits : '# '.split('').reverse(),
         binary : '01 '.split('').reverse(),
-        greyscale : '"???? '.split('').reverse()
+        greyscale : ' ▤▦▩█'.split('').reverse(),
+        blocks : ' ▖▚▜█'.split('').reverse()
     },
     color : ' CGO08@'.split(''),
     font : 'courier new',
@@ -68,6 +69,18 @@ AsciiArt.ansiCodes = function(str, color) {
     ansi_str += str + this.codes["off"];
     return ansi_str;
 };
+
+Object.defineProperty(AsciiArt, 'Image', {
+  get: function() {
+	  result = require('./image');
+	  result.setInstance(AsciiArt);
+	  AsciiArt.Image = result;
+	  return result;
+  },
+  enumerable: true,
+  configurable: true
+});
+
 // this code originates with http://github.com/scottgonzalez/figlet-js
 // if that ever makes it to NPM, it will become a dependency
 AsciiArt.Figlet = {
@@ -158,18 +171,32 @@ var fontChain = function(){
     var cb;
     var chain = [];
     var result;
+    var ob = this;
     var check = function(){
-        if(!fontChain.checking) fontChain.checking = true;
-        if(result && cb && chain.length === 0) cb(result);
+        if(ob.working) return;
+        else ob.working = true;
+        if(result && cb && chain.length === 0){
+	        check = function(){};
+	        cb(result);
+	     }
         if(chain.length){
             var item = chain.shift();
-            AsciiArt.Figlet.write(item.text, item.font, function(text){
-                result = combine(result||(new Array(text.split("\n").length)).join("\n"), text, item.style);
-                check();
-            });
+            if(item.font){
+				AsciiArt.Figlet.write(item.text, item.font, function(text){
+					result = combine(result||(new Array(text.split("\n").length)).join("\n"), text, item.style);
+					ob.working = false;
+					check();
+				});
+            }else{
+	            var image = new AsciiArt.Image(item.options);
+	            image.write(function(err, text){
+		            if(!err) result = combine(result||(new Array(text.split("\n").length)).join("\n"), text, '');
+		            ob.working = false;
+					check();
+	            });
+	        }
         }
     }
-    var ob = this;
     this.font = function(str, fontName, style, callback){
         if(typeof style == 'function'){
             callback = style;
@@ -181,7 +208,17 @@ var fontChain = function(){
             text : str,
             style : style
         });
-        if(!fontChain.checking) check();
+        //if(!fontChain.checking)
+        check();
+        return ob;
+    };
+    this.image = function(options, callback){
+        if(callback) cb = callback;
+        chain.push({
+            options : options,
+        });
+        //if(!fontChain.checking)
+        check();
         return ob;
     };
     return this;
@@ -196,6 +233,18 @@ AsciiArt.font = function(str, fontName, style, callback){
             if(style) text = AsciiArt.ansiCodes(text, style);
             callback(text);
         });
+    }
+}
+
+AsciiArt.image = function(options, callback){
+    if(!callback){
+        var chain = fontChain.apply({});
+        return chain.image(options);
+    }else{
+	    var image = new AsciiArt.Image(options);
+		image.write(function(err, text){
+			callback(text);
+		});
     }
 }
 //AsciiArt.font = AsciiArt.Figlet.write;
