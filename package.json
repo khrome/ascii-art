@@ -30,6 +30,7 @@
     "color-difference": "*",
     "karma-mocha": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.2",
+    "karma-chrome-launcher": "*",
     "karma-requirejs": "^1.1.0",
     "mocha": "*",
     "requirejs": "^2.3.2",
