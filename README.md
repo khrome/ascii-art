@@ -1,7 +1,7 @@
 ascii-art.js
 ===========
 
-A bunch of utilities for outputting textual art
+Draw images, render fonts and manipulate terminal styles in Node.js & the browser. 100% JS.
 
 Figlet fonts
 ------------
