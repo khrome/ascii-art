@@ -58,7 +58,7 @@ Images require [canvas]() but only optionally upon first reference of `art.Image
 
 So for example, say we want to generate a copy of a metropolis poster:
 
-![Image Output](http://outsider.industries/assets/docs/metropolis.jpg)
+![Image Output](http://patternweaver.com/Github/Ascii/docs/metropolis.jpg)
 
 You just need to do something like this:
 
@@ -70,7 +70,7 @@ You just need to do something like this:
 		console.log(rendered);
 	})
 
-![Image Output](http://outsider.industries/assets/docs/metropolis.png)
+![Image Output](http://patternweaver.com/Github/Ascii/docs/metropolis.png)
 
 Binary
 ------
@@ -109,7 +109,7 @@ Of course to match the `.font()` chain, there is also an `image()` chain, you ca
     
 Which produces something like:
 
-![Mixed Content Example](http://outsider.industries/assets/docs/initech.png);
+![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/initech.png);
 
 Testing
 -------

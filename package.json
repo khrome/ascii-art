@@ -1,42 +1,49 @@
 {
-    "name": "ascii-art",
-    "homepage": "https://github.com/khrome/ascii-art",
-    "version": "1.0.3",
-    "main": "ascii-art.js",
-    "description": "A package for ansi codes, figlet fonts, and ascii art",
-    "keywords": [
-        "ascii",
-        "figlet",
-        "ansi"
-    ],
-    "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
-    "contributors": [],
-    "bugs": {
-        "url": "https://github.com/khrome/ascii-art/issues"
-    },
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/khrome/ascii-art.git"
-    },
-    "dependencies": {
-	    "yargs":"*"
-    },
-    "devDependencies": {
-        "mocha": "*",
-        "color-difference": "*",
-        "should": "*"
-    },
-    "optionalDependencies": {
-	    "canvas": "*"
-    },
-    "engines": {
-        "node": "*"
-    },
-    "bin" : "./bin/ascii-art",
-    "scripts" : {
-	    "test" : "mocha",
-	    "test-data" : "node generate.js save",
-	    "sample" : "node generate.js"
-    }
+  "name": "ascii-art",
+  "homepage": "https://github.com/khrome/ascii-art",
+  "version": "1.0.3",
+  "main": "ascii-art.js",
+  "description": "A package for ansi codes, figlet fonts, and ascii art",
+  "keywords": [
+    "ascii",
+    "figlet",
+    "ansi"
+  ],
+  "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
+  "contributors": [],
+  "bugs": {
+    "url": "https://github.com/khrome/ascii-art/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/khrome/ascii-art.git"
+  },
+  "dependencies": {
+    "browser-request": "^0.3.3",
+    "dirname-shim": "0.0.1-alpha",
+    "karma-should": "^1.0.0",
+    "yargs": "*"
+  },
+  "devDependencies": {
+    "color-difference": "*",
+    "karma-mocha": "^1.2.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-requirejs": "^1.1.0",
+    "mocha": "*",
+    "requirejs": "^2.3.2",
+    "should": "*"
+  },
+  "optionalDependencies": {
+    "canvas": "*"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "bin": "./bin/ascii-art",
+  "scripts": {
+    "test": "mocha",
+    "test-data": "node generate.js save",
+    "sample": "node generate.js"
+  }
 }
