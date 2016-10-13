@@ -117,6 +117,10 @@ In the root directory run:
 
 	npm run test
 	
+which runs the test suite directly. In order to test it in Chrome try:
+
+	npm run browser-test
+	
 Please make sure to run the test suite before submitting a patch. Thanks!
 
 Sample
