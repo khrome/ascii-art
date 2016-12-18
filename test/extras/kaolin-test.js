@@ -1,3 +1,9 @@
+/*
+    author: sindresorhus@gmail.com
+    url: https://github.com/chalk/chalk/blob/05f87e25e108726ee469aa56cc88fcc160a911ed/test.js
+    license: MIT
+    license_url: https://github.com/chalk/chalk/blob/cf7eb2d0c7ac20ad6864773451dd59210e7a4612/license
+*/
 'use strict';
 var assert = require('assert');
 var requireUncached = require('require-uncached');

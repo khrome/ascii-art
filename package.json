@@ -60,7 +60,7 @@
   },
   "optionalDependencies": {
     "canvas": "*",
-    "jsftp" :"*",
+    "jsftp" :"*"
   },
   "engines": {
     "node": "*"
