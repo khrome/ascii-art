@@ -17,7 +17,7 @@ Why would I use this instead of X?
 ----------------------------------
 - **zero dependencies** - while the CL utility and test have dependencies, we will never call out to a module for what is supposed to be this lib's core competancy.
 - **color profiles** support - other libraries assume you are running x11
-- **no prototype manipulation** - Nobody is actually forcing String.prototype on anyone, but that doesn't stop it being a hot topic. In addition, we don't use `__proto__` under the hood and pretending we aren't doing dynamic prototype manipulation (zing!).
+- **no prototype manipulation** - Nobody is actually forcing String.prototype on anyone, but that doesn't stop it being a hot topic. In addition, we aren't using `__proto__` under the hood and pretending we aren't doing dynamic prototype manipulation (zing!).
 - handles the ugly [intersection of **multiline text and ansi codes**](docs/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
 - **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways.
@@ -43,9 +43,9 @@ Preview your font in a browser:
 
 	ascii-art preview doom
 	
-Now, install a figlet font
+Now, install a figlet font (globally)
 
-	ascii-art install doom
+	ascii-art install doom -g
 	
 Render some text
 
