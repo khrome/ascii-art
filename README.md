@@ -1,103 +1,69 @@
-ascii-art.js
-===========
+	                   _  _                       _   
+	                  (_)(_)                     | |  
+	  __ _  ___   ___  _  _  ______   __ _  _ __ | |_ 
+	 / _` |/ __| / __|| || ||______| / _` || '__|| __|
+	| (_| |\__ \| (__ | || |        | (_| || |   | |_ 
+	 \__,_||___/ \___||_||_|         \__,_||_|    \__|
+	 
+###ascii-art.js
 
-Draw images, render fonts and manipulate terminal styles in Node.js & the browser. 100% JS.
+Images, fonts and terminal styles in Node.js & the browser. 100% JS.
 
-Figlet fonts
-------------
-A slight mod of [Figlet.js](https://github.com/scottgonzalez/figlet-js) which I hope will make it to NPM in pure js form someday, rather than requiring a command line dependency.
+It features support for [Images](docs/Images.md), [Styles](docs/Images.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically. 
 
-Figlet fonts are an ASCII art font standard, widely used for terminal output.
+In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art` to [solve](docs/Multiline.md) [many](docs/Figlet.md) [problems](docs/Images.md) which chalk ignores. 
 
-It looks something like this:
+Why would I use this instead of X?
+----------------------------------
+- **zero dependencies** - while the CL utility and test have dependencies, we will never call out to a module for what is supposed to be this lib's core competancy.
+- **color profiles** support - other libraries assume you are running x11
+- **no prototype manipulation** - Nobody is actually forcing String.prototype on anyone, but that doesn't stop it being a hot topic. In addition, we don't use `__proto__` under the hood and pretending we aren't doing dynamic prototype manipulation (zing!).
+- handles the ugly [intersection of **multiline text and ansi codes**](doc/Multiline.md) for you.
+- runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
+- **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways.
+- **Expressive API** is a buzzword for chaining from days of yore, but the other guys are excited about having one and we have one too.
+- It **works like a package manager** for figlet fonts.
+- The other libraries out there do too little and focus on logging above other domains.
+- **Actively maintained** If we don't update the code we'll tweak a code of conduct or something... maybe just re-up with self congratulatory pull requests, just to keep kicking that can. We might even add badges if we get saucy.
+- **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for more useful activities).
+- **Loads nothing that isn't used** (Images, Fonts, Image Logic, etc.)
+- It's **awesome** and that thing you're holding is looking played out.
 
-    ______                          _ 
-    |  _  \                        | |
-    | | | |  ___  _ __ ___    ___  | |
-    | | | | / _ \| '_ ` _ \  / _ \ | |
-    | |/ / |  __/| | | | | || (_) ||_|
-    |___/   \___||_| |_| |_| \___/ (_)
+	
+On the Command Line
+------------------
 
-To set the directory of the fonts:
+	npm install -g ascii-art
+	
+Look at a list of fonts from the maintainers of Figlet:
 
-    art.Figlet.fontPath = 'Fonts';
-        
-Then to render some text:
+	ascii-art list all
+	
+Preview your font in a browser:
 
-    art.font('my text', 'Doom', function(rendered){
-        //do stuff here
-    });
+	ascii-art preview doom
+	
+Now, install a figlet font
 
-Styles
-------
-ANSI terminals allow us to output style which format the text in the terminal. In order to do this you just need to:
+	ascii-art install doom
+	
+Render some text
 
-    art.style('my text', 'red+underline');
-
-1. **colors**
-Foreground colors for characters are: black, red, green, yellow, blue, magenta, cyan, white and in some terminal environments:  bright_black, bright_red, bright_green, bright_yellow, bright_blue, bright_magenta, bright_cyan, bright_white (These generally default to their non-bright variants on systems without them)
-            
-2. **background colors**
-Background terminal colors available are: black_bg, red_bg, green_bg, yellow_bg, blue_bg, magenta_bg, cyan_bg, white_bg
-        
-3. **styles**
-To style the text you may use: bold, italic, underline, framed, encircled, overline, blink, inverse
-        
-4. **controls**
-Control styles are: off, hidden
-    
-Images
-------
-Images require [canvas]() but only optionally upon first reference of `art.Image()` the constructor takes an options argument
-
-- alphabet : requires one of `variant1`, `variant2`, `variant3`, `variant4`, `ultra-wide`, `wide`, `hatching`, `bits`, `binary`, `greyscale`, `blocks`
-- filepath(*required*) : the path of the image
-- width : # of terminal columns
-- height : # of terminal rows
-- distance : a function which takes in 6 args (2x rgb) and returns a measure of distance between these two colors
-
-So for example, say we want to generate a copy of a metropolis poster:
-
-![Image Output](http://patternweaver.com/Github/Ascii/docs/metropolis.jpg)
-
-You just need to do something like this:
-
-	var image = new art.Image({
-		filepath: '~/Images/metropolis.jpg',
-		alphabet:'variant4'
-	});
-	image.write(function(err, rendered){
-		console.log(rendered);
-	})
-
-![Image Output](http://patternweaver.com/Github/Ascii/docs/metropolis.png)
-
-Binary
-------
-You can run ascii-art as a commandline converter:
+	ascii-art text -s green -F doom "some text"
+	
+or render an image (use `npm run sample` to generate and view a gallery)
 
 	ascii-art image -f path/to/my/file.jpg
-
-
-Chaining
---------
-
-The font method also allows you to optionally pass styles and supports chaining, so if I want something a little more complex I could do something like this:
+	
+In your Code
+------------
+The font method also allows you to optionally pass styles and supports chaining, so if I want two strings rendered together:
 
     art.font('Prompt', 'Basic', 'red').font('v1', 'Doom', 'magenta', function(rendered){
         console.log(rendered);
     });
-
-and that will look like this (in color, of course) and it will totally respect the multiline chars and add in ansi codes per line, so things look how you'd expect:
-
-    d8888b. d8888b.  .d88b.  .88b  d88. d8888b. d888888b         __  
-    88  `8D 88  `8D .8P  Y8. 88'YbdP`88 88  `8D `~~88~~'        /  | 
-    88oodD' 88oobY' 88    88 88  88  88 88oodD'    88    __   __`| | 
-    88~~~   88`8b   88    88 88  88  88 88~~~      88    \ \ / / | | 
-    88      88 `88. `8b  d8' 88  88  88 88         88     \ V / _| |_
-    88      88   YD  `Y88P'  YP  YP  YP 88         YP      \_/  \___/
     
-Of course to match the `.font()` chain, there is also an `image()` chain, you can blend them like so:
+There is also an `image()` call in the chain, that requires `canvas` in Node.js and shims in the browser's `Canvas` object (but only when image is used, so that dependency is optional):
 
     art.image({
     	width : 40,
@@ -107,9 +73,32 @@ Of course to match the `.font()` chain, there is also an `image()` chain, you ca
 		console.log(ascii);
     });
     
-Which produces something like:
+Which produces (from [this](Images/initech.png) and [this](Fonts/doom.flf)):
 
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/initech.png);
+![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/initech.png)
+
+    
+|    **Color Table**           | `color`       | bright_`color`  | `color`_bg|
+| -----------------------------|---------------|-----------------|-----------|
+| black         | <div style="background-color:#000000;height:10px"><div> | <div style="background-color:#808080;height:10px"><div> | <div style="background-color:#000000;height:10px"><div> |
+| red           | <div style="background-color:#800000;height:10px"><div> | <div style="background-color:#ff0000;height:10px"><div> | <div style="background-color:#800000;height:10px"><div> |
+| green         | <div style="background-color:#008000;height:10px"><div> | <div style="background-color:#00ff00;height:10px"><div> | <div style="background-color:#008000;height:10px"><div> |
+| yellow          | <div style="background-color:#808000;height:10px"><div> | <div style="background-color:#ffff00;height:10px"><div> | <div style="background-color:#808000;height:10px"><div> |
+| blue          | <div style="background-color:#000080;height:10px"><div> | <div style="background-color:#0000ff;height:10px"><div> | <div style="background-color:#000080;height:10px"><div> |
+| cyan         | <div style="background-color:#008080;height:10px"><div> | <div style="background-color:#00ffff;height:10px"><div> | <div style="background-color:#008080;height:10px"><div> |
+| magenta       | <div style="background-color:#800080;height:10px"><div> | <div style="background-color:#ff00ff;height:10px"><div> | <div style="background-color:#800080;height:10px"><div> |
+| white         | <div style="background-color:#c0c0c0;height:10px"><div> | <div style="background-color:#ffffff;height:10px"><div> | <div style="background-color:#c0c0c0;height:10px"><div> |
+
+Styles are: *italic*, **bold**, <span style="text-decoration: underline">underline</span>, <span style="text-decoration: underline overline">|framed|</span>, <span style="text-decoration: underline overline">|encircled|</span>, <span style="text-decoration: overline">overline</span>, <span style="text-decoration: blink">blink</span> and <span style="display:inline-block; background-color:#777777; color: white">&nbsp;inverse&nbsp;</span>. 
+
+For example: if I wanted underlined blue text on a white background, my style would be `underlined+blue+white_bg`. Check out the detailed [style docs](docs/Styles.md) for more information.
+
+
+Compatibility
+-------------
+If you're a [chalk](https://www.npmjs.com/package/chalk) user, just use `var chalk = require('ascii-art/kaolin');` in place of your existing `chalk` references (Much of color.js, too... since chalk is a subset of colors.js). No migration needed, keep using the wacky syntax you are used to(In this mode, refer to their docs, not mine).
+
+I may support the other [colors](https://www.npmjs.com/package/colors) stuff (extras & themes) eventually, but it's currently a low priority.
 
 Testing
 -------
@@ -121,15 +110,11 @@ which runs the test suite directly. In order to test it in Chrome try:
 
 	npm run browser-test
 	
-Please make sure to run the test suite before submitting a patch. Thanks!
+In order to run the chalk test, use:
 
-Sample
-------
-To view a sample of graphics try:
-
-	npm run sample
-
-Hope that helps, please report any rough edges!
+	npm run chalk-test
+	
+Please make sure to run the tests before submitting a patch and report any rough edges. Thanks!
 
 Enjoy,
 

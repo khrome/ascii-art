@@ -3,14 +3,28 @@ var argv;
 var yargs = require('yargs');
 var fs = require('fs');
 var art = require('../ascii-art');
-yargs.usage('Usage: $0 <command> [options]')
+yargs.usage('Usage: $0 <command> [options] <target>')
 yargs.command('image', 'convert an image to ascii')
-    .demand(1)
-    .example('$0 image -f foo.jpg ', 'count the lines in the given file')
-    .demand('f')
-    	.alias('f', 'file')
-    	.nargs('f', 1)
-    	.describe('f', 'Load a file')
+    .command('text', 'add styles and/or font rendering to text')
+    .demand(2)
+    .example('$0 install Font.flf ', 'install a figlet font')
+    .example('$0 image foo.jpg ', 'output foo.jpg as inline ascii text with ansi colors')
+    .example('$0 text -F Doom "Some Titles"', 'outputs "Some Titles" in the Doom font')
+    .example('$0 text -s red+underline "Some Titles"', 'outputs "Some Titles" with a red and underlined terminal style')
+    .example('$0 text -F Doom "Some Titles"', 'outputs "Some Titles" in the Doom font')
+    .example('$0 list all', 'show all fonts available at figlet.org')
+    .example('$0 preview weird', 'visit the prieview page for weird.flf at figlet.org')
+    .example('$0 install weird', 'install weird.flf into the local "/Fonts" directory')
+    .example('$0 install weird -g', 'install weird.flf into the currently executing ascii-art instance')
+    .alias('s', 'style')
+    	.nargs('s', 1)
+    	.describe('s', 'render a ansi style onto a string')
+    .alias('F', 'font')
+    	.nargs('F', 1)
+    	.describe('F', 'render the output in the specified font')
+    .alias('g', 'global')
+    	.nargs('g', 0)
+    	.describe('g', 'install the font globally')
     .alias('o', 'output')
     	.nargs('o', 1)
     	.describe('o', 'Save to a file')
@@ -23,11 +37,13 @@ yargs.command('image', 'convert an image to ascii')
     .alias('h', 'help')
     .epilog('©2016 - Abbey Hawk Sparrow');
 argv = yargs.argv;
-var action = argv._.pop();
+var action = argv._.shift();
+var target = argv._.pop();
+var ftp;
 switch(action){
 	case 'image':
 		var options = {
-			filepath: argv.f
+			filepath: target
 		};
 		if(argv.a) options.alphabet = argv.a;
 		var image = new art.Image(options);
@@ -39,4 +55,73 @@ switch(action){
 			}
 		})
 		break;
+    case 'text':
+        var output = function(result){ console.log(result) };
+		if(argv.F){
+    		if(argv.s) art.font(target, argv.F, argv.s, output);
+    		else art.font(target, argv.F, output);
+		}else{
+    		console.log(art.style(target, argv.s||'', true));
+        }
+		break;
+    case 'list':
+        var JSFtp = ftp || (ftp = require('jsftp'));
+        var client = new JSFtp({
+            host: "ftp.figlet.org"
+        });
+        var jobs=2;
+        var results = [];
+        client.ls("pub/figlet/fonts/ours", function(err, res) {
+            if(!err) results = results.concat(res.map(function(item){
+                return "ours/"+item.name
+            }));
+            client.ls("pub/figlet/fonts/contributed", function(err, res) {
+                if(!err) results = results.concat(res.map(function(item){
+                    return "contributed/"+item.name
+                }));
+                client.raw.quit(function(err, data) {
+                    if (err) return console.error(err);
+                    var names = results.map(function(path){
+                        return path.split('/').pop().split('.').shift();
+                    })
+                    console.log(names);
+                });
+            });
+        });
+        break;
+    case 'preview':
+        var exec = require('child_process').exec;
+        exec('open "http://www.figlet.org/fontdb_example.cgi?font='+target.toLowerCase()+'.flf"')
+        break;
+    //http://www.figlet.org/fontdb_example.cgi?font=hollywood.flf
+    case 'install':
+        //*
+        var JSFtp = ftp || (ftp = require('jsftp'));
+        var ftp = new JSFtp({
+            host: "ftp.figlet.org"
+        });
+        var subdir = 'contributed'
+        var url = 'pub/figlet/fonts/'+subdir+'/'+target.toLowerCase()+'.flf';
+        ftp.get(url, function(err, socket) {
+            if (err) return;
+            var str = '';
+            socket.on("data", function(d) { str += d.toString(); })
+            socket.on("close", function(err) {
+                if (err){
+                    console.error('There was an error retrieving the font '+target);
+                }else{
+                    var dir = argv.g?process.cwd()+'/Fonts/':__dirname+'/../Fonts/';
+                    fs.writeFile(dir+target.toLowerCase()+'.flf', str, function(err){
+                        ftp.raw.quit(function(err, data) {
+                            if (err) return console.error(err);
+                            console.log(target+' written');
+                        });
+                    });
+                }
+                
+            });
+            socket.resume();
+        }); //*/
+        break;
+    default : throw new Error('unknown action: '+action);
 }

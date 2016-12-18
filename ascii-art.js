@@ -50,11 +50,12 @@
         alpha : false,
         errorMode : 'console',
     };
-    AsciiArt.ansiCodes = function(str, color) {
+    AsciiArt.ansiCodes = function(str, color, forceOff) {
         if(!color) return str;
         if(!this.codes){
             this.codes = {
                 "off"       : '\033[0m',
+                "reset"     : '\033[0m',
                 "bold"      : '\033[1m',
                 "italic"    : '\033[3m',
                 "underline" : '\033[4m',
@@ -71,7 +72,8 @@
                 "blue"      : '\033[34m',
                 "magenta"   : '\033[35m',
                 "cyan"      : '\033[36m',
-                "white"     : '\033[37m',
+                "white"      : '\033[37m',
+                "gray"      : '\033[90m',
                 "bright_black": '\033[90m',
                 "bright_red"  : '\033[91m',
                 "bright_green": '\033[92m',
@@ -95,7 +97,8 @@
         for(var i=0, attr; attr = color_attrs[i]; i++) {
             ansi_str += this.codes[attr];
         }
-        ansi_str += str + this.codes["off"];
+        ansi_str += str;
+        if(forceOff) ansi_str += this.codes["off"];
         return ansi_str;
     };
     
@@ -188,7 +191,7 @@
         linesOne.forEach(function(line, index){
             if(index >= diff){
                 if(style){
-                    linesOne[index] = linesOne[index]+AsciiArt.ansiCodes(linesTwo[index-diff], style);
+                    linesOne[index] = linesOne[index]+AsciiArt.ansiCodes(linesTwo[index-diff], style, true);
                 }else{
                     linesOne[index] = linesOne[index]+linesTwo[index-diff];
                 }
@@ -259,7 +262,7 @@
             return chain.font(str, fontName, style);
         }else{
             return AsciiArt.Figlet.write(str, fontName, function(text){
-                if(style) text = AsciiArt.ansiCodes(text, style);
+                if(style) text = AsciiArt.ansiCodes(text, style, true);
                 callback(text);
             });
         }

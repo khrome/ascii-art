@@ -50,7 +50,7 @@
                             data[offset+2]
                         )/255;
                         var charPosition = Math.floor(image.options.alphabet.length*fraction);
-                        result += AsciiArt.ansiCodes( (image.options.alphabet[charPosition] || ' '), color || 'off' );
+                        result += AsciiArt.ansiCodes( (image.options.alphabet[charPosition] || ' '), color || 'off' , true);
                         //result += (image.options.alphabet[charPosition] || ' ');
                     }
                     result += "\n";

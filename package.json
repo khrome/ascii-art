@@ -1,9 +1,9 @@
 {
   "name": "ascii-art",
   "homepage": "https://github.com/khrome/ascii-art",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "ascii-art.js",
-  "description": "A package for ansi codes, figlet fonts, and ascii art. Pure JS",
+  "description": "Ansi codes, figlet fonts, and ascii art. 100% JS",
   "keywords": [
     "ascii",
     "figlet",
@@ -28,7 +28,8 @@
     "terminal",
     "colors",
     "colour",
-    "color"
+    "color",
+    "chalk"
   ],
   "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
   "contributors": [],
@@ -58,7 +59,8 @@
     "should": "*"
   },
   "optionalDependencies": {
-    "canvas": "*"
+    "canvas": "*",
+    "jsftp" :"*",
   },
   "engines": {
     "node": "*"
@@ -66,6 +68,7 @@
   "bin": "./bin/ascii-art",
   "scripts": {
     "test": "mocha",
+    "chalk-test": "mocha test/extras/kaolin-test.js",
     "browser-test": "karma start",
     "test-data": "node generate.js save",
     "sample": "node generate.js"
