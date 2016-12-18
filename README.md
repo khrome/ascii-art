@@ -9,7 +9,7 @@
 
 Images, fonts and terminal styles in Node.js & the browser. 100% JS.
 
-It features support for [Images](docs/Images.md), [Styles](docs/Images.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically. 
+It features support for [Images](docs/Images.md), [Styles](docs/Styles.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically. 
 
 In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art` to [solve](docs/Multiline.md) [many](docs/Figlet.md) [problems](docs/Images.md) which chalk ignores. 
 
@@ -25,7 +25,7 @@ Why would I use this instead of X?
 - It **works like a package manager** for figlet fonts.
 - The other libraries out there do too little and focus on logging above other domains.
 - **Actively maintained** If we don't update the code we'll tweak a code of conduct or something... maybe just re-up with self congratulatory pull requests, just to keep kicking that can. We might even add badges if we get saucy.
-- **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for more useful activities).
+- **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for utility rather than code aesthetics).
 - **Loads nothing that isn't used** (Images, Fonts, Image Logic, etc.)
 - It's **awesome** and that thing you're holding is looking played out.
 
@@ -99,6 +99,16 @@ Compatibility
 If you're a [chalk](https://www.npmjs.com/package/chalk) user, just use `var chalk = require('ascii-art/kaolin');` in place of your existing `chalk` references (Much of color.js, too... since chalk is a subset of colors.js). No migration needed, keep using the wacky syntax you are used to(In this mode, refer to their docs, not mine).
 
 I may support the other [colors](https://www.npmjs.com/package/colors) stuff (extras & themes) eventually, but it's currently a low priority.
+
+	
+Upcoming Features
+-----------------
+- A wider set of color profiles for color accuracy
+- 256 color support
+- true color (hex) support
+- HTML .style() output
+- Windows tests?
+- More built-in averagers
 
 Testing
 -------
