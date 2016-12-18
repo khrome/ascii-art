@@ -69,7 +69,6 @@ switch(action){
         var client = new JSFtp({
             host: "ftp.figlet.org"
         });
-        var jobs=2;
         var results = [];
         client.ls("pub/figlet/fonts/ours", function(err, res) {
             if(!err) results = results.concat(res.map(function(item){
@@ -93,9 +92,7 @@ switch(action){
         var exec = require('child_process').exec;
         exec('open "http://www.figlet.org/fontdb_example.cgi?font='+target.toLowerCase()+'.flf"')
         break;
-    //http://www.figlet.org/fontdb_example.cgi?font=hollywood.flf
     case 'install':
-        //*
         var JSFtp = ftp || (ftp = require('jsftp'));
         var ftp = new JSFtp({
             host: "ftp.figlet.org"
@@ -121,7 +118,7 @@ switch(action){
                 
             });
             socket.resume();
-        }); //*/
+        });
         break;
     default : throw new Error('unknown action: '+action);
 }

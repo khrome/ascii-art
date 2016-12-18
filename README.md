@@ -18,7 +18,7 @@ Why would I use this instead of X?
 - **zero dependencies** - while the CL utility and test have dependencies, we will never call out to a module for what is supposed to be this lib's core competancy.
 - **color profiles** support - other libraries assume you are running x11
 - **no prototype manipulation** - Nobody is actually forcing String.prototype on anyone, but that doesn't stop it being a hot topic. In addition, we don't use `__proto__` under the hood and pretending we aren't doing dynamic prototype manipulation (zing!).
-- handles the ugly [intersection of **multiline text and ansi codes**](doc/Multiline.md) for you.
+- handles the ugly [intersection of **multiline text and ansi codes**](docs/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
 - **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways.
 - **Expressive API** is a buzzword for chaining from days of yore, but the other guys are excited about having one and we have one too.
@@ -78,16 +78,16 @@ Which produces (from [this](Images/initech.png) and [this](Fonts/doom.flf)):
 ![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/initech.png)
 
     
-|    **Color Table**           | `color`       | bright_`color`  | `color`_bg|
-| -----------------------------|---------------|-----------------|-----------|
-| black         | <div style="background-color:#000000;height:10px"><div> | <div style="background-color:#808080;height:10px"><div> | <div style="background-color:#000000;height:10px"><div> |
-| red           | <div style="background-color:#800000;height:10px"><div> | <div style="background-color:#ff0000;height:10px"><div> | <div style="background-color:#800000;height:10px"><div> |
-| green         | <div style="background-color:#008000;height:10px"><div> | <div style="background-color:#00ff00;height:10px"><div> | <div style="background-color:#008000;height:10px"><div> |
-| yellow          | <div style="background-color:#808000;height:10px"><div> | <div style="background-color:#ffff00;height:10px"><div> | <div style="background-color:#808000;height:10px"><div> |
-| blue          | <div style="background-color:#000080;height:10px"><div> | <div style="background-color:#0000ff;height:10px"><div> | <div style="background-color:#000080;height:10px"><div> |
-| cyan         | <div style="background-color:#008080;height:10px"><div> | <div style="background-color:#00ffff;height:10px"><div> | <div style="background-color:#008080;height:10px"><div> |
-| magenta       | <div style="background-color:#800080;height:10px"><div> | <div style="background-color:#ff00ff;height:10px"><div> | <div style="background-color:#800080;height:10px"><div> |
-| white         | <div style="background-color:#c0c0c0;height:10px"><div> | <div style="background-color:#ffffff;height:10px"><div> | <div style="background-color:#c0c0c0;height:10px"><div> |
+| **Color Table**  | `color`       | bright_`color`  | `color`_bg|
+| -----------------|---------------|-----------------|-----------|
+| black   |![color](Images/c/black.png)|![color](Images/c/light_black.png)|![color](Images/c/black.png)|
+| red     |![color](Images/c/red.png)|![color](Images/c/light_red.png)|![color](Images/c/red.png)|
+| green   |![color](Images/c/green.png)|![color](Images/c/light_green.png)| ![color](Images/c/green.png)|
+| yellow  |![color](Images/c/yellow.png)|![color](Images/c/light_yellow.png)|![color](Images/c/yellow.png)|
+| blue    |![color](Images/c/blue.png)|![color](Images/c/light_blue.png)|![color](Images/c/blue.png) |
+| cyan    |![color](Images/c/cyan.png)|![color](Images/c/light_cyan.png)|![color](Images/c/cyan.png) |
+| magenta |![color](Images/c/magenta.png)|![color](Images/c/light_magenta.png)|![color](Images/c/magenta.png)|
+| white   |![color](Images/c/gray.png)|![color](Images/c/light_gray.png)|![color](Images/c/gray.png)|
 
 Styles are: *italic*, **bold**, <span style="text-decoration: underline">underline</span>, <span style="text-decoration: underline overline">|framed|</span>, <span style="text-decoration: underline overline">|encircled|</span>, <span style="text-decoration: overline">overline</span>, <span style="text-decoration: blink">blink</span> and <span style="display:inline-block; background-color:#777777; color: white">&nbsp;inverse&nbsp;</span>. 
 
