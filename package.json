@@ -48,15 +48,15 @@
   },
   "devDependencies": {
     "color-difference": "*",
-    "karma-mocha": "^1.2.0",
-    "karma": "^1.3.0",
-    "karma-should": "^1.0.0",
-    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-mocha": "1.2.0",
+    "karma": "1.3.0",
+    "karma-should": "1.0.0",
+    "karma-phantomjs-launcher": "1.0.2",
     "karma-chrome-launcher": "*",
-    "karma-requirejs": "^1.1.0",
+    "karma-requirejs": "1.1.0",
     "mocha": "*",
     "canvas": "*",
-    "requirejs": "^2.3.2",
+    "requirejs": "2.3.2",
     "should": "*"
   },
   "optionalDependencies": {
