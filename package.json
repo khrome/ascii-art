@@ -42,7 +42,7 @@
     "url": "git://github.com/khrome/ascii-art.git"
   },
   "dependencies": {
-    "browser-request": "^0.3.3",
+    "browser-request": "0.3.3",
     "dirname-shim": "0.0.1-alpha",
     "yargs": "*"
   },
@@ -55,6 +55,7 @@
     "karma-chrome-launcher": "*",
     "karma-requirejs": "^1.1.0",
     "mocha": "*",
+    "canvas": "*",
     "requirejs": "^2.3.2",
     "should": "*"
   },
