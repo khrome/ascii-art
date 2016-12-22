@@ -7,13 +7,16 @@
 	 
 ###ascii-art.js
 
-[![GitHub stars](https://img.shields.io/github/stars/khrome/ascii-art.svg?style=social&label=Star)]()
+[![NPM version](https://img.shields.io/npm/v/ascii-art.svg)]()
+[![npm](https://img.shields.io/npm/dt/ascii-art.svg)]()
+[![Travis](https://img.shields.io/travis/khrome/ascii-art.svg)]()
+[![GitHub stars](https://img.shields.io/github/stars/khrome/ascii-art.svg?style=social&label=Star)](https://github.com/khrome/ascii-art)
 
 Images, fonts and terminal styles in Node.js & the browser. 100% JS.
 
 It features support for [Images](docs/Images.md), [Styles](docs/Styles.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically. 
 
-In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art` to [solve](docs/Multiline.md) [many](docs/Figlet.md) [problems](docs/Images.md) which chalk ignores. 
+In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art`. 
 
 Why would I use this instead of X?
 ----------------------------------
