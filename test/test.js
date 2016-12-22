@@ -45,6 +45,13 @@ var fs = require('fs');*/
         if(err) console.log(err.stack);
         should.exist(ascii);
         should.exist(expected);
+        var asciiLines = ascii.split("\n")
+        var expectedLines = expected.split("\n");
+        asciiLines.length.should.equal(expectedLines.length);
+        /*
+        asciiLines.forEach(function(line, index){
+            asciiLines[index].length.should(expectedLines[index].length);
+        }); //*/
         if(isNode) ascii.should.equal(expected);
         done();
     }

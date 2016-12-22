@@ -7,6 +7,8 @@
 	 
 ###ascii-art.js
 
+[![GitHub stars](https://img.shields.io/github/stars/khrome/ascii-art.svg?style=social&label=Star)]()
+
 Images, fonts and terminal styles in Node.js & the browser. 100% JS.
 
 It features support for [Images](docs/Images.md), [Styles](docs/Styles.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically. 
