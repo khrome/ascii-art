@@ -14,25 +14,22 @@
 
 Images, fonts and terminal styles in Node.js & the browser. 100% JS.
 
-It features support for [Images](docs/Images.md), [Styles](docs/Styles.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically. 
+In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art` as an update, expansion and generalization of [MooAsciiArt](http://mootools.net/forge/p/mooasciiart) and at the same time it can replace your existing ansi colors library. 
 
-In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art`. 
+It features support for [Images](docs/Images.md), [Styles](docs/Styles.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically. 
 
 Why would I use this instead of X?
 ----------------------------------
 - **zero dependencies** - while the CL utility and test have dependencies, we will never call out to a module for what is supposed to be this lib's core competancy.
 - **color profiles** support - other libraries assume you are running x11
-- **no prototype manipulation** - Nobody is actually forcing String.prototype on anyone, but that doesn't stop it being a hot topic. In addition, we aren't using `__proto__` under the hood and pretending we aren't doing dynamic prototype manipulation (zing!).
+- **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
 - handles the ugly [intersection of **multiline text and ansi codes**](docs/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
 - **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways.
-- **Expressive API** is a buzzword for chaining from days of yore, but the other guys are excited about having one and we have one too.
 - It **works like a package manager** for figlet fonts.
 - The other libraries out there do too little and focus on logging above other domains.
-- **Actively maintained** If we don't update the code we'll tweak a code of conduct or something... maybe just re-up with self congratulatory pull requests, just to keep kicking that can. We might even add badges if we get saucy.
 - **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for utility rather than code aesthetics).
 - **Loads nothing that isn't used** (Images, Fonts, Image Logic, etc.)
-- It's **awesome** and that thing you're holding is looking played out.
 
 	
 On the Command Line
@@ -112,8 +109,15 @@ Upcoming Features
 - 256 color support
 - true color (hex) support
 - HTML .style() output
-- Windows tests?
+- HTML tag support
 - More built-in averagers
+
+Non Goals
+---------
+
+- ascii videos: 
+- 
+
 
 Testing
 -------
