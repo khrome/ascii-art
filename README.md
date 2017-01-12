@@ -72,9 +72,10 @@ In your Code
 ------------
 The font method also allows you to optionally pass styles and supports chaining, so if I want two strings rendered together:
 
-    art.font('Prompt', 'Basic', 'red').font('v1', 'Doom', 'magenta', function(rendered){
-        console.log(rendered);
-    });
+    art.font('Prompt', 'Basic', 'red')
+		.font('v1', 'Doom', 'magenta', function(rendered){
+	        console.log(rendered);
+	    });
 
 There is also an `image()` call in the chain, that requires `canvas` in Node.js and shims in the browser's `Canvas` object (but only when image is used, so that dependency is optional):
 
