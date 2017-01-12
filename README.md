@@ -105,6 +105,10 @@ If you add some additional options you get:
 		art.table({
 			width : 80,
 			data : [ /* ... */ ],
+			headerStyle   : 'blue_bg+white',
+			verticalBar   : ' ',
+			horizontalBar : ' ',
+			intersection  : ' ',
 			columns : [
 				{
 					value : 'Product',
