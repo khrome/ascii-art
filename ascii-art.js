@@ -1,13 +1,17 @@
 (function (root, factory) { // UMD - returnExports
     if (typeof define === 'function' && define.amd) {
-        define(['./image', 'browser-request', 'dirname-shim'], function(img, request, shim){
+        define(['./image', './table', './figlet', 'browser-request', 'dirname-shim'], function(img, request, shim){
             return factory(function(){
                 return img;
+            },function(){
+                return tbl;
+            },function(){
+                return fig;
             }, {
                 readFile : function(filename, cs, fn){
                     var cb = typeof cs === 'string'?fn:cs;
                     request({
-                        url: __dirname +'/'+filename 
+                        url: __dirname +'/'+filename
                     }, function(err, req, data){
                         if(err) return cb(err);
                         else cb(undefined, data);
@@ -16,17 +20,30 @@
             });
         });
     } else if (typeof module === 'object' && module.exports) {
-        
+
         module.exports = factory(function(){
             return require('./image');
+        },function(){
+            return require('./table');
+        },function(){
+            return require('./figlet');
         }, require('fs'));
-        
+
     } else {
         root.AsciiArt = factory(function(){
             return root.AsciiArtImage;
+        }, function(){
+            return root.AsciiArtTable;
+        }, function(){
+            return root.AsciiArtFiglet;
         }, root.fs);
     }
-}(this, function(getImage, fs) {
+}(this, function(getImage, getTable, getFiglet, fs) {
+    var get ={
+        Image : getImage,
+        Table : getTable,
+        Figlet : getFiglet
+    };
     var AsciiArt = {
         value : 'variant1',
         valueScales : {
@@ -89,7 +106,18 @@
                 "blue_bg"   : '\033[44m',
                 "magenta_bg": '\033[45m',
                 "cyan_bg"   : '\033[46m',
-                "white_bg"  : '\033[47m'
+                "white_bg"  : '\033[47m',
+
+                "gray_bg"  : '\033[100m',
+
+                "bright_black_bg"  : '\033[100m',
+                "bright_red_bg"    : '\033[101m',
+                "bright_green_bg"  : '\033[102m',
+                "bright_yellow_bg" : '\033[103m',
+                "bright_blue_bg"   : '\033[104m',
+                "bright_magenta_bg": '\033[105m',
+                "bright_cyan_bg"   : '\033[106m',
+                "bright_white_bg"  : '\033[107m'
             };
         }
         var color_attrs = color.split("+");
@@ -101,88 +129,23 @@
         if(forceOff) ansi_str += this.codes["off"];
         return ansi_str;
     };
-    
-    Object.defineProperty(AsciiArt, 'Image', {
-      get: function() {
-          result = getImage().Image;
-          result.setInstance(AsciiArt);
-          AsciiArt.Image = result;
-          return result;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    
-    // this code originates with http://github.com/scottgonzalez/figlet-js
-    // if that ever makes it to NPM, it will become a dependency
-    AsciiArt.Figlet = {
-        fonts: {},
-        fontPath : __dirname+'/Fonts/',
-        parseFont: function(name, fn) { 
-            if (AsciiArt.Figlet.fonts[name]) fn(AsciiArt.Figlet.fonts[name]);
-            else AsciiArt.Figlet.loadFont(name, function(defn){
-                AsciiArt.Figlet._parseFont(name, defn, function(font){
-                    AsciiArt.Figlet.fonts[name] = font;
-                    fn(font);
-                });
-            });
-        },
-        _parseFont: function(name, defn, fn) {
-            var lines = defn.split("\n");
-            var header = lines[0].split(" ");
-            var hardblank = header[0].charAt(header[0].length - 1);
-            var height = +header[1];
-            var comments = +header[5];
-            var font = {
-                defn: lines.slice(comments + 1),
-                hardblank: hardblank,
-                height: height,
-                char: {}
-            };
-            fn(font);
-        },
-        parseChar: function(char, font) {
-            if(char > 122) return;
-            if (char in font.char) return font.char[char];
-            var height = font.height,
-                start = (char - 32) * height,
-                charDefn = [],
-                i;
-            for (i = 0; i < height; i++) {
-                if(!font.defn[start + i]) return;
-                charDefn[i] = font.defn[start + i].replace(/@/g, "")
-                .replace(RegExp("\\" + font.hardblank, "g"), " ");
-            }
-            return font.char[char] = charDefn;
-        },
-        loadFont: function(name, fn) {
-            //var fs = require('fs');
-            var fileName = this.fontPath + name+ '.flf';
-            fs.readFile(fileName, 'utf8', function(error, data) {
-                if(error) throw(error);
-                if(data) fn(data);
-            });
-        },
-        preloadDirectory : function(path, callback){
-            //todo
-        },
-        write : function(str, fontName, callback) {
-            AsciiArt.Figlet.parseFont(fontName, function(font) {
-                var chars = {},
-                result = "";
-                for (var i = 0, len = str.length; i < len; i++) {
-                    chars[i] = AsciiArt.Figlet.parseChar(str.charCodeAt(i), font);
-                }
-                for (var i = 0, height = chars[0].length; i < height; i++) {
-                    for (var j = 0; j < len; j++) {
-                        if(chars[j]) result += chars[j][i];
-                    }
-                    result += "\n";
-                }
-                callback(result, font);
-            });
-        }
-    };
+
+    function proxyOnFirstReference(name){
+        Object.defineProperty(AsciiArt, name, {
+            get: function() {
+                result = get[name]()[name];
+                result.setInstance(AsciiArt);
+                AsciiArt[name] = result;
+                return result;
+            },
+            enumerable: true,
+            configurable: true
+        });
+    }
+    proxyOnFirstReference('Figlet');
+    proxyOnFirstReference('Image');
+    proxyOnFirstReference('Table');
+
     //todo: optional styling on font callback
     var combine = function(blockOne, blockTwo, style){
         var linesOne = blockOne.split("\n");
@@ -220,12 +183,28 @@
                         check();
                     });
                 }else{
-                    var image = new AsciiArt.Image(item.options);
-                    image.write(function(err, text){
-                        if(!err) result = combine(result||(new Array(text.split("\n").length)).join("\n"), text, '');
-                        ob.working = false;
+                    if(item.data){
+                        var table = new AsciiArt.Table({
+                            intersection : item.intersection,
+                            horizontalBar : item.horizontalBar,
+                            verticalBar : item.verticalBar,
+                            verticalBar : item.verticalBar,
+                            headerStyle : item.headerStyle,
+                        });
+                        if(item.columns) table.setHeading(item.columns);
+                        var fields = Object.keys(item.data[0])
+                        table.data = item.data;
+                        var res = table.write(item.width || 80);
+                        result = combine(result||(new Array(text.split("\n").length)).join("\n"), text, '');
                         check();
-                    });
+                    }else{
+                        var image = new AsciiArt.Image(item.options);
+                        image.write(function(err, text){
+                            if(!err) result = combine(result||(new Array(text.split("\n").length)).join("\n"), text, '');
+                            ob.working = false;
+                            check();
+                        });
+                    }
                 }
             }
         }
@@ -240,7 +219,6 @@
                 text : str,
                 style : style
             });
-            //if(!fontChain.checking)
             check();
             return ob;
         };
@@ -249,14 +227,23 @@
             chain.push({
                 options : options,
             });
-            //if(!fontChain.checking)
+            check();
+            return ob;
+        };
+        this.table = function(options, callback){
+            if(callback) cb = callback;
+            chain.push(options);
             check();
             return ob;
         };
         return this;
     };
-    
+
     AsciiArt.font = function(str, fontName, style, callback){
+        if(typeof style == 'function' && !callback){
+            callback = style;
+            style = undefined;
+        }
         if(!callback){
             var chain = fontChain.apply({});
             return chain.font(str, fontName, style);
@@ -267,7 +254,7 @@
             });
         }
     }
-    
+
     AsciiArt.image = function(options, callback){
         if(!callback){
             var chain = fontChain.apply({});
@@ -279,10 +266,31 @@
             });
         }
     }
-    //AsciiArt.font = AsciiArt.Figlet.write;
+
+    AsciiArt.table = function(options, callback){
+        if(!callback){
+            var chain = fontChain.apply({});
+            return chain.table(options);
+        }else{
+            var table = new AsciiArt.Table({
+                intersection : options.intersection,
+                horizontalBar : options.horizontalBar,
+                verticalBar : options.verticalBar,
+                verticalBar : options.verticalBar,
+                headerStyle : options.headerStyle,
+            });
+            if(options.columns) table.setHeading.apply(
+                table, options.columns
+            );
+            var fields = Object.keys(options.data[0])
+            table.data = options.data;
+            var result = table.write(options.width || 80);
+            callback(result);
+        }
+    }
+
     AsciiArt.style = AsciiArt.ansiCodes;
-    //todo: AsciiArt.image
-    
+
     //use b in some fashion.
 
     // Just return a value to define the module export.
