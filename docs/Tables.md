@@ -34,7 +34,7 @@ which will output:
 
 ![Styled Table Example](http://patternweaver.com/Github/Ascii/docs/ansi_table.png)
 
-You can also play with border colorings and built-in borders (`single` and `double`) using the UTF box drawing characters
+You can also play with border colorings and built-in borders (`single`, `double`, `block` and `angles`) using the UTF box drawing characters
 
 	art.table({
 		width : 80,

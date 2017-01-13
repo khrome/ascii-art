@@ -210,6 +210,36 @@
                         'horizontal' : '═',
                     };
                     break;
+                case 'block':
+                    this.options.bars = {
+                        'ul_corner' : '█',
+                        'ur_corner' : '█',
+                        'lr_corner' : '█',
+                        'll_corner' : '█',
+                        'bottom_t' : '█',
+                        'top_t' : '█',
+                        'right_t' : '█',
+                        'left_t' : '█',
+                        'intersection' : '█',
+                        'vertical' : '█',
+                        'horizontal' : '█',
+                    };
+                    break;
+                case 'angles':
+                    this.options.bars = {
+                        'ul_corner' : '◤',
+                        'ur_corner' : '◥',
+                        'lr_corner' : '◢',
+                        'll_corner' : '◣',
+                        'bottom_t' : '▲',
+                        'top_t' : '▼',
+                        'right_t' : '◀',
+                        'left_t' : '▶',
+                        'intersection' : '◆',
+                        'vertical' : ' ',
+                        'horizontal' : ' ',
+                    };
+                    break;
             }
             var bars = this.options.bars;
             this.getBoundaryChar = function(t, l, b, r){
