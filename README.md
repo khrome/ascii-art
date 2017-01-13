@@ -93,15 +93,6 @@ Which produces (from [this](Images/initech.png) and [this](Fonts/Doom.flf)):
 
 You can also generate tables in a standard box style (and it will attempt to be smart about column widths **without** truncating ansi codes):
 
-	    art.table({
-	    	width : 80,
-	    	data : [ /* ... */ ]
-	    });
-
-![Table Example](http://patternweaver.com/Github/Ascii/docs/ascii_table.png)
-
-If you add some additional options you get:
-
 		art.table({
 			width : 80,
 			data : [ /* ... */ ],
@@ -126,6 +117,8 @@ If you add some additional options you get:
 which will output:
 
 ![Styled Table Example](http://patternweaver.com/Github/Ascii/docs/ansi_table.png)
+
+check out the [documentation](docs/Tables.md) for more examples!
 
 Styles
 ------

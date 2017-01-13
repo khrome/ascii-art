@@ -50,7 +50,6 @@
             }
         });
         var idealWidth = sizes.reduce(sum);
-        //console.log(sizes, this.headers);
         if(idealWidth > remainingWidth){
             //try to convert column by column to average width until you've
             // tried them all (go backwards (assuming order of importance))
@@ -60,11 +59,9 @@
                     for(var lcv = sizes.length-1; lcv >= 0; lcv--){
                         sizes[lcv] = stats[ob.headers[lcv].value].average;
                         var width = sizes.reduce(sum);
-                        //console.log(''+lcv, sizes, width);
                         if(width <= remainingWidth){
                             var rem = remainingWidth - width;
                             sizes[lcv] += rem;
-                            //console.log(''+lcv, sizes, width);
                             return;
                         };
                     }
@@ -74,11 +71,9 @@
                     for(var lcv = sizes.length-1; lcv >= 0; lcv--){
                         sizes[lcv] = stats[ob.headers[lcv].value].min;
                         var width = sizes.reduce(sum);
-                        //console.log(''+lcv, sizes, width);
                         if(width <= remainingWidth){
                             var rem = remainingWidth - width;
                             sizes[lcv] += rem;
-                            //console.log(''+lcv, sizes, width);
                             return;
                         };
                     }
@@ -181,9 +176,75 @@
 
     AsciiArt.Table = function(options){
         this.options = options || {};
-        if(!this.options.verticalBar) this.options.verticalBar = '|';
-        if(!this.options.horizontalBar) this.options.horizontalBar = '-';
-        if(!this.options.intersection) this.options.intersection = '+';
+        var ob = this;
+        if(this.options.bars){
+            if(this.options.bars === true) this.options.bars = 'single';
+            if(typeof this.options.bars == 'string') switch(this.options.bars){
+                case 'single':
+                    this.options.bars = {
+                        'ul_corner' : '┏',
+                        'ur_corner' : '┓',
+                        'lr_corner' : '┛',
+                        'll_corner' : '┗',
+                        'bottom_t' : '┻',
+                        'top_t' : '┳',
+                        'right_t' : '┫',
+                        'left_t' : '┣',
+                        'intersection' : '╋',
+                        'vertical' : '┃',
+                        'horizontal' : '━',
+                    };
+                    break;
+                case 'double':
+                    this.options.bars = {
+                        'ul_corner' : '╔',
+                        'ur_corner' : '╗',
+                        'lr_corner' : '╝',
+                        'll_corner' : '╚',
+                        'bottom_t' : '╩',
+                        'top_t' : '╦',
+                        'right_t' : '╣',
+                        'left_t' : '╠',
+                        'intersection' : '╬',
+                        'vertical' : '║',
+                        'horizontal' : '═',
+                    };
+                    break;
+            }
+            var bars = this.options.bars;
+            this.getBoundaryChar = function(t, l, b, r){
+                if(t && l && b && r) return bars.intersection;
+                //Ts
+                if(t && l && b) return bars.right_t;
+                if(t && l && r) return bars.bottom_t;
+                if(t && b && r) return bars.left_t;
+                if(l && b && r) return bars.top_t;
+
+                //Corners
+                if(l && b) return bars.ur_corner;
+                if(t && l) return bars.lr_corner;
+                if(t && r) return bars.ll_corner;
+                if(b && r) return bars.ul_corner;
+
+                //Straights
+                if(l && r) return bars.horizontal;
+                if(t && b) return bars.vertical;
+            }
+        }else{
+            if(!this.options.verticalBar) this.options.verticalBar = '|';
+            if(!this.options.horizontalBar) this.options.horizontalBar = '-';
+            if(!this.options.intersection) this.options.intersection = '+';
+            this.getBoundaryChar = function(t, l, b, r){
+                var isVert = (t || b);
+                var isHoriz = (l || r);
+                if(isVert && isHoriz){
+                    return ob.options.intersection;
+                }else{
+                    if(isVert) return ob.options.verticalBar;
+                    if(isHoriz) return ob.options.horizontalBar;
+                }
+            }
+        }
         this.headers = [];
         this.data = [];
     };
@@ -194,68 +255,88 @@
         var ob = this;
         //RENDER!!!
         var result = '';
-        var horizontalRule = function(styleHandler){
-            var lastStyle;
+        var y = true;
+        var n = false;
+        var fillerChar = '%';
+        var horizontalRule = function(styleHandler, top, bottom){
+            var rule = '';
+            var t = !top;
+            var b = !bottom;
             ob.headers.forEach(function(header, index){
-                var line = ob.options.intersection + padRTo(
-                    '', sizes[index], ob.options.horizontalBar
+                var f = index !== 0?true:false;
+                var c = ob.getBoundaryChar(t, f, b, y);
+                if(ob.options.borderColor) c = parentArt.style(
+                    c, ob.options.borderColor, false
+                );
+                var line = c + padRTo(
+                    '', sizes[index], ob.getBoundaryChar(n, y, n, y)
                 );
                 if(styleHandler){
                     styleHandler(header, index, function(style){
                         if(style){
                             line = parentArt.style(line, style, true);
                         }
-                        lastStyle = style;
                     });
                 }
-                result += line;
+                rule += line;
             });
-            result += (lastStyle?
-                parentArt.style(ob.options.intersection, lastStyle, true):
-                ob.options.intersection);
-            styleHandler(
-                ob.headers[ob.headers.length-1],
-                ob.headers.length-1,
-                function(style){
+            var chr = ob.getBoundaryChar(t, y, b, n);
+            if(ob.options.borderColor) chr = parentArt.style(
+                chr, ob.options.borderColor, true
+            );
+            var pos = ob.headers.length-1;
+            if(styleHandler){
+                styleHandler(ob.headers[pos], pos, function(style){
                     var backgroundColor = bgFromStyle(style);
                     if(style){
-                        if(ob.options.intersection.trim()){
-                            result += parentArt.style(ob.options.intersection, style, true);
-                        }else{
-                            result += parentArt.style('X', style+'+'+backgroundColor, true);
+                        var s = style;
+                        var c = chr;
+                        if(backgroundColor && !c.trim()){
+                            c = 'X';
+                            s = style+'+'+backgroundColor
                         }
+                        rule += parentArt.style(c, s, true);
                     }else{
-                        result += ob.options.intersection
+                        rule += chr;
                     }
-                }
-            );
-            result += "\n";
+                });
+            }else{
+                rule += chr;
+            }
+            rule += "\n";
+            return rule;
         }
 
         var horizontalRuleStylerMaker = function(styleGetter){
-            return function(column, index, setStyle){
+            return function(column, index, done){
                 var style = styleGetter(column, index);
                 var backgroundColor = bgFromStyle(style);
-                if(backgroundColor) setStyle(backgroundColor+'_bg');
+                if(backgroundColor) done(backgroundColor+'_bg');
+                else done();
             }
         }
         if(ob.options.drawRules !== false){
-            horizontalRule(horizontalRuleStylerMaker(function(header, i, row){
+            result += horizontalRule(horizontalRuleStylerMaker(function(header, i, row){
                 return (header && (
                     header.headerStyle ||
                     ob.options.headerStyle ||
                     header.style
                 ));
-            }));
+            }), true);
         }
         var lastBG;
+        var vb = ob.getBoundaryChar(y, n, y, n);
         ob.headers.forEach(function(header, index){
-            var line = ob.options.verticalBar;
+            var line = vb;
+            if(ob.options.borderColor) line = parentArt.style(
+                line, ob.options.borderColor, true
+            );
             var value = header.label;
             var backgroundColor;
             var style = header.headerStyle ||
                 ob.options.headerStyle ||
-                header.style;
+                header.style ||
+                ob.options.cellStyle;
             if(style){
                 backgroundColor = bgFromStyle(style);
                 value = parentArt.style(value, style, true);
@@ -270,7 +351,7 @@
                     value,
                     sizes[index] - length,
                     backgroundColor?parentArt.style(
-                        'X', style+'+'+backgroundColor, true
+                        '.', style+'+'+backgroundColor, true
                     ):' '
                 );
             }
@@ -278,14 +359,22 @@
             lastBG = backgroundColor;
         });
         if(!lastBG){
-            result += ob.options.verticalBar+"\n";
+            if(ob.options.borderColor){
+                result += parentArt.style(
+                    vb, ob.options.borderColor, true
+                )+"\n";;
+            }else{
+                result += vb+"\n";
+            }
         }else{
-            result += parentArt.style(
-                ob.options.verticalBar+"\n", lastBG+'_bg', true
-            )
+            var c = vb;
+            if(ob.options.borderColor) c = parentArt.style(
+                c, ob.options.borderColor, true
+            );
+            result += parentArt.style(c, lastBG+'_bg', true)+"\n";
         }
         if(ob.options.drawRules !== false){
-            horizontalRule(horizontalRuleStylerMaker(function(header, i, row){
+            result += horizontalRule(horizontalRuleStylerMaker(function(header, i, row){
                 return (header && (
                     header.headerStyle ||
                     ob.options.headerStyle ||
@@ -295,12 +384,18 @@
         }
         ob.data.forEach(function(item){
             ob.headers.forEach(function(header, index){
-                var line = ob.options.verticalBar;
+                var style = header.style ||
+                    ob.options.dataStyle ||
+                    ob.options.cellStyle;
+                var line = vb;
+                if(ob.options.borderColor) line = parentArt.style(
+                    line, ob.options.borderColor, true
+                );
                 var value = item[header.value] || '';
                 var backgroundColor;
-                if(header.style){
-                    backgroundColor = bgFromStyle(header.style);
-                    value = parentArt.style(value, header.style, true);
+                if(style){
+                    backgroundColor = bgFromStyle(style);
+                    value = parentArt.style(value, style, true);
                     if(backgroundColor)
                         line = parentArt.style(line, backgroundColor+'_bg', true);
                 }
@@ -312,18 +407,24 @@
                         value,
                         sizes[index] - length,
                         backgroundColor?parentArt.style(
-                            'X', header.style+'+'+backgroundColor, true
+                            'X', style+'+'+backgroundColor, true
                         ):' '
                     );
                 }
                 result += line;
             });
-            result += ob.options.verticalBar+"\n";
+            if(ob.options.borderColor){
+                result += parentArt.style(
+                    vb, ob.options.borderColor, true
+                )+"\n";
+            }else{
+                result += vb+"\n";
+            }
         });
         if(ob.options.drawRules !== false){
-            horizontalRule(horizontalRuleStylerMaker(function(header, i, row){
+            result += horizontalRule(horizontalRuleStylerMaker(function(header, i, row){
                 return (header && header.style);
-            }));
+            }), false, true);
         }
         return result;
     }

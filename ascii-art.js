@@ -272,13 +272,15 @@
             var chain = fontChain.apply({});
             return chain.table(options);
         }else{
-            var table = new AsciiArt.Table({
-                intersection : options.intersection,
-                horizontalBar : options.horizontalBar,
-                verticalBar : options.verticalBar,
-                verticalBar : options.verticalBar,
-                headerStyle : options.headerStyle,
-            });
+            var opts = {};
+            [
+                'intersection', 'horizontalBar', 'verticalBar',
+                'dataStyle', 'headerStyle', 'bars', 'cellStyle',
+                'borderColor'
+            ].forEach(function(opt){
+                opts[opt] = options[opt];
+            })
+            var table = new AsciiArt.Table(opts);
             if(options.columns) table.setHeading.apply(
                 table, options.columns
             );
