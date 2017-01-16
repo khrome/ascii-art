@@ -15,7 +15,7 @@
             return factory(imgLoadBrowser, renderersBrowser, function(){
                 return root.document.createElement('canvas');
             }, root.Image, function(){
-               return ave; 
+               return ave;
             });
         });
     } else if (typeof module === 'object' && module.exports) {
@@ -40,7 +40,7 @@
 }(this, function (readImage, getRenderers, Canvas, Image, getAverage) {
     var color_profiles = {
         "darwin" : {
-             "black" : [37, 188, 36],
+             "black" : [0, 0, 0],
              "red" : [194, 54, 33],
              "green" : [37, 188, 36],
              "yellow" : [173, 173, 39],
@@ -105,7 +105,7 @@
                         ob.options.height = ob.options.width * ob.aspectRatio;
                     }
                 }else{
-                    if(ob.options.height){ 
+                    if(ob.options.height){
                         ob.options.width = ob.options.height / ob.aspectRatio;
                     }
                 }
@@ -120,7 +120,7 @@
                 });
                 jobs = [];
             });
-        }else throw new Error('flfkfkdfdlkkf');
+        }else throw new Error('no filepath provided!');
     };
     AsciiArt.Image.Canvas = Canvas;
     AsciiArt.Image.Image = Image;
@@ -159,10 +159,17 @@
             }
         });
     }
-    
+
     AsciiArt.Image.Color = {};
-    AsciiArt.Image.Color.distance = function(r1, g1, b1, r2, g2, b2){
+    /*AsciiArt.Image.Color.distance = function(r1, g1, b1, r2, g2, b2){
         return (Math.abs(r1-r2)+Math.abs(g1-g2)+Math.abs(b1-b2))/3;
+    }//*/
+    AsciiArt.Image.Color.distance = function(r1, g1, b1, r2, g2, b2){
+        return (Math.abs(r1-r2)+Math.abs(g1-g2)+Math.abs(b1-b2)+
+            //add the value change in as well
+0
+            //Math.abs(Math.max(r1, g1, b1)-Math.max(r2, g2, b2))/2
+        )/3 + Math.abs(Math.max(r1, g1, b1)-Math.max(r2, g2, b2))/2;
     }
     AsciiArt.Image.Colors = function(colorList){
         this.colors = colorList;
@@ -196,7 +203,7 @@
         var done = function(){ if(callback) callback() };
         if(count === 1) this.average(done);
         else this.shrink({count: this.colors.length - count}, done);
-        
+
     }
     AsciiArt.Image.Colors.prototype.shrink = function(options, callback){
         if(options && options.count){
@@ -251,7 +258,7 @@
         if(position === -1) throw new Error('could not find color');
         this.colors.splice(position, 1);
     }
-    
+
     var closest = function(color, colors, names, options){
         var distances = colors.map(function(candidate){
             return (options.distance || AsciiArt.Image.Color.distance)(
@@ -269,7 +276,7 @@
         });
         return names?names[position]:colors[position];
     };
-    
+
     AsciiArt.Image.getTerminalColor = function(r, g, b, options){
         var names = Object.keys(AsciiArt.Image.colorProfiles.darwin);
         var colors = names.map(function(name){
@@ -277,7 +284,7 @@
         });
         return closest([r, g, b], colors, names, options);
     }
-    
+
     AsciiArt.Image.renderers = {};
     AsciiArt.Image.renderers['average'] = getAverage();
     //todo: make dynamic load async
@@ -286,7 +293,7 @@
         var name = file.substring(0, file.indexOf('.'));
         AsciiArt.Image.renderers[name] = require(__dirname+'/renderers/'+file);
     });*/
-    
+
     AsciiArt.Image.setInstance = function(art){
         Object.keys(AsciiArt.Image.renderers).forEach(function(name){
             AsciiArt.Image.renderers[name].setInstance(art);

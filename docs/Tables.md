@@ -7,7 +7,9 @@ To produce a standard box style (and it will attempt to be smart about column wi
 	    art.table({
 	    	width : 80,
 	    	data : [ /* ... */ ]
-	    });
+	    }, function(rendered){
+			// use rendered text
+		});
 
 ![Table Example](http://patternweaver.com/Github/Ascii/docs/ascii_table.png)
 
@@ -16,6 +18,9 @@ If you add some additional options you get:
 		art.table({
 			width : 80,
 			data : [ /* ... */ ],
+			verticalBar : ' ',
+			horizontalBar : ' ',
+			intersection : ' ',
 			columns : [
 				{
 					value : 'Product',
@@ -28,6 +33,8 @@ If you add some additional options you get:
 					style : 'white'
 				}
 			]
+		}, function(rendered){
+			// use rendered text
 		});
 
 which will output:
@@ -41,6 +48,8 @@ You can also play with border colorings and built-in borders (`single`, `double`
 		data : [ /* ... */ ],
         bars : 'single',
         borderColor : 'bright_white'
+	}, function(rendered){
+		// use rendered text
 	});
 
 which will output:
@@ -66,7 +75,9 @@ To define this manually it would look like:
             'horizontal' : '━',
         },
         borderColor : 'bright_white',
-    });
+    }, function(rendered){
+		// use rendered text
+	});
 
 Another example:
 
@@ -77,6 +88,8 @@ Another example:
         headerStyle : 'yellow',
         dataStyle : 'bright_white',
         borderColor : 'gray'
+	}, function(rendered){
+		// use rendered text
 	});
 
 which will output:

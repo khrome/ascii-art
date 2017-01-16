@@ -1,7 +1,7 @@
 {
   "name": "ascii-art",
   "homepage": "https://github.com/khrome/ascii-art",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "main": "ascii-art.js",
   "description": "Ansi codes, figlet fonts, and ascii art. 100% JS",
   "keywords": [
@@ -27,6 +27,7 @@
     "console",
     "terminal",
     "table",
+    "compositing",
     "colors",
     "colour",
     "color",
@@ -44,7 +45,8 @@
   },
   "dependencies": {
     "browser-request": "0.3.3",
-    "dirname-shim": "0.0.1-alpha",
+    "request": "2.79.0",
+    "dirname-shim": "1.0.0",
     "canvas": "*",
     "yargs": "*"
   },
