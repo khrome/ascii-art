@@ -97,8 +97,12 @@
                     (!ob.options.width) &&
                     (!ob.options.height)
                 ){
-                    ob.options.width = 80;
-                    ob.options.height = Math.floor((ob.image.height/ob.image.width) * 80);
+                    ob.options.width = (
+                        process &&
+                        process.stdout &&
+                        process.stdout.columns
+                    ) || 80;
+                    ob.options.height = Math.floor((ob.image.height/ob.image.width) * ob.options.width);
                 }
                 if(ob.options.width){
                     if(!ob.options.height){

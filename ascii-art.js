@@ -448,7 +448,14 @@
                             Object.keys(item.data[0]||{});
                          table.setHeading.apply(table, fields);
                          table.data = item.data;
-                         var res = table.write(item.width || 80);
+                         var res = table.write(
+                             item.width ||
+                             (
+                                 process &&
+                                 process.stdout &&
+                                 process.stdout.columns
+                             ) || 80
+                         );
                          result = safeCombine(result, res);
                          done();
                      }, 1);
@@ -595,7 +602,14 @@
             var fields = options.columns || Object.keys(options.data[0] ||{});
             table.setHeading.apply(table, fields);
             table.data = options.data;
-            var result = table.write(options.width || 80);
+            var result = table.write(
+                options.width ||
+                (
+                    process &&
+                    process.stdout &&
+                    process.stdout.columns
+                ) || 80
+            );
             callback(result);
         }
     }
