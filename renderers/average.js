@@ -23,14 +23,14 @@
                 height = Math.floor(image.options.height*distortion);
                 var newImage = utils.imageFromCanvas(image.canvas);
                 var canvas = utils.canvas(width, height);
-                
+
                 var context = canvas.getContext('2d');
                 context.drawImage(
-                    newImage, 0, 0, 
+                    newImage, 0, 0,
                     width, height
                 );
                 var data = context.getImageData(
-                    0, 0, 
+                    0, 0,
                     width, height
                 ).data;
                 var result = '';
@@ -50,7 +50,7 @@
                             data[offset+2]
                         )/255;
                         var charPosition = Math.floor(image.options.alphabet.length*fraction);
-                        result += AsciiArt.ansiCodes( (image.options.alphabet[charPosition] || ' '), color || 'off' , true);
+                        result += AsciiArt.Ansi.Codes( (image.options.alphabet[charPosition] || ' '), color || 'off' , true);
                         //result += (image.options.alphabet[charPosition] || ' ');
                     }
                     result += "\n";

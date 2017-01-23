@@ -87,53 +87,12 @@
         return a + b;
     }
 
-    function ansiAwareLength(value){
-        var lcv = 0;
-        var inEscape = false;
-        var count = 0;
-        while(value && lcv < value.length){
-            if(inEscape){
-                if(value[lcv] == 'm') inEscape = false;
-            }else{
-                if(value[lcv] == '\033' && value[lcv+1] == '['){
-                    inEscape = true;
-                    lcv++;
-                }else{
-                    count++;
-                }
-            }
-            lcv++;
-        }
-        return count;
+    var ansiAwareLength = function(value){
+        return parentArt.Ansi.length(value);
     }
 
-    function ansiAwareTrimTo(value, length){
-        var lcv = 0;
-        var result = '';
-        var inEscape = false;
-        var fuse = length;
-        while(lcv < value.length){
-            if(inEscape){
-                //todo: strict (enforce numeric)
-                result += value[lcv];
-                if(value[lcv] == 'm'){
-                    inEscape = false;
-                }
-            }else{
-                if(value[lcv] == '\033' && value[lcv+1] == '['){
-                    inEscape = true;
-                    result += '\033[';
-                    lcv++;
-                }else{
-                    if(fuse > 0){
-                        result += value[lcv];
-                        fuse--;
-                    }
-                }
-            }
-            lcv++;
-        }
-        return result;
+    var ansiAwareTrimTo = function(value, length){
+        return parentArt.Ansi.trimTo(value, length);
     }
 
     var defaultChar = ' ';

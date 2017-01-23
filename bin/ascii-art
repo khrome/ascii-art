@@ -49,6 +49,13 @@ switch(action){
 			filepath: target
 		};
 		if(argv.a) options.alphabet = argv.a;
+        if(
+            process &&
+            process.stdout &&
+            process.stdout.columns
+        ){
+            options.width = process.stdout.columns;
+        }
 		var image = new art.Image(options);
 		image.write(function(err, rendered){
 			if(argv.o){

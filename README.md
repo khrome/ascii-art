@@ -5,7 +5,8 @@
 	| (_| |\__ \| (__ | || |        | (_| || |   | |_
 	 \__,_||___/ \___||_||_|         \__,_||_|    \__|
 
-###ascii-art.js
+ascii-art.js
+============
 
 [![NPM version](https://img.shields.io/npm/v/ascii-art.svg)]()
 [![npm](https://img.shields.io/npm/dt/ascii-art.svg)]()
@@ -27,7 +28,7 @@ Why would I use this instead of X?
 - runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
 - **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways.
 - It **works like a package manager** for figlet fonts.
-- The other libraries out there do too little and focus on logging above other domains.
+- The **other libraries** out there **do too little**, focus on logging above other domains and often unaware of ANSI controls(for example: style text, then put it in a table).
 - **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for utility rather than code aesthetics).
 - **Loads nothing that isn't used** (Images, Fonts, Tables, Logic, etc.)
 
@@ -37,241 +38,21 @@ Installation
 
 	npm install ascii-art
 
-If you want to use `.image()` or `.Image` you must install [canvas](https://www.npmjs.com/package/canvas) and if you want to run the chalk tests... you'll need to to install `require-uncached` as well.
+If you'd like to use the command-line tool make sure to use `-g`
 
-On the Command Line
--------------------
+If you want to use `.image()` or `.Image` you must install [`canvas`](https://www.npmjs.com/package/canvas) and if you want to run the chalk tests... you'll need to to install `require-uncached` as well.
 
-If you want the gloabally available `ascii-art` you'll need to install with the `global` flag
-
-	npm install -g ascii-art
-
-Otherwise, the binary is available from your project root at `./node_modules/ascii-art/bin/ascii-art`
-
-Look at a list of fonts from the maintainers of Figlet:
-
-	ascii-art list all
-
-Preview your font in a browser:
-
-	ascii-art preview doom
-
-Now, install a figlet font (globally)
-
-	ascii-art install doom -g
-
-Render some text
-
-	ascii-art text -s green -F doom "some text"
-
-list some graphics on `textfiles.com`
-
-	ascii-art art textfiles.com
-
-show a particular graphic from `textfiles.com`
-
-	ascii-art art textfiles.com/art/nasa.vt
-
-or render an image (use `npm run sample` to generate and view a gallery)
-
-	ascii-art image path/to/my/file.jpg
-
-In your Code
-------------
-
-####.style(options[, callback]) > String
-
-Add ANSI styles to a string and return the result.
-
-
-####.font(text, fontName[, style][, callback])
-
-Render a string using a figlet font and add that to the buffer. There is a batch version of this function which does not chain and takes an array( `.strings()`).
-
-####.image(options[, callback])
-
-Create an image from the passed image and append that to the buffer
-
-####.table(options[, callback])
-
-Generate a table from the passed data, with support for many styles and append that to the buffer
-
-####.artwork(options[, callback])
-
-	fetch a graphic from a remote source and append it to the current buffer.
-
-###In-Chain functions
-
-The functions only exist on the chain and not on the root (`art.x().overlay()` not `art.overlay()`).
-
-####.overlay(overlain, options[, callback]);
-
-Inset the passed ascii graphic onto the existing buffer
-
-####.lines(start, stop[, callback]);
-
-subset the lines of the buffer
-
-####.join(text[, callback]);
-
-attach the given multi-line text to the current buffer at it's end.
-
-Examples
---------
-
-`ascii-art` allows you to construct complex ASCII/ANSI compositions easily.
-
-Let's say you want to impress your friends with oblique references to sci-fi but also address the challenges humanity faces in regards to the environment, but to do it with a glib comedic wit. I might try something like:
-
-	art.artwork({
-		artwork:'textfiles.com/art/st-char.asc'
-	}).lines(31, 45, function(rendered){
-		//cleanup non-unix terminators
-		rendered = rendered.replace(/\r/g, '');
-		rendered = colorInBonesShirt(rendered);
-		art.image({
-			filepath :'~/Images/earth_in_space.jpg',
-			alphabet : 'ultra-wide'
-		}).overlay(rendered, {
-			x: 0,
-			y: -1,
-			style: 'red+blink',
-			transparent: '&'
-		}, function(final){
-			console.log(final);
-		});
-	});
-
-to get:
-
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/bones_earth.png)
-
-Or maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with:
-
-	art.font('Ghost Wire BBS', 'Doom', function(logo){
-	    art.font('No place like home', 'rusted', function(subtext){
-	        art.table({
-	            verticalBar : ' ',
-	            horizontalBar : ' ',
-	            intersection : ' ',
-	            data:[
-	                {name: art.style('current users', 'red'), value: '203'},
-	                {name: 'operator', value: 'vince.vega'},
-	                {name: 'dial-in', value: '(917)555-4202'},
-	            ]
-	        }).lines(2, function(table){
-	            art.image({
-	                filepath :'~/Images/starburst_red.jpg',
-	                alphabet : 'ultra-wide'
-	            }).lines(2, 30).overlay(logo, {
-	                x: 0,
-	                y: 0,
-	                style: 'blue',
-	            }).overlay(subtext, {
-	                x: 19,
-	                y: 8,
-	                style: 'yellow',
-	            }).overlay(table, {
-	                x: -1,
-	                y: -1,
-	                style: 'green',
-	            }, function(final){
-	                console.log(final);
-	            });
-	        });
-	    });
-	});
-
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/ghostwire.png)
-
-
-Sometimes we have to create a splash for an intranet app:
-
-    art.image({
-    	width : 40,
-    	filepath : parentDir+'/Images/initech.png',
-    	alphabet : 'wide'
-    }).font('INITECH', 'Doom', 'cyan', function(ascii){
-		console.log(ascii);
-    });
-
-Which produces (from [this](Images/initech.png) and [this](Fonts/Doom.flf)):
-
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/initech.png)
-
-I used to have an apartment in Savannah in the mid 90s where a young artist slapped a (now well known) sticker on the door. I came home to see this sticker everyday for quite a while, so it became an old friend. But when you digitize an image, the text becomes unreadable... so to recreate that image in ascii would take a bunch of tedious hand work, so what would it take to regenerate that?
-
-	art.table({
-	    data:[
-	        {text: '    .\'ANDRE.    '},
-	        {text: '   ..THE.GIANT\'.  '},
-	        {text: '.With.Bobby."The.Brain"'},
-	        {text: '.Heenan.'}
-	    ],
-	    verticalBar : ' ',
-	    horizontalBar : ' ',
-	    intersection : ' '
-	}).lines(2, function(table){
-	    art.strings([
-	        'ANDRE',
-	        'the',
-	        'GIANT',
-	        'POSSE',
-	        '7\'4"',
-	        '520 LB'
-	    ], 'rusted', function(andre, the, giant, posse, height, weight){
-	        art.strings([ 'has', 'a'], 'twopoint', function(has, a){
-	            art.image({
-	                filepath :'/Images/andre_has_a_posse.jpeg',
-	                alphabet : 'ultra-wide'
-	            }).overlay(andre, {
-	                x: 8, y: 4,
-	                style: 'white'
-	            }).overlay(the, {
-	                x: 10, y: 7,
-	                style: 'white',
-	                transparent : true
-	            }).overlay(giant, {
-	                x: 8, y: 10,
-	                style: 'white',
-	                transparent : true
-	            }).overlay(has, {
-	                x: 10, y: 14,
-	                style: 'white'
-	            }).overlay(a, {
-	                x: 13, y: 17,
-	                style: 'white'
-	            }).overlay(posse, {
-	                x: 5, y: 20,
-	                style: 'bright_black',
-	                transparent: true
-	            }).overlay(height, {
-	                x: 59, y: 3,
-	                style: 'bright_black',
-	                transparent: true
-	            }).overlay(weight, {
-	                x: 59, y: 8,
-	                style: 'bright_black',
-	                transparent: true
-	            }).overlay(table, {
-	                x: 6, y: -6,
-	                style: 'bright_black',
-	                transparent: true
-	            }, function(final){
-	                console.log(final);
-	            });
-	        });
-	    });
-	});
-
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/andre.png)
-
-Now I can put it on any portal I like!
-
-check out the [documentation](docs/Tables.md) for more examples!
 
 Styles
 ------
+
+Add ANSI styles to a string and return the result.
+
+| In your code                                    |         In the Terminal                           |
+|-------------------------------------------------|---------------------------------------------------|
+| `.style(text, style[, close]) > String`          | `ascii-art text -s green "some text"`             |
+
+Styles are: *italic*, **bold**, <span style="text-decoration: underline">underline</span>, <span style="text-decoration: underline overline">|framed|</span>, <span style="text-decoration: underline overline">|encircled|</span>, <span style="text-decoration: overline">overline</span>, <span style="text-decoration: blink">blink</span> and <span style="display:inline-block; background-color:#777777; color: white">&nbsp;inverse&nbsp;</span>. And available colors are:
 
 | **Color Table**  | `color`       | bright_`color`  | `color`_bg| bright_`color`_bg|
 | -----------------|---------------|-----------------|-----------|------------------|
@@ -284,9 +65,78 @@ Styles
 | magenta |![color](Images/c/magenta.png)|![color](Images/c/light_magenta.png)|![color](Images/c/magenta.png)|![color](Images/c/light_magenta.png)|
 | white   |![color](Images/c/gray.png)|![color](Images/c/light_gray.png)|![color](Images/c/gray.png)|![color](Images/c/light_gray.png)|
 
-Styles are: *italic*, **bold**, <span style="text-decoration: underline">underline</span>, <span style="text-decoration: underline overline">|framed|</span>, <span style="text-decoration: underline overline">|encircled|</span>, <span style="text-decoration: overline">overline</span>, <span style="text-decoration: blink">blink</span> and <span style="display:inline-block; background-color:#777777; color: white">&nbsp;inverse&nbsp;</span>.
-
 For example: if I wanted underlined blue text on a white background, my style would be `underlined+blue+white_bg`. Check out the detailed [style docs](docs/Styles.md) for more information.
+
+Fonts
+-----
+
+Render a string using a figlet font and add that to the buffer. There is a batch version of this function which does not chain and takes an array( `.strings()`).
+
+| In your code                                    |         In the Terminal                           |
+|-------------------------------------------------|---------------------------------------------------|
+| `.font(text, font[, style][, callback])`    | `ascii-art text -F <font> "Demo!"`             |
+
+Outputs
+
+	______                          _
+	|  _  \                        | |
+	| | | |  ___  _ __ ___    ___  | |
+	| | | | / _ \| '_ ` _ \  / _ \ | |
+	| |/ / |  __/| | | | | || (_) ||_|
+	|___/   \___||_| |_| |_| \___/ (_)
+
+Check out the [documentation](docs/Figlet.md) for more examples!
+
+Images
+------
+
+Create an image from the passed image and append that to the buffer
+
+| In your code                                    |         In the Terminal                           |
+|-------------------------------------------------|---------------------------------------------------|
+| `.image(options[, callback])`                   | `ascii-art image path/to/my/file.jpg`             |
+
+Paired with a font call it looks like:
+
+![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/initech.png)
+
+Check out the [documentation](docs/Images.md) for more examples!
+
+Tables
+------
+
+Generate a table from the passed data, with support for many styles and append that to the buffer
+
+| In your code                                    |         In the Terminal                           |
+|-------------------------------------------------|---------------------------------------------------|
+| `.table(options[, callback])`                   | N/A             |
+
+![Styled Table Example](http://patternweaver.com/Github/Ascii/docs/ansi_table.png)
+
+Check out the [documentation](docs/Tables.md) for more examples!
+
+Artwork
+-------
+
+fetch a graphic from a remote source and append it to the current buffer.
+
+| In your code                                    |         In the Terminal                           |
+|-------------------------------------------------|---------------------------------------------------|
+| `.artwork(options[, callback])`                 | ascii-art art [source][/path]            |
+
+Often I use this in conjunction with an image backdrop, for example to superimpose bones on the earth:
+
+![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/bones_earth.png)
+
+
+Compositing
+-----------
+
+We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with
+
+![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/ghostwire.png)
+
+Check out the [documentation](docs/Compositing.md) for detailed examples!
 
 
 Compatibility

@@ -90,19 +90,12 @@
             readImage(this.options.filepath, function(err, image){
                 if (err) throw err;
                 ob.image = image;
-                ob.aspectRatio = ob.image.width<ob.image.height?
-                    ob.image.width/ob.image.height:
-                    ob.image.height/ob.image.width;
+                ob.aspectRatio = ob.image.height/ob.image.width;
                 if(
                     (!ob.options.width) &&
                     (!ob.options.height)
                 ){
-                    ob.options.width = (
-                        process &&
-                        process.stdout &&
-                        process.stdout.columns
-                    ) || 80;
-                    ob.options.height = Math.floor((ob.image.height/ob.image.width) * ob.options.width);
+                    ob.options.width = 80;
                 }
                 if(ob.options.width){
                     if(!ob.options.height){

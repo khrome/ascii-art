@@ -68,7 +68,7 @@ var fs = require('fs');*/
             var text = 'blargh';
 
             it('ANSI codes', function(){
-                var rendered = art.ansiCodes(text, 'red+blink+inverse');
+                var rendered = art.Ansi.Codes(text, 'red+blink+inverse');
                 rendered.should.not.equal(text); //make sure string has been altered
             });
 
@@ -173,7 +173,8 @@ var fs = require('fs');*/
                     it('is a JPEG with default settings', function(done){
                         this.timeout(5000);
                         testImage({
-                            filepath: parentDir+'/Images/mucha-job.jpg'
+                            filepath: parentDir+'/Images/mucha-job.jpg',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -181,7 +182,8 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/cernettes.jpg',
-                            alphabet:'variant1'
+                            alphabet:'variant1',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -189,7 +191,8 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/gob.jpg',
-                            alphabet:'variant2'
+                            alphabet:'variant2',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -197,7 +200,8 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/beyonce-upgrade.jpg',
-                            alphabet:'variant3'
+                            alphabet:'variant3',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -205,7 +209,8 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/metropolis.jpg',
-                            alphabet:'variant4'
+                            alphabet:'variant4',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -213,7 +218,8 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/grendel.jpg',
-                            alphabet:'blocks'
+                            alphabet:'blocks',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -221,7 +227,8 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/zero-cool.jpg',
-                            alphabet:'greyscale'
+                            alphabet:'greyscale',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -229,35 +236,40 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/gir.gif',
-                            alphabet:'binary'
+                            alphabet:'binary',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
                     it('is a PNG drawn with defaults', function(done){
                         this.timeout(5000);
                         testImage({
-                            filepath: parentDir+'/Images/seven-proxies.png'
+                            filepath: parentDir+'/Images/seven-proxies.png',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
                     it('is a JPEG drawn with defaults', function(done){
                         this.timeout(5000);
                         testImage({
-                            filepath: parentDir+'/Images/peewee.jpeg'
+                            filepath: parentDir+'/Images/peewee.jpeg',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
                     it('is a JPEG drawn with defaults', function(done){
                         this.timeout(5000);
                         testImage({
-                            filepath: parentDir+'/Images/animal_muppet.jpg'
+                            filepath: parentDir+'/Images/animal_muppet.jpg',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
                     it('is a JPEG drawn with defaults', function(done){
                         this.timeout(5000);
                         testImage({
-                            filepath: parentDir+'/Images/serious-business.jpg'
+                            filepath: parentDir+'/Images/serious-business.jpg',
+                            width: 80
                         }, imageIsValid, done);
                     });
 
@@ -265,6 +277,7 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/zero-cool.jpg',
+                            width: 80,
                             alphabet:'greyscale'
                         }, imageIsValid, done);
                     });
@@ -273,6 +286,7 @@ var fs = require('fs');*/
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/rene-cigler.jpg',
+                            width: 80,
                             distance: function(r1, g1, b1, r2, g2, b2){
                                 return difference.compare(
                                     '#'+r1.toString(16)+g1.toString(16)+b1.toString(16),
