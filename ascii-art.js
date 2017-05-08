@@ -83,6 +83,11 @@
         errorMode : 'console',
     };
 
+    var sources = {};
+    AsciiArt.addSource = function(source){
+
+    }
+
     //lazy load subreferences
     function proxyOnFirstReference(name){
         Object.defineProperty(AsciiArt, name, {
@@ -108,7 +113,7 @@
             throw new Error('incomplete path provided!');
         }
 
-        switch(parts[0]){
+        /*switch(parts[0]){
             case 'textfiles.com':
                 if(parts[1]){
                     var pre = '';
@@ -150,7 +155,7 @@
                 break;
             }
             //default : throw new Error('unknown art source:'+parts[0]);
-        }
+        }*/
     }
 
     //todo: optional styling on font callback
@@ -424,7 +429,7 @@
             [
                 'intersection', 'horizontalBar', 'verticalBar',
                 'dataStyle', 'headerStyle', 'bars', 'cellStyle',
-                'borderColor'
+                'borderColor', 'includeHeader', 'justify'
             ].forEach(function(opt){
                 opts[opt] = options[opt];
             })

@@ -48,12 +48,21 @@ var fs = require('fs');*/
         var asciiLines = ascii.split("\n")
         var expectedLines = expected.split("\n");
         asciiLines.length.should.equal(expectedLines.length);
+        //TODO: recapture final values once color fn stabilizes
         /*
         asciiLines.forEach(function(line, index){
             asciiLines[index].length.should(expectedLines[index].length);
         }); //*/
         //if(isNode) ascii.should.equal(expected);
         done();
+    }
+
+    function longestLineLength(str){
+        return str.split("\n").map(function(str){
+            return str.length || 0
+        }).reduce(function(a, b){
+            return Math.max(a, b)
+        })
     }
 
     var parentDir = __dirname.split('/');
@@ -88,53 +97,6 @@ var fs = require('fs');*/
                 });
             });
 
-            it('a table', function(done){
-                art.table({
-                    columns : ['a', 'b', 'c', 'd'],
-                    data : [
-                        {
-                            a : 'a',
-                            b : 'b',
-                            c : 'c',
-                            d : 'd'
-                        },{
-                            a : 'e',
-                            b : 'f',
-                            c : 'g',
-                            d : 'h'
-                        },{
-                            a : 'i',
-                            b : 'j',
-                            c : 'k',
-                            d : 'l'
-                        },{
-                            a : 'm',
-                            b : 'n',
-                            c : 'o',
-                            d : 'p'
-                        },{
-                            a : 'q',
-                            b : 'r',
-                            c : 's',
-                            d : 't'
-                        }
-                    ]
-                }, function(rendered){
-                    var sample =
-                        "+-+-+-+-+"+"\n"+
-                        "|a|b|c|d|"+"\n"+
-                        "+-+-+-+-+"+"\n"+
-                        "|a|b|c|d|"+"\n"+
-                        "|e|f|g|h|"+"\n"+
-                        "|i|j|k|l|"+"\n"+
-                        "|m|n|o|p|"+"\n"+
-                        "|q|r|s|t|"+"\n"+
-                        "+-+-+-+-+"+"\n";
-                    rendered.should.equal(sample);
-                    done();
-                });
-            });
-
             it('mixed expression', function(done){
                 this.timeout(10000);
                 var match = function(a, b){
@@ -161,6 +123,79 @@ var fs = require('fs');*/
                         var expectedLines = expected.split("\n");
                         asciiLines.length.should.equal(expectedLines.length);
                         //if(isNode) ascii.should.equal(expected);
+                        done();
+                    });
+                });
+            });
+
+            describe('a table', function(){
+                it('with data', function(done){
+                    art.table({
+                        columns : ['a', 'b', 'c', 'd'],
+                        data : [
+                            {
+                                a : 'a',
+                                b : 'b',
+                                c : 'c',
+                                d : 'd'
+                            },{
+                                a : 'e',
+                                b : 'f',
+                                c : 'g',
+                                d : 'h'
+                            },{
+                                a : 'i',
+                                b : 'j',
+                                c : 'k',
+                                d : 'l'
+                            },{
+                                a : 'm',
+                                b : 'n',
+                                c : 'o',
+                                d : 'p'
+                            },{
+                                a : 'q',
+                                b : 'r',
+                                c : 's',
+                                d : 't'
+                            }
+                        ]
+                    }, function(rendered){
+                        var sample =
+                            "+-+-+-+-+"+"\n"+
+                            "|a|b|c|d|"+"\n"+
+                            "+-+-+-+-+"+"\n"+
+                            "|a|b|c|d|"+"\n"+
+                            "|e|f|g|h|"+"\n"+
+                            "|i|j|k|l|"+"\n"+
+                            "|m|n|o|p|"+"\n"+
+                            "|q|r|s|t|"+"\n"+
+                            "+-+-+-+-+"+"\n";
+                        rendered.should.equal(sample);
+                        done();
+                    });
+                });
+
+                it('using headers', function(done){
+                    art.table({
+                    	width : 80,
+                        includeHeader: true,
+                    	data : [ {something : '1', another:'2', athird:'2'} ]
+                    }, function(rendered){
+                        longestLineLength(rendered).should.equal(26);
+                        done();
+                    });
+                });
+
+                it('using headers and justification', function(done){
+
+                    art.table({
+                    	width : 80,
+                        includeHeader: true,
+                        justify: true,
+                    	data : [ {something : '1', another:'2', athird:'2'} ]
+                    }, function(rendered){
+                    	longestLineLength(rendered).should.equal(80);
                         done();
                     });
                 });

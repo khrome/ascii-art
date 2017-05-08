@@ -12,13 +12,16 @@
     var AsciiArt = {};
     var parentArt;
 
-    function columnStatistics(columns, data){
+    function columnStatistics(columns, data, includeColumns){
         var result = {};
         columns.forEach(function(column){
             var stats = {
                 total : 0,
                 count : 0
             };
+            if(includeColumns && column.label){
+                stats.max = column.label.length;
+            }
             data.forEach(function(item){
                 var str = (item[column.value]||'')+'';
                 stats.count++;
@@ -79,6 +82,16 @@
                     }
                 }
             })();
+        }
+        if(ob.options.justify && idealWidth < remainingWidth){
+            var diff = remainingWidth - idealWidth;
+            var increment = diff / sizes.length;
+            var rem = diff % sizes.length;
+            sizes = sizes.map(function(size){
+                return size + increment;
+            });
+            //todo: what's right?
+            sizes[sizes.length-1] += rem;
         }
         return sizes;
     }
@@ -239,7 +252,7 @@
     };
 
     AsciiArt.Table.prototype.write = function(width){
-        var stats = columnStatistics(this.headers, this.data);
+        var stats = columnStatistics(this.headers, this.data, this.options.includeHeader);
         var sizes = columnSizes(width, stats, this);
         var ob = this;
         //RENDER!!!

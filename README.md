@@ -48,7 +48,7 @@ Styles
 
 Add ANSI styles to a string and return the result.
 
-| In your code                                    |         In the Terminal                           |
+| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
 |-------------------------------------------------|---------------------------------------------------|
 | `.style(text, style[, close]) > String`          | `ascii-art text -s green "some text"`             |
 
@@ -72,7 +72,7 @@ Fonts
 
 Render a string using a figlet font and add that to the buffer. There is a batch version of this function which does not chain and takes an array( `.strings()`).
 
-| In your code                                    |         In the Terminal                           |
+| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
 |-------------------------------------------------|---------------------------------------------------|
 | `.font(text, font[, style][, callback])`    | `ascii-art text -F <font> "Demo!"`             |
 
@@ -92,7 +92,7 @@ Images
 
 Create an image from the passed image and append that to the buffer
 
-| In your code                                    |         In the Terminal                           |
+| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
 |-------------------------------------------------|---------------------------------------------------|
 | `.image(options[, callback])`                   | `ascii-art image path/to/my/file.jpg`             |
 
@@ -120,7 +120,7 @@ Artwork
 
 fetch a graphic from a remote source and append it to the current buffer.
 
-| In your code                                    |         In the Terminal                           |
+| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
 |-------------------------------------------------|---------------------------------------------------|
 | `.artwork(options[, callback])`                 | ascii-art art [source][/path]            |
 
@@ -138,6 +138,10 @@ We also support combining all these nifty elements you've made into a single com
 
 Check out the [documentation](docs/Compositing.md) for detailed examples!
 
+256 color support
+-----------------
+
+**(Experimental!)** First ensure your terminal supports 256 colors (OS X users, [look here](https://gist.github.com/shawnbot/3277580)), then set `.colors` to `256` this will enable 256 color support across all generated assets.
 
 Compatibility
 -------------
@@ -157,6 +161,7 @@ Roadmap
 - value reversal (light vs dark)
 - HTML output
 - [ANSI art](https://en.wikipedia.org/wiki/ANSI_art) support
+- [PETSCII art](https://en.wikipedia.org/wiki/PETSCII) support
 - More stuff!! (averagers, color profiles)
 - true color (hex) support
 - 2 colors per char (possibly zalgo-painting?)
