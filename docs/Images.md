@@ -14,12 +14,17 @@ So for example, say we want to generate a copy of a metropolis poster:
 
 You just need to do something like this:
 
-	var image = new art.Image({
-		filepath: '~/Images/metropolis.jpg',
-		alphabet:'variant4'
-	});
-	image.write(function(err, rendered){
-		console.log(rendered);
-	})
+```js
+art=require('ascii-art');
+Canvas=require('canvas'); 
+   
+var image = new art.Image({
+    	filepath: '~/Images/metropolis.jpg',
+	alphabet:'variant4'
+});
+
+image.write(function(err, rendered){
+	console.log(rendered);
+})```
 
 ![Image Output](http://patternweaver.com/Github/Ascii/docs/metropolis.png)
