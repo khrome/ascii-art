@@ -41,6 +41,9 @@ yargs.command('image', 'convert an image to ascii')
 argv = yargs.argv;
 var action = argv._.shift();
 var target = argv._.pop();
+var validator = /^[A-Za-z0-9\-\_]+$/;
+if(!validator.test(action)) throw new Error('invalid action');
+if(!validator.test(target)) throw new Error('invalid target');
 var ftp;
 var request;
 switch(action){
