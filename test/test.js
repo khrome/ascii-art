@@ -81,6 +81,22 @@ var fs = require('fs');*/
                 rendered.should.not.equal(text); //make sure string has been altered
             });
 
+            it('returns a promise', function(done){
+                art.font(text, 'Doom').toPromise().then(function(rendered){
+                    var sample =
+                    " _      _                      _     "+"\n"+
+                    "| |    | |                    | |    "+"\n"+
+                    "| |__  | |  __ _  _ __   __ _ | |__  "+"\n"+
+                    "| '_ \\ | | / _` || '__| / _` || '_ \\ "+"\n"+
+                    "| |_) || || (_| || |   | (_| || | | |"+"\n"+
+                    "|_.__/ |_| \\__,_||_|    \\__, ||_| |_|"+"\n"+
+                    "                         __/ |       "+"\n"+
+                    "                        |___/        "+"\n";
+                    rendered.should.equal(sample);
+                    done();
+                });
+            });
+
             it('a Figlet font', function(done){
                 art.font(text, 'Doom', function(rendered){
                     var sample =
