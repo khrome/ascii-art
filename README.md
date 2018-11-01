@@ -1,5 +1,5 @@
-	                   _  _                       _   
-	                  (_)(_)                     | |  
+	                   _  _                       _
+	                  (_)(_)                     | |
 	  __ _  ___   ___  _  _  ______   __ _  _ __ | |_
 	 / _` |/ __| / __|| || ||______| / _` || '__|| __|
 	| (_| |\__ \| (__ | || |        | (_| || |   | |_
@@ -137,6 +137,17 @@ We also support combining all these nifty elements you've made into a single com
 ![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/ghostwire.png)
 
 Check out the [documentation](docs/Compositing.md) for detailed examples!
+
+
+Promises
+--------
+
+Instead of providing a callback, you can also get a promise instead ( `.toPromise()`).
+
+| In your code                                |
+|---------------------------------------------|
+| `.font(text, font[, style]).toPromise()`    |
+
 
 256 color support
 -----------------

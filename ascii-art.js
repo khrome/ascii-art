@@ -377,6 +377,14 @@
             });
             check();
             return ob;
+        };
+        this.toPromise = function(){
+            return new Promise(function(resolve){
+                cb = function(result){
+                    resolve(result);
+                }
+                check();
+            });
         };//*/
         return this;
     };
