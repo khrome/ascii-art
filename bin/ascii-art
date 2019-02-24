@@ -8,7 +8,9 @@ yargs.command('image', 'convert an image to ascii')
     .command('art', 'get some ascii art from various sites')
     .command('text', 'add styles and/or font rendering to text')
     .demand(2)
-    .example('$0 art textfiles.com/spock.art ', 'request the file "spock.art" remotely from "textfiles.com"')
+    .example('$0 art textfiles.com ', 'list available groupings from "textfiles.com"')
+    .example('$0 art textfiles.com/RAZOR ', 'list files in the group "RAZOR" on "textfiles.com"')
+    .example('$0 art textfiles.com/art/dragon.txt ', 'request the file "dragon.txt" (in the group "art") remotely from "textfiles.com"')
     .example('$0 install Font.flf ', 'install a figlet font')
     .example('$0 image foo.jpg ', 'output foo.jpg as inline ascii text with ansi colors')
     .example('$0 text -F Doom "Some Titles"', 'outputs "Some Titles" in the Doom font')
@@ -19,22 +21,25 @@ yargs.command('image', 'convert an image to ascii')
     .example('$0 install weird', 'install weird.flf into the local "/Fonts" directory')
     .example('$0 install weird -g', 'install weird.flf into the currently executing ascii-art instance')
     .alias('s', 'style')
-    	.nargs('s', 1)
-    	.describe('s', 'render a ansi style onto a string')
+        .nargs('s', 1)
+        .describe('s', 'render a ansi style onto a string')
     .alias('F', 'font')
-    	.nargs('F', 1)
-    	.describe('F', 'render the output in the specified font')
+        .nargs('F', 1)
+        .describe('F', 'render the output in the specified font')
+    .alias('v', 'validate')
+        .nargs('v', 1)
+        .describe('v', 'a regex string to validate the target')
     .alias('g', 'global')
-    	.nargs('g', 0)
-    	.describe('g', 'install the font globally')
+        .nargs('g', 0)
+        .describe('g', 'install the font globally')
     .alias('o', 'output')
-    	.nargs('o', 1)
-    	.describe('o', 'Save to a file')
+        .nargs('o', 1)
+        .describe('o', 'Save to a file')
     .alias('a', 'alphabet')
-    	.alias('a', 'alpha')
-    	.nargs('a', 1)
-    	.choices('a', Object.keys(art.valueScales))
-    	.describe('a', 'Which alphabet to use')
+        .alias('a', 'alpha')
+        .nargs('a', 1)
+        .choices('a', Object.keys(art.valueScales))
+        .describe('a', 'Which alphabet to use')
     .help('h')
     .alias('h', 'help')
     .epilog('©2016 - Abbey Hawk Sparrow');
@@ -42,16 +47,16 @@ argv = yargs.argv;
 var action = argv._.shift();
 var target = argv._.pop();
 var validator = /^[A-Za-z0-9\-\_]+$/;
-if(!validator.test(action)) throw new Error('invalid action');
-if(!validator.test(target)) throw new Error('invalid target');
+if(action && !validator.test(action)) throw new Error('invalid action');
+if(argv.v && target && !(new RegExp(argv.v)).test(target)) throw new Error('invalid target');
 var ftp;
 var request;
 switch(action){
-	case 'image':
-		var options = {
-			filepath: target
-		};
-		if(argv.a) options.alphabet = argv.a;
+    case 'image':
+        var options = {
+            filepath: target
+        };
+        if(argv.a) options.alphabet = argv.a;
         if(
             process &&
             process.stdout &&
@@ -59,15 +64,15 @@ switch(action){
         ){
             options.width = process.stdout.columns;
         }
-		var image = new art.Image(options);
-		image.write(function(err, rendered){
-			if(argv.o){
-				fs.writeFile(argv.o, rendered);
-			}else{
-				console.log(rendered);
-			}
-		})
-		break;
+        var image = new art.Image(options);
+        image.write(function(err, rendered){
+            if(argv.o){
+                fs.writeFile(argv.o, rendered);
+            }else{
+                console.log(rendered);
+            }
+        })
+        break;
     case 'art':
             var parts = (target ||'').split('/');
             if(!request) request = require('request');
@@ -171,19 +176,19 @@ switch(action){
                     break;
                 default : throw new Error('unknown art source:'+parts[0]);
             }
-    		var options = {
-    			filepath: target
-    		};
-    		break;
+            var options = {
+                filepath: target
+            };
+            break;
     case 'text':
         var output = function(result){ console.log(result) };
-		if(argv.F){
-    		if(argv.s) art.font(target, argv.F, argv.s, output);
-    		else art.font(target, argv.F, output);
-		}else{
-    		console.log(art.style(target, argv.s||'', true));
+        if(argv.F){
+            if(argv.s) art.font(target, argv.F, argv.s, output);
+            else art.font(target, argv.F, output);
+        }else{
+            console.log(art.style(target, argv.s||'', true));
         }
-		break;
+        break;
     case 'list':
         var JSFtp = ftp || (ftp = require('jsftp'));
         var client = new JSFtp({
