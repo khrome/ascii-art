@@ -7,10 +7,12 @@ var fs = require('fs');*/
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['browser-request', 'dirname-shim', '../ascii-art', '../cold'], function(request, shim, a, cold){
+        define([
+            'browser-request', 'ascii-art-ansi/color', 'dirname-shim', '../art', '../cold'
+        ], function(request, color, shim, a, cold){
             //console.log(cold);
             a.Figlet.fontPath = 'Fonts/'
-            return factory(a, cold, {
+            return factory(a, color, cold, {
                 readFile : function(filename, cb){
                     request({
                         url: filename
@@ -22,11 +24,11 @@ var fs = require('fs');*/
             }, should);
         });
     } else if (typeof module === 'object' && module.exports) {
-        module.exports = factory(require('../ascii-art'), require('color-difference'), require('fs'), require('should'));
+        module.exports = factory(require('../art'), require('ascii-art-ansi/color'), require('color-difference'), require('fs'), require('chai').should());
     } else {
         throw new Error('global testing not supported!');
     }
-}(this, function (art, difference, fs, should) {
+}(this, function (art, Color, difference, fs, should) {
     var isNode = typeof module === 'object' && module.exports;
 
     function testImage(options, callback, complete){
@@ -94,11 +96,13 @@ var fs = require('fs');*/
                     "                        |___/        "+"\n";
                     rendered.should.equal(sample);
                     done();
+                }).catch(function(err){
+                    should.not.exist(err);
                 });
             });
 
             it('a Figlet font', function(done){
-                art.font(text, 'Doom', function(rendered){
+                art.font(text, 'Doom', function(err, rendered){
                     var sample =
                     " _      _                      _     "+"\n"+
                     "| |    | |                    | |    "+"\n"+
@@ -128,17 +132,20 @@ var fs = require('fs');*/
                 var file = (isNode?__dirname:'base/test')+'/images/mixed.nfo';
                 var expected = fs.readFile(__dirname+'/images/mixed.nfo', function(err, result){
                     var expected = result.toString();
+                    Color.useDistance('closestByIntensity');
                     art.image({
                         width : 40,
                         filepath : parentDir+'/Images/initech.png',
-                        alphabet : 'wide'
-                    }).font('INITECH', 'Doom', 'cyan', function(ascii){
+                        invertValue : true,
+                        alphabet : 'wide',
+                    }).font('INITECH', 'Doom', 'cyan', function(err, ascii){
                         should.exist(ascii);
                         should.exist(expected);
                         var asciiLines = ascii.split("\n")
                         var expectedLines = expected.split("\n");
                         asciiLines.length.should.equal(expectedLines.length);
-                        //if(isNode) ascii.should.equal(expected);
+                        if(isNode) ascii.should.equal(expected);
+                        Color.useDistance('classic');
                         done();
                     });
                 });

@@ -17,11 +17,11 @@ Images, fonts, tables, ansi styles and compositing in Node.js & the browser. 100
 
 In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art` as an update, expansion and generalization of [MooAsciiArt](http://mootools.net/forge/p/mooasciiart) and at the same time it can replace your existing ansi colors library.
 
-It features support for [Images](docs/Images.md), [Styles](docs/Styles.md), [Tables](docs/Tables.md) and [Figlet Fonts](docs/Figlet.md) as well as handling multi-line joining automatically.
+It features support for [Images](https://www.npmjs.com/package/ascii-art-image), [Styles](docs/Styles.md), [Tables](https://www.npmjs.com/package/ascii-art-table) and [Figlet Fonts](https://www.npmjs.com/package/ascii-art-font) as well as handling multi-line joining automatically.
 
 Why would I use this instead of X?
 ----------------------------------
-- **zero dependencies** - while the CL utility and test have dependencies, we will never call out to a module for what is supposed to be this lib's core competancy.
+- **modular** - small set of purpose built modules all interacting through a common ani library.
 - **color profiles** support - other libraries assume you are running x11
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
 - handles the ugly [intersection of **multiline text and ansi codes**](docs/Multiline.md) for you.
@@ -30,7 +30,7 @@ Why would I use this instead of X?
 - It **works like a package manager** for figlet fonts.
 - The **other libraries** out there **do too little**, focus on logging above other domains and often unaware of ANSI controls(for example: style text, then put it in a table).
 - **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for utility rather than code aesthetics).
-- **Loads nothing that isn't used** (Images, Fonts, Tables, Logic, etc.)
+- **flexible output** Supports 4bit, 8bit and 32bit output
 
 
 Installation
@@ -54,18 +54,13 @@ Add ANSI styles to a string and return the result.
 
 Styles are: *italic*, **bold**, <span style="text-decoration: underline">underline</span>, <span style="text-decoration: underline overline">|framed|</span>, <span style="text-decoration: underline overline">|encircled|</span>, <span style="text-decoration: overline">overline</span>, <span style="text-decoration: blink">blink</span> and <span style="display:inline-block; background-color:#777777; color: white">&nbsp;inverse&nbsp;</span>. And available colors are:
 
-| **Color Table**  | `color`       | bright_`color`  | `color`_bg| bright_`color`_bg|
-| -----------------|---------------|-----------------|-----------|------------------|
-| black   |![color](Images/c/black.png)|![color](Images/c/light_black.png)|![color](Images/c/black.png)|![color](Images/c/light_black.png)|
-| red     |![color](Images/c/red.png)|![color](Images/c/light_red.png)|![color](Images/c/red.png)|![color](Images/c/light_red.png)|
-| green   |![color](Images/c/green.png)|![color](Images/c/light_green.png)| ![color](Images/c/green.png)|![color](Images/c/light_green.png)|
-| yellow  |![color](Images/c/yellow.png)|![color](Images/c/light_yellow.png)|![color](Images/c/yellow.png)|![color](Images/c/light_yellow.png)|
-| blue    |![color](Images/c/blue.png)|![color](Images/c/light_blue.png)|![color](Images/c/blue.png) |![color](Images/c/light_blue.png)|
-| cyan    |![color](Images/c/cyan.png)|![color](Images/c/light_cyan.png)|![color](Images/c/cyan.png) |![color](Images/c/light_cyan.png)|
-| magenta |![color](Images/c/magenta.png)|![color](Images/c/light_magenta.png)|![color](Images/c/magenta.png)|![color](Images/c/light_magenta.png)|
-| white   |![color](Images/c/gray.png)|![color](Images/c/light_gray.png)|![color](Images/c/gray.png)|![color](Images/c/light_gray.png)|
+**Colors**
 
-For example: if I wanted underlined blue text on a white background, my style would be `underlined+blue+white_bg`. Check out the detailed [style docs](docs/Styles.md) for more information.
+Color defaults to 8 bit (most compatible), to enable other modes set booleans in the options:
+- `is256` : compute the color using 256colors, as defined by ansi256. Note that full color output may need to tune the difference method to obtain optimal results.
+- `isTrueColor` : do not constrain color and directly output RGB to the console.
+
+Color Tables may be found in the style [documentation](docs/Styles.md)
 
 Fonts
 -----
@@ -85,7 +80,7 @@ Outputs
 	| |/ / |  __/| | | | | || (_) ||_|
 	|___/   \___||_| |_| |_| \___/ (_)
 
-Check out the [documentation](docs/Figlet.md) for more examples!
+Check out the [documentation](https://www.npmjs.com/package/ascii-art-font) for more examples!
 
 Images
 ------
@@ -96,11 +91,15 @@ Create an image from the passed image and append that to the buffer
 |-------------------------------------------------|---------------------------------------------------|
 | `.image(options[, callback])`                   | `ascii-art image path/to/my/file.jpg`             |
 
-Paired with a font call it looks like:
+Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
 
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/initech.png)
+![Grendel Compare](Images/examples/grendel-compare.png)
 
-Check out the [documentation](docs/Images.md) for more examples!
+Here's a comparison of various output modes:
+
+ ![Zero Cool Compare](Images/examples/zero-cool-compare.png)
+
+Check out the [documentation](https://www.npmjs.com/package/ascii-art-image) for more examples!
 
 Tables
 ------
@@ -113,7 +112,7 @@ Generate a table from the passed data, with support for many styles and append t
 
 ![Styled Table Example](http://patternweaver.com/Github/Ascii/docs/ansi_table.png)
 
-Check out the [documentation](docs/Tables.md) for more examples!
+Check out the [documentation](https://www.npmjs.com/package/ascii-art-table) for more examples!
 
 Artwork
 -------
@@ -148,12 +147,6 @@ Instead of providing a callback, you can also get a promise instead ( `.toPromis
 |---------------------------------------------|
 | `.font(text, font[, style]).toPromise()`    |
 
-
-256 color support
------------------
-
-**(Experimental!)** First ensure your terminal supports 256 colors (OS X users, [look here](https://gist.github.com/shawnbot/3277580)), then set `.colors` to `256` this will enable 256 color support across all generated assets.
-
 Compatibility
 -------------
 If you're a [chalk](https://www.npmjs.com/package/chalk) user, just use `var chalk = require('ascii-art/kaolin');` in place of your existing `chalk` references (Much of color.js, too... since chalk is a subset of colors.js). No migration needed, keep using the wacky syntax you are used to(In this mode, refer to their docs, not mine).
@@ -166,18 +159,16 @@ I may support the other [colors](https://www.npmjs.com/package/colors) stuff (ex
 Roadmap
 -------
 
-####Goals
+#### Goals
 - Better Docs
-- Color handling/256 color support
 - value reversal (light vs dark)
 - HTML output
 - [ANSI art](https://en.wikipedia.org/wiki/ANSI_art) support
 - [PETSCII art](https://en.wikipedia.org/wiki/PETSCII) support
-- More stuff!! (averagers, color profiles)
-- true color (hex) support
-- 2 colors per char (possibly zalgo-painting?)
+- 2 colors per char with multisampling
+- REPL
 
-####Non Goals
+#### Non Goals
 
 - realtime: videos, curses, etc.:
 - logging integration
