@@ -44,9 +44,9 @@
     "url": "git://github.com/khrome/ascii-art.git"
   },
   "dependencies": {
-    "ascii-art-ansi": "^0.1.1",
-    "ascii-art-font": "0.0.2",
-    "ascii-art-image": "0.0.4",
+    "ascii-art-ansi": "^0.3.0",
+    "ascii-art-font": "0.0.3",
+    "ascii-art-image": "0.1.0",
     "ascii-art-table": "0.0.3",
     "browser-request": "0.3.3",
     "canvas": "1.6.9",
