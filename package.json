@@ -69,7 +69,7 @@
     "should": "*"
   },
   "optionalDependencies": {
-    "canvas": "1.6.9",
+    "canvas": "^2.6.0",
     "jsftp": "2.1.3"
   },
   "engines": {
