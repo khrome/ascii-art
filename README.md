@@ -21,7 +21,7 @@ It features support for [Images](https://www.npmjs.com/package/ascii-art-image),
 
 Why would I use this instead of X?
 ----------------------------------
-- **modular** - small set of purpose built modules all interacting through a common ani library.
+- **modular** - small set of purpose built modules all interacting through a common ansi library.
 - **color profiles** support - other libraries assume you are running x11
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
 - handles the ugly [intersection of **multiline text and ansi codes**](docs/Multiline.md) for you.
