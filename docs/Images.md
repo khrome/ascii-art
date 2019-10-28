@@ -25,6 +25,7 @@ var image = new art.Image({
 
 image.write(function(err, rendered){
 	console.log(rendered);
-})```
+})
+```
 
 ![Image Output](http://patternweaver.com/Github/Ascii/docs/metropolis.png)
