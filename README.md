@@ -94,7 +94,7 @@ Create an image from the passed image and append that to the buffer
 Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
 
 ```bash
-ascii-art image -B 8 -C rankedChannel -a blocks Images/grendel.jpg
+ascii-art image -B 8 -C rankedChannel -a blocks node_modules/ascii-art/Images/grendel.jpg
 ```
 
 ![Grendel Compare](Images/examples/grendel-compare.png)
