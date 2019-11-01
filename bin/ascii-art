@@ -2,7 +2,8 @@
 var argv;
 var yargs = require('yargs');
 var fs = require('fs');
-var art = require('../ascii-art');
+var art = require('../art');
+var Color = require('ascii-art-ansi/color');
 yargs.usage('Usage: $0 <command> [options] <target>')
 yargs.command('image', 'convert an image to ascii')
     .command('art', 'get some ascii art from various sites')
@@ -26,6 +27,24 @@ yargs.command('image', 'convert an image to ascii')
     .alias('F', 'font')
         .nargs('F', 1)
         .describe('F', 'render the output in the specified font')
+    .alias('C', 'color-distance')
+        .nargs('C', 1)
+        .choices('C', [
+            'euclideanDistance',
+            'classic',
+            'ratioDistance',
+            'classicByValue',
+            'CIE76Difference',
+            'closestByIntensity',
+            'rankedChannel',
+            'simple',
+            'original'
+        ])
+        .describe('C', 'algorithm (or combination of algorithms) to use when computing the distance between colors')
+    .alias('B', 'bit-depth')
+        .nargs('B', 1)
+        .choices('B', [4, 8, 32])
+        .describe('B', 'bit-depth to use for color')
     .alias('v', 'validate')
         .nargs('v', 1)
         .describe('v', 'a regex string to validate the target')
@@ -38,7 +57,20 @@ yargs.command('image', 'convert an image to ascii')
     .alias('a', 'alphabet')
         .alias('a', 'alpha')
         .nargs('a', 1)
-        .choices('a', Object.keys(art.valueScales))
+        .choices('a', [
+            'variant1',
+            'variant2',
+            'variant3',
+            'variant4',
+            'ultra-wide',
+            'wide',
+            'hatching',
+            'bits',
+            'binary',
+            'greyscale',
+            'blocks',
+            'solid'
+        ])
         .describe('a', 'Which alphabet to use')
     .help('h')
     .alias('h', 'help')
@@ -57,6 +89,26 @@ switch(action){
             filepath: target
         };
         if(argv.a) options.alphabet = argv.a;
+        if(argv.B){
+            switch(argv.B+''){
+                case '4':
+                    Color.is256 = false;
+                    Color.isTrueColor = false;
+                    break;
+                case '8':
+                    Color.is256 = true;
+                    Color.isTrueColor = false;
+                    break;
+                case '32':
+                    Color.is256 = false;
+                    Color.isTrueColor = true;
+                    break;
+                default: throw new Error('Unsupported Bit Depth: '+argv.B)
+            }
+        }
+        if(argv.C){
+            Color.useDistance(argv.C);
+        }
         if(
             process &&
             process.stdout &&
@@ -69,7 +121,7 @@ switch(action){
             if(argv.o){
                 fs.writeFile(argv.o, rendered);
             }else{
-                console.log(rendered);
+                console.log(rendered+"\033[39;49m");
             }
         })
         break;

@@ -93,11 +93,27 @@ Create an image from the passed image and append that to the buffer
 
 Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
 
+```bash
+ascii-art image -B 8 -C rankedChannel -a blocks Images/grendel.jpg
+```
+
 ![Grendel Compare](Images/examples/grendel-compare.png)
+
 
 Here's a comparison of various output modes:
 
  ![Zero Cool Compare](Images/examples/zero-cool-compare.png)
+
+```bash
+#4bit
+ascii-art image -B 4 -a solid node_modules/ascii-art/Images/zero-cool.jpg
+
+#8bit
+ascii-art image -B 8 -C closestByIntensity -a solid node_modules/ascii-art/Images/zero-cool.jpg
+
+#32bit (on supported terminals)
+ascii-art image -B 32 -a solid node_modules/ascii-art/Images/zero-cool.jpg
+```
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-image) for more examples!
 
@@ -163,6 +179,7 @@ Roadmap
 - Better Docs
 - value reversal (light vs dark)
 - HTML output
+- piping support on the command line
 - [ANSI art](https://en.wikipedia.org/wiki/ANSI_art) support
 - [PETSCII art](https://en.wikipedia.org/wiki/PETSCII) support
 - 2 colors per char with multisampling
