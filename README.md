@@ -147,9 +147,9 @@ Often I use this in conjunction with an image backdrop, for example to superimpo
 Compositing
 -----------
 
-We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with
+We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with [this](test/scripts/bbs.js)
 
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/ghostwire.png)
+![Mixed Content Example](Images/examples/serious-business.png)
 
 Check out the [documentation](docs/Compositing.md) for detailed examples!
 

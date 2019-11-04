@@ -5,6 +5,7 @@
             'ascii-art-font',
             'ascii-art-image',
             'ascii-art-table',
+            'ascii-art-ansi/grid',
             'strangler'
         ], factory);
     }else if(typeof module === 'object' && module.exports){
@@ -13,6 +14,7 @@
             require('ascii-art-font'),
             require('ascii-art-image'),
             require('ascii-art-table'),
+            require('ascii-art-ansi/grid'),
             require('strangler')
         );
     }else{
@@ -21,10 +23,11 @@
             root.AsciiArtFont,
             root.AsciiArtImage,
             root.AsciiArtTable,
+            root.AsciiArtAnsiGrid,
             root.Strangler
         );
     }
-}(typeof self !== 'undefined' ? self : this, function(Ansi, Font, Image, Table){
+}(typeof self !== 'undefined' ? self : this, function(Ansi, Font, Image, Table, TextGrid, Strangler){
 
     var AsciiArt = { Ansi, Font, Image, Table };
 
@@ -145,7 +148,11 @@
                                      if(item.data){
                                          mode = 'table';
                                      }else{
-                                         mode = 'image';
+                                         if(item.style && item.text){
+                                             mode = 'style';
+                                         }else{
+                                             mode = 'image';
+                                         }
                                      }
                                  }
                              }
@@ -176,12 +183,22 @@
                     break;
                  case 'overlay':
                      setTimeout(function(){
-                         var overlaid = AsciiArt.Ansi.intersect(
-                             result, item.text, item
-                         );
-                         if(overlaid) result = overlaid;
+                         var canvas = new TextGrid(result);
+                         if(item.style){
+                             item.text = Ansi.map(item.text, function(chr, codes){
+                                 return (item.style?Ansi.codes(chr, item.style):'');
+                             });
+                         }
+                         canvas.drawOnto(item.text, item.x, item.y, item.transparent);
+                         result = canvas.toString();
                          done();
                      }, 1);
+                    break;
+                case 'style':
+                    setTimeout(function(){
+                        result = Ansi.codes(item.text || result, item.style);
+                        done();
+                    }, 1);
                     break;
                  case 'font':
                      AsciiArt.Font.create(item.text, item.font, function(err, text){
@@ -283,6 +300,21 @@
             check();
             return ob;
         };
+        this.style = function(text, styles, callback){
+            return Ansi.codes(text, styles);
+            var opts = {};
+            if((typeof styles == 'function' || !styles) && !callback){
+                callback = styles;
+                opts = text;
+            }else{
+                opts.text = text;
+                opts.style = style;
+            }
+            if(callback) cb = callback;
+            chain.push(opts);
+            check();
+            return ob;
+        };
         this.overlay = function(text, options, callback){
             if(typeof options == 'function'){
                 callback = options;
@@ -321,6 +353,9 @@
     }
     AsciiArt.font = function(str, font, callback){
         return AsciiArt.Font.create(str, font, callback);
+    }
+    AsciiArt.style = function(text, styles){
+        return Ansi.codes(text, styles);
     }
     AsciiArt.Image.newReturnContext = function(options){
         var chain = fontChain.apply({});
