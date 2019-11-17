@@ -1,9 +1,3 @@
-/*var should = require("should");
-var art = require('../ascii-art');
-//art.fontPath
-var difference = require('color-difference');
-var fs = require('fs');*/
-
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
@@ -71,6 +65,7 @@ var fs = require('fs');*/
     parentDir.pop();
     //if(! (typeof module === 'object' && module.exports)) parentDir.pop();
     parentDir = parentDir.join('/');
+    parentDir = parentDir+'/node_modules/ascii-art-docs';
 
     //*
     describe('AsciiArt', function(){

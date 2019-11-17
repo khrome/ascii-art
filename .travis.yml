@@ -16,4 +16,5 @@ addons:
 env:
   - CXX=g++-4.9
 before_install:
+  - ./generate.js
   - npm explore npm -g -- npm install node-gyp@latest
