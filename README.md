@@ -17,14 +17,14 @@ Images, fonts, tables, ansi styles and compositing in Node.js & the browser. 100
 
 In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art` as an update, expansion and generalization of [MooAsciiArt](http://mootools.net/forge/p/mooasciiart) and at the same time it can replace your existing ansi colors library.
 
-It features support for [Images](https://www.npmjs.com/package/ascii-art-image), [Styles](docs/Styles.md), [Tables](https://www.npmjs.com/package/ascii-art-table) and [Figlet Fonts](https://www.npmjs.com/package/ascii-art-font) as well as handling multi-line joining automatically.
+It features support for [Images](https://www.npmjs.com/package/ascii-art-image), [Styles](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md), [Tables](https://www.npmjs.com/package/ascii-art-table) and [Figlet Fonts](https://www.npmjs.com/package/ascii-art-font) as well as handling multi-line joining automatically.
 
 Why would I use this instead of X?
 ----------------------------------
 - **modular** - small set of purpose built modules all interacting through a common ansi library.
 - **color profiles** support - other libraries assume you are running x11
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
-- handles the ugly [intersection of **multiline text and ansi codes**](docs/Multiline.md) for you.
+- handles the ugly [intersection of **multiline text and ansi codes**](https://github.com/khrome/ascii-art-docs/blob/master/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
 - **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways.
 - It **works like a package manager** for figlet fonts.
@@ -60,7 +60,7 @@ Color defaults to 8 bit (most compatible), to enable other modes set booleans in
 - `is256` : compute the color using 256colors, as defined by ansi256. Note that full color output may need to tune the difference method to obtain optimal results.
 - `isTrueColor` : do not constrain color and directly output RGB to the console.
 
-Color Tables may be found in the style [documentation](docs/Styles.md)
+Color Tables may be found in the style [documentation](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md)
 
 Fonts
 -----
@@ -97,12 +97,12 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
 ascii-art image -B 8 -C rankedChannel -a blocks node_modules/ascii-art/Images/grendel.jpg
 ```
 
-![Grendel Compare](Images/examples/grendel-compare.png)
+![Grendel Compare](http://patternweaver.com/Github/Ascii/Images/grendel-compare.png)
 
 
 Here's a comparison of various output modes:
 
- ![Zero Cool Compare](Images/examples/zero-cool-compare.png)
+ ![Zero Cool Compare](http://patternweaver.com/Github/Ascii/Images/zero-cool-compare.png)
 
 ```bash
 #4bit
@@ -149,9 +149,9 @@ Compositing
 
 We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with [this](test/scripts/bbs.js)
 
-![Mixed Content Example](Images/examples/serious-business.png)
+![Mixed Content Example](http://patternweaver.com/Github/Ascii/Images/serious-business.png)
 
-Check out the [documentation](docs/Compositing.md) for detailed examples!
+Check out the [documentation](https://github.com/khrome/ascii-art-docs/blob/master/Compositing.md) for detailed examples!
 
 
 Promises
