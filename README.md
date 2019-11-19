@@ -87,7 +87,8 @@ Images
 
 Create an image from the passed image and append that to the buffer
 
-| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
+
+|In your code                                     |         In the [Terminal](docs/Terminal.md)       |
 |-------------------------------------------------|---------------------------------------------------|
 | `.image(options[, callback])`                   | `ascii-art image path/to/my/file.jpg`             |
 
@@ -105,14 +106,15 @@ Here's a comparison of various output modes:
  ![Zero Cool Compare](http://patternweaver.com/Github/Ascii/Images/zero-cool-compare.png)
 
 ```bash
-#4bit
-ascii-art image -B 4 -a solid node_modules/ascii-art/Images/zero-cool.jpg
 
-#8bit
-ascii-art image -B 8 -C closestByIntensity -a solid node_modules/ascii-art/Images/zero-cool.jpg
+	#4bit
+	ascii-art image -B 4 -a solid node_modules/ascii-art/Images/zero-cool.jpg
 
-#32bit (on supported terminals)
-ascii-art image -B 32 -a solid node_modules/ascii-art/Images/zero-cool.jpg
+	#8bit
+	ascii-art image -B 8 -C closestByIntensity -a solid node_modules/ascii-art/Images/zero-cool.jpg
+
+	#32bit (on supported terminals)
+	ascii-art image -B 32 -a solid node_modules/ascii-art/Images/zero-cool.jpg
 ```
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-image) for more examples!
