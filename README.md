@@ -13,13 +13,13 @@ ascii-art.js
 [![Travis](https://img.shields.io/travis/khrome/ascii-art.svg)]()
 [![GitHub stars](https://img.shields.io/github/stars/khrome/ascii-art.svg?style=social&label=Star)](https://github.com/khrome/ascii-art)
 
-Images, fonts, tables, ansi styles and compositing in Node.js & the browser. 100% JS.
+Images, fonts, tables, ansi styles and compositing in Node.js & the browser. 100% JS.  ([What is ASCII-Art?](https://github.com/khrome/ascii-art-docs/blob/master/History.md))
 
 In the beginning there was [colors.js](https://github.com/Marak/colors.js) but in the fine tradition of vendors calling out a problem they have the solution to, [chalk](https://github.com/yeoman/yo/issues/68) was introduced. In that same vein, I offer `ascii-art` as an update, expansion and generalization of [MooAsciiArt](http://mootools.net/forge/p/mooasciiart) and at the same time it can replace your existing ansi colors library.
 
-It features support for [Images](https://www.npmjs.com/package/ascii-art-image), [Styles](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md), [Tables](https://www.npmjs.com/package/ascii-art-table) and [Figlet Fonts](https://www.npmjs.com/package/ascii-art-font) as well as handling multi-line joining automatically.
+It features support for [Images](https://www.npmjs.com/package/ascii-art-image), [Styles](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md), [Tables](https://www.npmjs.com/package/ascii-art-table), [Graphs](https://www.npmjs.com/package/ascii-art-graph) and [Figlet Fonts](https://www.npmjs.com/package/ascii-art-font) as well as handling multi-line joining and compositing automatically.
 
-Why would I use this instead of X?
+Why would I use this?
 ----------------------------------
 - **modular** - small set of purpose built modules all interacting through a common ansi library.
 - **color profiles** support - other libraries assume you are running x11
