@@ -132,6 +132,19 @@ Generate a table from the passed data, with support for many styles and append t
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-table) for more examples!
 
+Graphs
+------
+
+Generate a graph from the passed data
+
+| In your code                                    |         In the Terminal                           |
+|-------------------------------------------------|---------------------------------------------------|
+| `.graph(options[, callback])`                   | N/A                                               |
+
+![Graph Example](https://github.com/khrome/ascii-art-graph/raw/master/simple-braille.png)
+
+Check out the [documentation](https://www.npmjs.com/package/ascii-art-graph) for more examples!
+
 Artwork
 -------
 

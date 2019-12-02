@@ -48,6 +48,7 @@
     "ascii-art-font":  "1.0.1",
     "ascii-art-image": "1.0.2",
     "ascii-art-table": "1.0.1",
+    "ascii-art-graph": "0.1.0",
     "browser-request": "0.3.3",
     "canvas": "1.6.9",
     "dirname-shim": "1.0.0",

@@ -37,6 +37,17 @@
         });
     }
 
+    function testGraph(name, text, cb){
+        var simple = fs.readFile(
+            __dirname+'/../node_modules/ascii-art-graph/test/data/'+name, 
+            function(err, result){
+                should.not.exist(err);
+                text.should.equal(result.toString());
+                cb();
+            }
+        );
+    }
+
     function imageIsValid(err, ascii, expected, done){
         if(err) console.log(err.stack);
         should.exist(ascii);
@@ -66,6 +77,13 @@
     //if(! (typeof module === 'object' && module.exports)) parentDir.pop();
     parentDir = parentDir.join('/');
     parentDir = parentDir+'/node_modules/ascii-art-docs';
+
+    var timeseriesA = [
+      { value: 2, date: '2019-11-25T01:55:45.000Z' },
+      { value: 5, date: '2019-11-25T01:56:45.000Z' },
+      { value: 3, date: '2019-11-25T01:58:45.000Z' },
+      { value: 11, date: '2019-11-25T01:59:45.000Z' }
+    ];
 
     //*
     describe('AsciiArt', function(){
@@ -215,6 +233,39 @@
                     }, function(rendered){
                     	longestLineLength(rendered).should.equal(80);
                         done();
+                    });
+                });
+            });
+
+            describe('a graph', function(){
+                it('with data', function(done){
+                    art.graph({
+                        height : 20,
+                        width : 80,
+                        node : '@',
+                        data : {
+                            'timeseriesA': timeseriesA
+                        }
+                    }, function(rendered){
+                        testGraph('simpleLineGraph.json', rendered, function(){
+                            done();
+                        });
+                    });
+                });
+
+                it('with braille', function(done){
+                    art.graph({
+                        height : 20,
+                        width : 80,
+                        node : '@',
+                        renderMethod : 'braille',
+                        data : {
+                            'timeseriesA': timeseriesA
+                        }
+                    }, function(rendered){
+                        testGraph('simple-braille.ansi', rendered, function(){
+                            done();
+                        });
                     });
                 });
             });

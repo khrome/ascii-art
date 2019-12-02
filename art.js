@@ -5,6 +5,7 @@
             'ascii-art-font',
             'ascii-art-image',
             'ascii-art-table',
+            'ascii-art-graph',
             'ascii-art-ansi/grid',
             'strangler'
         ], factory);
@@ -14,6 +15,7 @@
             require('ascii-art-font'),
             require('ascii-art-image'),
             require('ascii-art-table'),
+            require('ascii-art-graph'),
             require('ascii-art-ansi/grid'),
             require('strangler')
         );
@@ -23,13 +25,14 @@
             root.AsciiArtFont,
             root.AsciiArtImage,
             root.AsciiArtTable,
+            root.AsciiArtGraph,
             root.AsciiArtAnsiGrid,
             root.Strangler
         );
     }
-}(typeof self !== 'undefined' ? self : this, function(Ansi, Font, Image, Table, TextGrid, Strangler){
+}(typeof self !== 'undefined' ? self : this, function(Ansi, Font, Image, Table, Graph, TextGrid, Strangler){
 
-    var AsciiArt = { Ansi, Font, Image, Table };
+    var AsciiArt = { Ansi, Font, Image, Table, Graph };
 
     var getTextFile = function(file, cb){
         var parts = (file ||'').split('/')
@@ -151,7 +154,11 @@
                                          if(item.style && item.text){
                                              mode = 'style';
                                          }else{
-                                             mode = 'image';
+                                             if(item.height && item.width && item.graph){
+                                                 mode = 'graph';
+                                             }else{
+                                                 mode = 'image';
+                                             }
                                          }
                                      }
                                  }
@@ -240,6 +247,13 @@
                          done();
                      });
                     break;
+                 case 'graph':
+                     AsciiArt.Graph.create(item, function(err, text){
+                         if(!err) result = safeCombine(result, text);
+                         done();
+                     });
+                     break;
+
              }
         }
         this.font = function(str, fontName, style, callback){
@@ -282,6 +296,15 @@
         }
         this.image = function(options, callback){
             if(callback) cb = callback;
+            chain.push({
+                options : options,
+            });
+            check();
+            return ob;
+        };
+        this.graph = function(options, callback){
+            if(callback) cb = callback;
+            options.graph = true;
             chain.push({
                 options : options,
             });
@@ -370,6 +393,13 @@
     }
     AsciiArt.table = function(options, callback){
         return AsciiArt.Table.create(options, callback);
+    }
+    AsciiArt.Graph.newReturnContext = function(options){
+        var chain = fontChain.apply({});
+        return chain.font(options);
+    }
+    AsciiArt.graph = function(options, callback){
+        return AsciiArt.Graph.create(options, callback);
     }
 
     AsciiArt.artwork = function(options, callback){
