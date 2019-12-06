@@ -34,6 +34,37 @@
 
     var AsciiArt = { Ansi, Font, Image, Table, Graph };
 
+    var boxEdge = function(type, size, options, style){
+        var edge = '';
+        switch(type){
+            case 'l':
+                edge += options.ul+"\n";
+                for(var lcv=2; lcv< size; lcv++){
+                    edge += style(options.l)+"\n";
+                }
+                edge += style(options.ll);
+                break;
+            case 'r':
+                edge += options.ur+"\n";
+                for(var lcv=2; lcv< size; lcv++){
+                    edge += style(options.r)+"\n";
+                }
+                edge += style(options.lr);
+                break;
+            case 't':
+                for(var lcv=0; lcv< size; lcv++){
+                    edge += style(options.t);
+                }
+                break;
+            case 'b':
+                for(var lcv=0; lcv< size; lcv++){
+                    edge += style(options.b);
+                }
+                break;
+        }
+        return edge;
+    }
+
     var getTextFile = function(file, cb){
         var parts = (file ||'').split('/')
         if(!parts.filter(function(p){ return p.trim() }).length){
@@ -157,7 +188,11 @@
                                              if(item.height && item.width && item.graph){
                                                  mode = 'graph';
                                              }else{
-                                                 mode = 'image';
+                                                 if(item.l && item.r && item.t && item.b){
+                                                     mode = 'border';
+                                                 }else{
+                                                     mode = 'image';
+                                                 }
                                              }
                                          }
                                      }
@@ -212,6 +247,20 @@
                          result = safeCombine(result, text, item.style);
                          done();
                      });
+                     break;
+                 case 'border':
+                     var canvas = new TextGrid(result);
+                     var styler = item.style?function(s){
+                         return AsciiArt.style(s, item.style);
+                     }:function(s){ return s };
+                     canvas.drawOnto(boxEdge('l', canvas.height, item, styler), 0, 0);
+                     canvas.drawOnto(boxEdge('r', canvas.height, item, styler), -1, 0);
+                     canvas.drawOnto(boxEdge('t', canvas.width-3, item, styler), 1, 0);
+                     canvas.drawOnto(boxEdge('b', canvas.width-3, item, styler), 1, -1);
+                     result = canvas.toString();
+                     setTimeout(function(){
+                         done();
+                     }, 0);
                      break;
                  case 'table':
                      setTimeout(function(){
@@ -295,6 +344,14 @@
             return ob;
         }
         this.image = function(options, callback){
+            if(callback) cb = callback;
+            chain.push({
+                options : options,
+            });
+            check();
+            return ob;
+        };
+        this.border = function(options, callback){
             if(callback) cb = callback;
             chain.push({
                 options : options,
