@@ -162,7 +162,7 @@ Often I use this in conjunction with an image backdrop, for example to superimpo
 Compositing
 -----------
 
-We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with [this](test/scripts/bbs.js)
+We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()`, `.border()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with [this](test/scripts/bbs.js)
 
 ![Mixed Content Example](http://patternweaver.com/Github/Ascii/Images/serious-business.png)
 
@@ -172,11 +172,11 @@ Check out the [documentation](https://github.com/khrome/ascii-art-docs/blob/mast
 Promises
 --------
 
-Instead of providing a callback, you can also get a promise instead ( `.toPromise()`).
+Instead of providing a callback, you can also get a from the top level by calling `then` which lazily produces a promise, or you can use the old function, which is deprecated ( `.toPromise()`).
 
-| In your code                                |
-|---------------------------------------------|
-| `.font(text, font[, style]).toPromise()`    |
+| In your code                                                    |
+|-----------------------------------------------------------------|
+| `.font(text, font[, style]).then(handler).catch(errHandler)`    |
 
 Compatibility
 -------------

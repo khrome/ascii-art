@@ -6,6 +6,7 @@
             'ascii-art-image',
             'ascii-art-table',
             'ascii-art-graph',
+            'ascii-art-utf',
             'ascii-art-ansi/grid',
             'strangler'
         ], factory);
@@ -16,6 +17,7 @@
             require('ascii-art-image'),
             require('ascii-art-table'),
             require('ascii-art-graph'),
+            require('ascii-art-utf'),
             require('ascii-art-ansi/grid'),
             require('strangler')
         );
@@ -26,11 +28,12 @@
             root.AsciiArtImage,
             root.AsciiArtTable,
             root.AsciiArtGraph,
+            root.AsciiArtUTF,
             root.AsciiArtAnsiGrid,
             root.Strangler
         );
     }
-}(typeof self !== 'undefined' ? self : this, function(Ansi, Font, Image, Table, Graph, TextGrid, Strangler){
+}(typeof self !== 'undefined' ? self : this, function(Ansi, Font, Image, Table, Graph, utf, TextGrid, Strangler){
 
     var AsciiArt = { Ansi, Font, Image, Table, Graph };
 
@@ -243,10 +246,19 @@
                     }, 1);
                     break;
                  case 'font':
-                     AsciiArt.Font.create(item.text, item.font, function(err, text){
-                         result = safeCombine(result, text, item.style);
+                     if(item.font.indexOf('u:') === 0){
+                         result = safeCombine(
+                             result,
+                             utf.font(item.text, item.font.substring(2)),
+                             item.style
+                         );
                          done();
-                     });
+                     }else{
+                         AsciiArt.Font.create(item.text, item.font, function(err, text){
+                             result = safeCombine(result, text, item.style);
+                             done();
+                         });
+                     }
                      break;
                  case 'border':
                      var canvas = new TextGrid(result);
@@ -424,6 +436,16 @@
                 check();
             });
         };//*/
+        this.then = function(handler){
+            var promise = new Promise(function(resolve, reject){
+                cb = function(err, result){
+                    if(err) return reject(err);
+                    resolve(result);
+                }
+                check();
+            });
+            return promise.then(handler);
+        };
         return this;
     };
 
@@ -432,7 +454,16 @@
         return chain.font(options);
     }
     AsciiArt.font = function(str, font, callback){
-        return AsciiArt.Font.create(str, font, callback);
+        if(font.indexOf('u:') === 0){
+            var result =  utf.font(str, font.substring(2));
+            if(callback){
+                setTimeout(function(){
+                    callback(undefined, result);
+                }, 0);
+                //todo: support promise returns here!
+                return result;
+            }
+        }else return AsciiArt.Font.create(str, font, callback);
     }
     AsciiArt.style = function(text, styles){
         return Ansi.codes(text, styles);

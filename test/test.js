@@ -2,11 +2,10 @@
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define([
-            'browser-request', 'ascii-art-ansi/color', 'dirname-shim', '../art', '../cold'
-        ], function(request, color, shim, a, cold){
-            //console.log(cold);
+            'browser-request', 'ascii-art-ansi/color', 'dirname-shim', '../art', 'color-difference'
+        ], function(request, color, shim, a, diff){
             a.Figlet.fontPath = 'Fonts/'
-            return factory(a, color, cold, {
+            return factory(a, color, diff, {
                 readFile : function(filename, cb){
                     request({
                         url: filename
@@ -39,7 +38,7 @@
 
     function testGraph(name, text, cb){
         var simple = fs.readFile(
-            __dirname+'/../node_modules/ascii-art-graph/test/data/'+name, 
+            __dirname+'/../node_modules/ascii-art-graph/test/data/'+name,
             function(err, result){
                 should.not.exist(err);
                 text.should.equal(result.toString());
@@ -87,17 +86,9 @@
 
     //*
     describe('AsciiArt', function(){
-        describe('can render', function(){
-
-            var text = 'blargh';
-
-            it('ANSI codes', function(){
-                var rendered = art.Ansi.Codes(text, 'red+blink+inverse');
-                rendered.should.not.equal(text); //make sure string has been altered
-            });
-
-            it('returns a promise', function(done){
-                art.font(text, 'Doom').toPromise().then(function(rendered){
+        describe('supports legacy features', function(){
+            it.skip('returns a promise', function(done){
+                var promise = art.font('blargh', 'Doom').toPromise().then(function(rendered){
                     var sample =
                     " _      _                      _     "+"\n"+
                     "| |    | |                    | |    "+"\n"+
@@ -112,6 +103,42 @@
                 }).catch(function(err){
                     should.not.exist(err);
                 });
+            });
+
+        });
+        describe('can render', function(){
+
+            var text = 'blargh';
+
+            it('ANSI codes', function(){
+                var rendered = art.Ansi.Codes(text, 'red+blink+inverse');
+                rendered.should.not.equal(text); //make sure string has been altered
+            });
+
+            it('emulates a promise', function(done){
+                art.font(text, 'Doom').then(function(rendered){
+                    var sample =
+                    " _      _                      _     "+"\n"+
+                    "| |    | |                    | |    "+"\n"+
+                    "| |__  | |  __ _  _ __   __ _ | |__  "+"\n"+
+                    "| '_ \\ | | / _` || '__| / _` || '_ \\ "+"\n"+
+                    "| |_) || || (_| || |   | (_| || | | |"+"\n"+
+                    "|_.__/ |_| \\__,_||_|    \\__, ||_| |_|"+"\n"+
+                    "                         __/ |       "+"\n"+
+                    "                        |___/        "+"\n";
+                    rendered.should.equal(sample);
+                    done();
+                }).catch(function(err){
+                    should.not.exist(err);
+                });
+            });
+
+            it('a UTF font', function(done){
+                var immediate = art.font('BLARGH', 'u:sansserif', function(err, rendered){
+                    rendered.should.equal('𝖡𝖫𝖠𝖱𝖦𝖧');
+                    done();
+                });
+                immediate.should.equal('𝖡𝖫𝖠𝖱𝖦𝖧');
             });
 
             it('a Figlet font', function(done){
