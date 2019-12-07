@@ -303,10 +303,24 @@
                     break;
                  case 'image':
                     var image = new AsciiArt.Image(item);
-                     image.write(function(err, text){
-                         if(!err) result = safeCombine(result, text);
-                         done();
-                     });
+                    if(item.lineart){
+                        image.writeLineArt(function(err, text){
+                            if(!err) result = safeCombine(result, text);
+                            done();
+                        });
+                    }else{
+                        if(item.posterize){
+                            image.writePosterized(function(err, text){
+                                if(!err) result = safeCombine(result, text);
+                                done();
+                            });
+                        }else{
+                            image.write(function(err, text){
+                                if(!err) result = safeCombine(result, text);
+                                done();
+                            });
+                        }
+                    }
                     break;
                  case 'graph':
                      AsciiArt.Graph.create(item, function(err, text){

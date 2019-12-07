@@ -170,7 +170,7 @@
                     return result;
                 };
                 var file = (isNode?__dirname:'base/test')+'/images/mixed.nfo';
-                var expected = fs.readFile(__dirname+'/images/mixed.nfo', function(err, result){
+                fs.readFile(__dirname+'/images/mixed.nfo', function(err, result){
                     var expected = result.toString();
                     Color.useDistance('closestByIntensity');
                     art.image({
@@ -179,6 +179,8 @@
                         invertValue : true,
                         alphabet : 'wide',
                     }).font('INITECH', 'Doom', 'cyan', function(err, ascii){
+                        //fs.writeFile('bunk.nfo', ascii, function(){ })
+                        //*
                         should.exist(ascii);
                         should.exist(expected);
                         var asciiLines = ascii.split("\n")
@@ -186,7 +188,7 @@
                         asciiLines.length.should.equal(expectedLines.length);
                         if(isNode) ascii.should.equal(expected);
                         Color.useDistance('classic');
-                        done();
+                        done();//*/
                     });
                 });
             });
@@ -305,6 +307,15 @@
                         this.timeout(5000);
                         testImage({
                             filepath: parentDir+'/Images/mucha-job.jpg',
+                            width: 80
+                        }, imageIsValid, done);
+                    });
+
+                    it('is a JPEG with default settings and render', function(done){
+                        this.timeout(5000);
+                        testImage({
+                            filepath: parentDir+'/Images/mucha-job.jpg',
+                            lineart: true,
                             width: 80
                         }, imageIsValid, done);
                     });

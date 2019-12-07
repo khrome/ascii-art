@@ -80,6 +80,14 @@ Outputs
 	| |/ / |  __/| | | | | || (_) ||_|
 	|___/   \___||_| |_| |_| \___/ (_)
 
+If you use UTF fonts your output looks more like:
+
+![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-gothic.png)
+
+or
+
+![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-sansserif.png)
+
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-font) for more examples!
 
 Images
@@ -92,6 +100,11 @@ Create an image from the passed image and append that to the buffer
 |-------------------------------------------------|---------------------------------------------------|
 | `.image(options[, callback])`                   | `ascii-art image path/to/my/file.jpg`             |
 
+There are 2 options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are(both modes are currently beta):
+
+- `lineart` : a boolean option which outputs lineart (which may be colored with `stroke` and customized with `threshold`(0-255))
+- `posterize` : use lineart on top of colored backgrounds to retain as much detail as possible
+
 Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
 
 ```bash
@@ -100,8 +113,15 @@ ascii-art image -B 8 -C rankedChannel -a blocks node_modules/ascii-art/Images/gr
 
 ![Grendel Compare](http://patternweaver.com/Github/Ascii/Images/grendel-compare.png)
 
+Here's an example of `lineart` output:
 
-Here's a comparison of various output modes:
+![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png)
+
+Here's an example of `posterize` output:
+
+![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/peewee-posterized.png)
+
+Here's a comparison of various color output modes:
 
  ![Zero Cool Compare](http://patternweaver.com/Github/Ascii/Images/zero-cool-compare.png)
 

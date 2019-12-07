@@ -45,6 +45,12 @@ yargs.command('image', 'convert an image to ascii')
         .nargs('B', 1)
         .choices('B', [4, 8, 32])
         .describe('B', 'bit-depth to use for color')
+    .alias('P', 'posterize')
+        .nargs('P', 0)
+        .describe('P', 'posterize the image')
+    .alias('L', 'lineart')
+        .nargs('L', 0)
+        .describe('L', 'use braille characters to produce a 1 color threshold image')
     .alias('v', 'validate')
         .nargs('v', 1)
         .describe('v', 'a regex string to validate the target')
@@ -86,7 +92,9 @@ var request;
 switch(action){
     case 'image':
         var options = {
-            filepath: target
+            filepath: target,
+            lineart: argv.L,
+            posterize: argv.P,
         };
         if(argv.a) options.alphabet = argv.a;
         if(argv.B){
@@ -117,13 +125,25 @@ switch(action){
             options.width = process.stdout.columns;
         }
         var image = new art.Image(options);
-        image.write(function(err, rendered){
-            if(argv.o){
-                fs.writeFile(argv.o, rendered);
+        if(options.lineart){
+            image.writeLineArt(function(err, text){
+                if(argv.o) fs.writeFile(argv.o, text);
+                else console.log(text+"\033[39;49m");
+            });
+        }else{
+            if(options.posterize){
+                if(!image.options.stroke) image.options.stroke = 'black';
+                image.writePosterized(function(err, text){
+                    if(argv.o) fs.writeFile(argv.o, text);
+                    else console.log(text+"\033[39;49m");
+                });
             }else{
-                console.log(rendered+"\033[39;49m");
+                image.write(function(err, text){
+                    if(argv.o) fs.writeFile(argv.o, text);
+                    else console.log(text+"\033[39;49m");
+                });
             }
-        })
+        }
         break;
     case 'art':
             var parts = (target ||'').split('/');
@@ -233,7 +253,7 @@ switch(action){
             };
             break;
     case 'text':
-        var output = function(result){ console.log(result) };
+        var output = function(err, result){ console.log(result) };
         if(argv.F){
             if(argv.s) art.font(target, argv.F, argv.s, output);
             else art.font(target, argv.F, output);
