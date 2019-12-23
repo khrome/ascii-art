@@ -100,9 +100,10 @@ Create an image from the passed image and append that to the buffer
 |-------------------------------------------------|---------------------------------------------------|
 | `.image(options[, callback])`                   | `ascii-art image path/to/my/file.jpg`             |
 
-There are 2 options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are(both modes are currently beta):
+There are 2 options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are:
 
-- `lineart` : a boolean option which outputs lineart (which may be colored with `stroke` and customized with `threshold`(0-255))
+- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255))
+- `stipple` : a boolean option which outputs lineart using braille characters (which may be colored with `stroke` and customized with `threshold`(0-255))
 - `posterize` : use lineart on top of colored backgrounds to retain as much detail as possible
 
 Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
@@ -115,11 +116,11 @@ ascii-art image -B 8 -C rankedChannel -a blocks node_modules/ascii-art/Images/gr
 
 Here's an example of `lineart` output:
 
-![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png)
+![Mucha Stipple](https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png)
 
 Here's an example of `posterize` output:
 
-![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/peewee-posterized.png)
+![Peewee Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/peewee-posterized.png)
 
 Here's a comparison of various color output modes:
 
@@ -215,6 +216,7 @@ Roadmap
 - value reversal (light vs dark)
 - HTML output
 - piping support on the command line
+- [ATASCII art](https://en.wikipedia.org/wiki/ATASCII) support
 - [ANSI art](https://en.wikipedia.org/wiki/ANSI_art) support
 - [PETSCII art](https://en.wikipedia.org/wiki/PETSCII) support
 - 2 colors per char with multisampling

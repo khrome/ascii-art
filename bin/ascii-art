@@ -45,17 +45,29 @@ yargs.command('image', 'convert an image to ascii')
         .nargs('B', 1)
         .choices('B', [4, 8, 32])
         .describe('B', 'bit-depth to use for color')
-    .alias('P', 'posterize')
-        .nargs('P', 0)
+    .boolean('P')
+        .alias('P', 'posterize')
         .describe('P', 'posterize the image')
-    .alias('L', 'lineart')
-        .nargs('L', 0)
-        .describe('L', 'use braille characters to produce a 1 color threshold image')
+    .boolean('E')
+        .alias('E', 'blended')
+        .describe('E', 'use both blocks and braille')
+    .boolean('L')
+        .alias('L', 'lineart')
+        .describe('L', 'use block characters to produce a 1 color threshold image')
+    .boolean('S')
+        .alias('S', 'stippled')
+        .describe('S', 'use braille characters to produce a 1 color threshold image')
+    .alias('H', 'threshold')
+        .nargs('H', 1)
+        .describe('H', '0-255, the value we use to mask the image')
+    .alias('D', 'darken')
+        .nargs('D', 1)
+        .describe('D', 'darkness factor, for creating shadows')
     .alias('v', 'validate')
         .nargs('v', 1)
         .describe('v', 'a regex string to validate the target')
-    .alias('g', 'global')
-        .nargs('g', 0)
+    .boolean('g')
+        .alias('g', 'global')
         .describe('g', 'install the font globally')
     .alias('o', 'output')
         .nargs('o', 1)
@@ -94,6 +106,10 @@ switch(action){
         var options = {
             filepath: target,
             lineart: argv.L,
+            stippled: argv.S,
+            blended: argv.E,
+            threshold: argv.H,
+            darken: argv.D,
             posterize: argv.P,
         };
         if(argv.a) options.alphabet = argv.a;
@@ -134,14 +150,23 @@ switch(action){
             if(options.posterize){
                 if(!image.options.stroke) image.options.stroke = 'black';
                 image.writePosterized(function(err, text){
+                    if(err) console.log(err);
                     if(argv.o) fs.writeFile(argv.o, text);
                     else console.log(text+"\033[39;49m");
                 });
             }else{
-                image.write(function(err, text){
-                    if(argv.o) fs.writeFile(argv.o, text);
-                    else console.log(text+"\033[39;49m");
-                });
+                if(options.stippled){
+                    image.writeStipple(function(err, text){
+                        if(err) console.log(err);
+                        if(argv.o) fs.writeFile(argv.o, text);
+                        else console.log(text+"\033[39;49m");
+                    });
+                }else{
+                    image.write(function(err, text){
+                        if(argv.o) fs.writeFile(argv.o, text);
+                        else console.log(text+"\033[39;49m");
+                    });
+                }
             }
         }
         break;

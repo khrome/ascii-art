@@ -86,8 +86,8 @@
 
     //*
     describe('AsciiArt', function(){
-        describe('supports legacy features', function(){
-            it.skip('returns a promise', function(done){
+        describe.skip('supports legacy features', function(){
+            it('returns a promise', function(done){
                 var promise = art.font('blargh', 'Doom').toPromise().then(function(rendered){
                     var sample =
                     " _      _                      _     "+"\n"+
@@ -179,8 +179,6 @@
                         invertValue : true,
                         alphabet : 'wide',
                     }).font('INITECH', 'Doom', 'cyan', function(err, ascii){
-                        //fs.writeFile('bunk.nfo', ascii, function(){ })
-                        //*
                         should.exist(ascii);
                         should.exist(expected);
                         var asciiLines = ascii.split("\n")
@@ -188,7 +186,7 @@
                         asciiLines.length.should.equal(expectedLines.length);
                         if(isNode) ascii.should.equal(expected);
                         Color.useDistance('classic');
-                        done();//*/
+                        done();
                     });
                 });
             });
