@@ -112,7 +112,7 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
 ascii-art image -B 8 -C rankedChannel -a blocks node_modules/ascii-art/Images/grendel.jpg
 ```
 
-![Grendel Compare](http://patternweaver.com/Github/Ascii/Images/grendel-compare.png)
+![Grendel Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/grendel-compare.png?raw=true)
 
 Here's an example of `lineart` output:
 
@@ -124,7 +124,7 @@ Here's an example of `posterize` output:
 
 Here's a comparison of various color output modes:
 
- ![Zero Cool Compare](http://patternweaver.com/Github/Ascii/Images/zero-cool-compare.png)
+ ![Zero Cool Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/zero-cool-compare.png?raw=true)
 
 ```bash
 
@@ -149,7 +149,7 @@ Generate a table from the passed data, with support for many styles and append t
 |-------------------------------------------------|---------------------------------------------------|
 | `.table(options[, callback])`                   | N/A             |
 
-![Styled Table Example](http://patternweaver.com/Github/Ascii/docs/ansi_table.png)
+![Styled Table Example](https://github.com/khrome/ascii-art-docs/blob/master/Examples/ansi_table.png?raw=true)
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-table) for more examples!
 
@@ -177,7 +177,7 @@ Fetch a graphic from a remote source and append it to the current buffer, which 
 
 Often I use this in conjunction with an image backdrop, for example to superimpose bones on the earth:
 
-![Mixed Content Example](http://patternweaver.com/Github/Ascii/docs/bones_earth.png)
+![Mixed Content Example](https://github.com/khrome/ascii-art-docs/blob/master/Examples/bones_earth.png?raw=true)
 
 
 Compositing

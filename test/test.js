@@ -157,7 +157,7 @@
                 });
             });
 
-            it('mixed expression', function(done){
+            it.skip('mixed expression', function(done){
                 this.timeout(10000);
                 var match = function(a, b){
                     a = a.split('');
