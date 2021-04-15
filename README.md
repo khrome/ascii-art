@@ -26,7 +26,7 @@ Why would I use this?
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
 - handles the ugly [intersection of **multiline text and ansi codes**](https://github.com/khrome/ascii-art-docs/blob/master/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
-- **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways.
+- **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways (In node this renders in cairo, via a Canvas shim).
 - It **works like a package manager** for figlet fonts.
 - The **other libraries** out there **do too little**, focus on logging above other domains and often unaware of ANSI controls(for example: style text, then put it in a table).
 - **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for utility rather than code aesthetics).
@@ -80,13 +80,13 @@ Outputs
 	| |/ / |  __/| | | | | || (_) ||_|
 	|___/   \___||_| |_| |_| \___/ (_)
 
-If you use UTF fonts your output looks more like:
+If you use UTF fonts(Which are part of your systm fonts) your output looks more like:
 
-![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-gothic.png)
+![Gothic UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-gothic.png)
 
 or
 
-![Mucha Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-sansserif.png)
+![Sans Serif UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-sansserif.png)
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-font) for more examples!
 
@@ -166,10 +166,10 @@ Generate a graph from the passed data
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-graph) for more examples!
 
-Artwork
+Artwork[Non-Functional]
 -------
 
-fetch a graphic from a remote source and append it to the current buffer.
+Fetch a graphic from a remote source and append it to the current buffer, which is not enabled by default. You must add a `request` compatible library by either setting the ENV variable `ASCII_ART_REQUEST_MODULE` **or** by setting it manually with `art.setRequest(requestModule)`
 
 | In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
 |-------------------------------------------------|---------------------------------------------------|
@@ -183,7 +183,7 @@ Often I use this in conjunction with an image backdrop, for example to superimpo
 Compositing
 -----------
 
-We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()`, `.border()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with [this](test/scripts/bbs.js)
+We also support combining all these nifty elements you've made into a single composition, via a few functions available on the chains (`.lines()`, `.overlay()`, `.border()`, `.strip()` and `.join()`). Maybe I've got A BBS wall I want to have some dynamic info on.. I could make that with [this](test/scripts/bbs.js)
 
 ![Mixed Content Example](http://patternweaver.com/Github/Ascii/Images/serious-business.png)
 
@@ -193,11 +193,18 @@ Check out the [documentation](https://github.com/khrome/ascii-art-docs/blob/mast
 Promises
 --------
 
-Instead of providing a callback, you can also get a from the top level by calling `then` which lazily produces a promise, or you can use the old function, which is deprecated ( `.toPromise()`).
+Instead of providing a callback, you can also get a from the top level by calling `then` which lazily produces a promise.
 
-| In your code                                                    |
+| In your code(using .font() as an example)                       |
 |-----------------------------------------------------------------|
-| `.font(text, font[, style]).then(handler).catch(errHandler)`    |
+| `art.font(text, font[, style]).then(handler).catch(errHandler)` |
+
+Await
+-----
+
+| In your code(using .font() as an example)                       |
+|-----------------------------------------------------------------|
+| `let rendered = await art.font(text, font[, style]).completed()`|
 
 Compatibility
 -------------
@@ -212,6 +219,9 @@ Roadmap
 -------
 
 #### Goals
+- Re-enable `.artwork()`
+- Bring karma current, deprecate phantomjs
+- artwork source standard
 - Better Docs
 - value reversal (light vs dark)
 - HTML output
@@ -220,6 +230,7 @@ Roadmap
 - [ANSI art](https://en.wikipedia.org/wiki/ANSI_art) support
 - [PETSCII art](https://en.wikipedia.org/wiki/PETSCII) support
 - 2 colors per char with multisampling
+- Graph enhancements
 - REPL
 
 #### Non Goals
@@ -241,6 +252,32 @@ which runs the test suite directly. In order to test it in Chrome try:
 In order to run the chalk test, use:
 
 	npm run chalk-test
+
+
+Deprecations
+------------
+
+- `.artwork()` is currently non-functional while we enable an open-plugin standard, which will arrive shortly. When it does, you'll be able to plug any number of fetch solutions in, which hopefully matches whatever you currently bundle.
+- `.toPromise()` is now deprecated in favor of `.completed()` and will be removed when 3.x arrives
+- up to this point all files are UMD wrapped and may be used *without modification* in node(even old versions), the browser and via browser build systems. when 3.x arrives, the UMD versions may be part of an independent build process, while the mainline browser and node versions may continue to be uniform. If you have opinions on this, I'd like to hear them.
+
+
+Development
+-----------
+**How to dev : the simple version**
+- fork `ascii-art`
+- `git clone git@github.com:<YOUR GITHUB USERNAME>/ascii-art.git`
+- go into the checked out module `cd ascii-art`
+- execute `./test/dev_setup.sh` (this will install a number of dependencies in the parent directory)
+
+**How to dev : a better version**
+- Fork all the ascii-art-modules(`ascii-art-image`, `ascii-art-ansi`, `ascii-art-braille`, `ascii-art-docs`, `ascii-art-font`, `ascii-art-utf`, `ascii-art-graph`, `ascii-art-table`), along with the root module.
+- `git clone git@github.com:<YOUR GITHUB USERNAME>/ascii-art.git`
+- go into the checked out module `cd ascii-art`
+- `./dev_setup.sh <YOUR GITHUB USERNAME>`
+- commit to your own branches master, then submit PRs from that to the master branch of the main repo.
+
+Note various modern editions of npm nuke links each time `package-lock.json` is written (which, depending on your settings, may be every new dependency you add). This can be remedied by executing `npx module-auto-link -c 'npm-auto-link'` in the module in question, which will restore it's links.
 
 Please make sure to run the tests before submitting a patch and report any rough edges. Thanks!
 

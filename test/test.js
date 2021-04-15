@@ -31,7 +31,7 @@
         file = '/images/'+file.join('.')+'.nfo';
         fs.readFile(__dirname+file, function(err, result){
             image.write(function(err, ascii){
-                callback(err, ascii, result&&result.toString(), complete);
+                callback(err, ascii, result&&result.toString(), complete, image);
             });
         });
     }
@@ -434,6 +434,19 @@
                                 );
                             }
                         }, imageIsValid, done);
+                    });
+
+                    it('is a JPEG drawn in variant1 and can strip ansi chars', function(done){
+                        this.timeout(5000);
+                        art.image({
+                            filepath: parentDir+'/Images/cernettes.jpg',
+                            alphabet:'variant1',
+                            width: 80
+                        }).strip({}, function(err, result){
+                            //console.log(result);
+                            //todo:verify no ansi codes appear
+                            done();
+                        });
                     });
                 });
             });

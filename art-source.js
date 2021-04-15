@@ -8,24 +8,28 @@
         // Browser globals (root is window)
         root.AsciiArtSource = factory();
     }
-}(this, function(){
+}(this, function(list){
     var art;
+    var request;
     return {
         define : function(definition){
             return {
-                search : function(query, callback){
+                search : definition.search || function(query, callback){
 
                 },
-                list : function(path, callback){
+                list : definition.list || function(path, callback){
 
                 },
-                fetch : function(location, callback){
+                fetch : definition.fetch || function(location, callback){
 
                 }
             }
         },
         link : function(artInstance){
             art = artInstance;
+        },
+        request : function(requestInstance){
+            request = requestInstance;
         }
-    }};
+    };
 }));

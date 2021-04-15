@@ -8,6 +8,7 @@
             'ascii-art-graph',
             'ascii-art-utf',
             'ascii-art-ansi/grid',
+            'ascii-art-ansi',
             'strangler'
         ], factory);
     }else if(typeof module === 'object' && module.exports){
@@ -194,7 +195,11 @@
                                                  if(item.l && item.r && item.t && item.b){
                                                      mode = 'border';
                                                  }else{
-                                                     mode = 'image';
+                                                     if(item.strip){
+                                                         mode = 'strip';
+                                                     }else{
+                                                         mode = 'image';
+                                                     }
                                                  }
                                              }
                                          }
@@ -218,6 +223,10 @@
                          done();
                      });
                     break;
+                case 'strip':
+                    result = Ansi.strip(result);
+                    done();
+                   break;
                  case 'lines':
                      setTimeout(function(){
                          result = (
@@ -377,6 +386,14 @@
             check();
             return ob;
         };
+        this.strip = function(options, callback){
+            if(callback) cb = callback;
+            chain.push({
+                strip : true,
+            });
+            check();
+            return ob;
+        };
         this.border = function(options, callback){
             if(callback) cb = callback;
             chain.push({
@@ -441,6 +458,15 @@
             check();
             return ob;
         };
+        this.completed = function(){
+            return new Promise(function(resolve, reject){
+                cb = function(err, result){
+                    if(err) return reject(err);
+                    resolve(result);
+                }
+                check();
+            });
+        };//*/
         this.toPromise = function(){
             return new Promise(function(resolve, reject){
                 cb = function(err, result){
@@ -462,6 +488,11 @@
         };
         return this;
     };
+
+    AsciiArt.Font.newReturnContext = function(options){
+        var chain = fontChain.apply({});
+        return chain.font(options);
+    }
 
     AsciiArt.Font.newReturnContext = function(options){
         var chain = fontChain.apply({});
