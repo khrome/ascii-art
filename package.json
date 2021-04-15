@@ -48,7 +48,7 @@
     "ascii-art-ansi": "1.3.3",
     "ascii-art-font": "1.0.2",
     "ascii-art-graph": "0.1.1",
-    "ascii-art-image": "1.2.2",
+    "ascii-art-image": "1.3.0",
     "ascii-art-table": "1.0.1",
     "ascii-art-utf": "0.0.1",
     "browser-request": "0.3.3",
@@ -81,8 +81,8 @@
   },
   "bin": "./bin/ascii-art",
   "scripts": {
-    "test": "mocha",
-    "chalk-test": "mocha test/extras/kaolin-test.js",
+    "test": "./node_modules/mocha/bin/mocha",
+    "chalk-test": "./node_modules/mocha/bin/mocha test/extras/kaolin-test.js",
     "browser-test": "./node_modules/karma/bin/karma start",
     "test-data": "node generate.js save",
     "sample": "node generate.js"

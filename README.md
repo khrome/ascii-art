@@ -277,6 +277,8 @@ Development
 - `./dev_setup.sh <YOUR GITHUB USERNAME>`
 - commit to your own branches master, then submit PRs from that to the master branch of the main repo.
 
+After setup, run `npm test` to make sure everything is working correctly.
+
 Note various modern editions of npm nuke links each time `package-lock.json` is written (which, depending on your settings, may be every new dependency you add). This can be remedied by executing `npx module-auto-link -c 'npm-auto-link'` in the module in question, which will restore it's links.
 
 Please make sure to run the tests before submitting a patch and report any rough edges. Thanks!
