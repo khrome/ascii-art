@@ -1,5 +1,5 @@
 set -exo pipefail
-#npm install
+npm install
 USER=${1:-"khrome"}
 AA_ROOT_PATH_DESTINATION=$(pwd)
 cd ..
