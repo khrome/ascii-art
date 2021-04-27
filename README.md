@@ -88,6 +88,8 @@ or
 
 ![Sans Serif UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-sansserif.png)
 
+by using `u:<utf font name>` where the font names are: `default`, `script`, `script+bold`, `gothic`, `gothic+bold`, `serif+bold+italic`, `serif+bold`, `serif+italic`, `monospace`, `sansserif`, `sansserif+bold+italic`, `sansserif+bold`, `sansserif+italic`, `doublestrike`
+
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-font) for more examples!
 
 Images
