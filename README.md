@@ -48,9 +48,38 @@ Styles
 
 Add ANSI styles to a string and return the result.
 
-| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
-|-------------------------------------------------|---------------------------------------------------|
-| `.style(text, style[, close]) > String`          | `ascii-art text -s green "some text"`             |
+
+<table>
+<tr><td valign="top">
+<details><summary> JS </summary>
+<p>
+
+```javascript
+    art.style(text, style[, close]) //returns String
+```
+
+</p>
+</details></td><td valign="top">
+<details><summary> CL </summary>
+<p>
+
+```bash
+    ascii-art text -s green "some text"
+```
+
+</p>
+</details></td><td valign="top">
+<details><summary> Browser </summary>
+<p>
+
+```html
+    <ascii-art-style
+		style="bold+blue"
+	>Some Text</ascii-art-style>
+```
+</p>
+</details>
+</td></tr></table>
 
 Styles are: *italic*, **bold**, <span style="text-decoration: underline">underline</span>, <span style="text-decoration: underline overline">|framed|</span>, <span style="text-decoration: underline overline">|encircled|</span>, <span style="text-decoration: overline">overline</span>, <span style="text-decoration: blink">blink</span> and <span style="display:inline-block; background-color:#777777; color: white">&nbsp;inverse&nbsp;</span>. And available colors are:
 
