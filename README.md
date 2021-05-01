@@ -50,6 +50,7 @@ Add ANSI styles to a string and return the result.
 
 
 <table><tr><td colspan="3">
+
 	Change "Some Text" to be formatted with ansi codes for `green` (then have the colors reset at the end of the string)
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
@@ -93,6 +94,7 @@ Fonts
 Render a string using a figlet font and add that to the buffer. There is a batch version of this function which does not chain and takes an array( `.strings()`).
 
 <table><tr><td colspan="3">
+
 	Change "Some Text" to be formatted using the `doom.flf` font, which it will load from the predefined localtion (defaults to `/Fonts`)
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
@@ -147,6 +149,7 @@ Images
 Create an image from the passed image and append that to the buffer
 
 <table><tr><td colspan="3">
+
 	This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipples the details at a threshold of 40 (of 255) using a higher resolution image and then renders that into a braille overlay in black(#000000) on top of the colors.
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
@@ -169,7 +172,7 @@ Create an image from the passed image and append that to the buffer
 ```bash
     ascii-art image posterized stippled
         --rows=80 --cols=80 --stipple="#000000"
-        --threshold=40 "Some Text"
+        --threshold=40 myImage.jpg
 ```
 
 </p></details></td><td valign="top">
@@ -197,7 +200,11 @@ There are 2 options that are available which are not in the [image core](https:/
 Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
 
 ```bash
-ascii-art image -B 8 -C rankedChannel -a blocks node_modules/ascii-art/Images/grendel.jpg
+ascii-art image
+    -B 8
+    -C rankedChannel
+    -a blocks
+    node_modules/ascii-art/Images/grendel.jpg
 ```
 
 ![Grendel Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/grendel-compare.png?raw=true)
@@ -214,17 +221,42 @@ Here's a comparison of various color output modes:
 
  ![Zero Cool Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/zero-cool-compare.png?raw=true)
 
-```bash
+ <table><tr><td colspan="3">
 
-	#4bit
-	ascii-art image -B 4 -a solid node_modules/ascii-art/Images/zero-cool.jpg
+ 	This takes `zero-cool.jpg`, converts the colors to ansi foreground color in solid block characters.
+ </td></tr><tr><td valign="top">
+ <details><summary> 4bit </summary><p>
 
-	#8bit
-	ascii-art image -B 8 -C closestByIntensity -a solid node_modules/ascii-art/Images/zero-cool.jpg
+ ```bash
+     ascii-art image
+        -B 4
+        -a solid
+        node_modules/ascii-art/Images/zero-cool.jpg
+ ```
 
-	#32bit (on supported terminals)
-	ascii-art image -B 32 -a solid node_modules/ascii-art/Images/zero-cool.jpg
-```
+ </p></details></td><td valign="top">
+
+ <details><summary> 8bit </summary><p>
+
+ ```bash
+     ascii-art image
+        -B 8
+        -C closestByIntensity
+        -a solid
+        node_modules/ascii-art/Images/zero-cool.jpg
+ ```
+
+ </p></details></td><td valign="top">
+
+ <details><summary> 32bit </summary><p>
+
+ ```bash
+     ascii-art image
+        -B 32
+        -a solid
+        node_modules/ascii-art/Images/zero-cool.jpg
+ ```
+ </p></details></td></tr></table>
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-image) for more examples!
 
@@ -233,9 +265,32 @@ Tables
 
 Generate a table from the passed data, with support for many styles and append that to the buffer
 
-| In your code                                    |         In the Terminal                           |
-|-------------------------------------------------|---------------------------------------------------|
-| `.table(options[, callback])`                   | N/A             |
+<table><tr><td colspan="3">
+
+	Render a table for with the provided data given the provided options
+</td></tr><tr><td valign="top">
+<details><summary> JS </summary><p>
+
+```javascript
+    art.table({}, cb) //returns String
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> CL </summary><p>
+
+```bash
+    # N/A
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
+
+```html
+    <!--N/A -->
+```
+</p></details></td></tr></table>
 
 ![Styled Table Example](https://github.com/khrome/ascii-art-docs/blob/master/Examples/ansi_table.png?raw=true)
 
@@ -244,11 +299,32 @@ Check out the [documentation](https://www.npmjs.com/package/ascii-art-table) for
 Graphs
 ------
 
-Generate a graph from the passed data
+<table><tr><td colspan="3">
 
-| In your code                                    |         In the Terminal                           |
-|-------------------------------------------------|---------------------------------------------------|
-| `.graph(options[, callback])`                   | N/A                                               |
+	Render a graph for with the provided data given the provided options
+</td></tr><tr><td valign="top">
+<details><summary> JS </summary><p>
+
+```javascript
+    art.graph({}, cb) //returns String
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> CL </summary><p>
+
+```bash
+    # N/A
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
+
+```html
+    <!--N/A -->
+```
+</p></details></td></tr></table>
 
 ![Graph Example](https://github.com/khrome/ascii-art-graph/raw/master/simple-braille.png)
 
@@ -259,9 +335,32 @@ Artwork[Non-Functional]
 
 Fetch a graphic from a remote source and append it to the current buffer, which is not enabled by default. You must add a `request` compatible library by either setting the ENV variable `ASCII_ART_REQUEST_MODULE` **or** by setting it manually with `art.setRequest(requestModule)`
 
-| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
-|-------------------------------------------------|---------------------------------------------------|
-| `.artwork(options[, callback])`                 | ascii-art art [source][/path]            |
+<table><tr><td colspan="3">
+
+	Fetch artwork from the requested source using the preconfigured request library.
+</td></tr><tr><td valign="top">
+<details><summary> JS </summary><p>
+
+```javascript
+    art.artwork({}, cb) //returns String
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> CL </summary><p>
+
+```bash
+    # N/A
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
+
+```html
+    <!--N/A -->
+```
+</p></details></td></tr></table>
 
 Often I use this in conjunction with an image backdrop, for example to superimpose bones on the earth:
 
