@@ -147,7 +147,7 @@ Images
 Create an image from the passed image and append that to the buffer
 
 <table><tr><td colspan="3">
-	Create an image from the passed image and append that to the buffer
+	This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipples the details at a threshold of 40 (of 255) using a higher resolution image and then renders that into a braille overlay in black(#000000) on top of the colors.
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
