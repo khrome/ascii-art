@@ -51,7 +51,7 @@ Add ANSI styles to a string and return the result.
 
 <table><tr><td colspan="3">
 
-	Change "Some Text" to be formatted with ansi codes for `green` (then have the colors reset at the end of the string)
+Change "Some Text" to be formatted with ansi codes for `green` (then have the colors reset at the end of the string)
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
@@ -95,7 +95,7 @@ Render a string using a figlet font and add that to the buffer. There is a batch
 
 <table><tr><td colspan="3">
 
-	Change "Some Text" to be formatted using the `doom.flf` font, which it will load from the predefined localtion (defaults to `/Fonts`)
+Change "Some Text" to be formatted using the `doom.flf` font, which it will load from the predefined localtion (defaults to `/Fonts`)
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
@@ -150,7 +150,7 @@ Create an image from the passed image and append that to the buffer
 
 <table><tr><td colspan="3">
 
-	This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipples the details at a threshold of 40 (of 255) using a higher resolution image and then renders that into a braille overlay in black(#000000) on top of the colors.
+This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipples the details at a threshold of 40 (of 255) using a higher resolution image and then renders that into a braille overlay in black(#000000) on top of the colors.
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
@@ -223,7 +223,7 @@ Here's a comparison of various color output modes:
 
  <table><tr><td colspan="3">
 
- 	This takes `zero-cool.jpg`, converts the colors to ansi foreground color in solid block characters.
+ This takes `zero-cool.jpg`, converts the colors to ansi foreground color in solid block characters.
  </td></tr><tr><td valign="top">
  <details><summary> 4bit </summary><p>
 
@@ -267,7 +267,7 @@ Generate a table from the passed data, with support for many styles and append t
 
 <table><tr><td colspan="3">
 
-	Render a table for with the provided data given the provided options
+Render a table for with the provided data given the provided options
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
@@ -301,7 +301,7 @@ Graphs
 
 <table><tr><td colspan="3">
 
-	Render a graph for with the provided data given the provided options
+Render a graph for with the provided data given the provided options
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
@@ -337,7 +337,7 @@ Fetch a graphic from a remote source and append it to the current buffer, which 
 
 <table><tr><td colspan="3">
 
-	Fetch artwork from the requested source using the preconfigured request library.
+Fetch artwork from the requested source using the preconfigured request library.
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
