@@ -49,37 +49,33 @@ Styles
 Add ANSI styles to a string and return the result.
 
 
-<table>
-<tr><td valign="top">
-<details><summary> JS </summary>
-<p>
+<table><tr><td colspan="3">
+	Change "Some Text" to be formatted with ansi codes for `green` (then have the colors reset at the end of the string)
+</td></tr><tr><td valign="top">
+<details><summary> JS </summary><p>
 
 ```javascript
-    art.style(text, style[, close]) //returns String
+    art.style("Some Text", 'green', true) //returns String
 ```
 
-</p>
-</details></td><td valign="top">
-<details><summary> CL </summary>
-<p>
+</p></details></td><td valign="top">
+
+<details><summary> CL </summary><p>
 
 ```bash
-    ascii-art text -s green "some text"
+    ascii-art text -s green "Some Text"
 ```
 
-</p>
-</details></td><td valign="top">
-<details><summary> Browser </summary>
-<p>
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
 
 ```html
     <ascii-art-style
-		style="bold+blue"
+		style="green"
 	>Some Text</ascii-art-style>
 ```
-</p>
-</details>
-</td></tr></table>
+</p></details></td></tr></table>
 
 Styles are: *italic*, **bold**, <span style="text-decoration: underline">underline</span>, <span style="text-decoration: underline overline">|framed|</span>, <span style="text-decoration: underline overline">|encircled|</span>, <span style="text-decoration: overline">overline</span>, <span style="text-decoration: blink">blink</span> and <span style="display:inline-block; background-color:#777777; color: white">&nbsp;inverse&nbsp;</span>. And available colors are:
 
@@ -96,9 +92,33 @@ Fonts
 
 Render a string using a figlet font and add that to the buffer. There is a batch version of this function which does not chain and takes an array( `.strings()`).
 
-| In your code                                    |         In the [Terminal](docs/Terminal.md)                           |
-|-------------------------------------------------|---------------------------------------------------|
-| `.font(text, font[, style][, callback])`    | `ascii-art text -F <font> "Demo!"`             |
+<table><tr><td colspan="3">
+	Change "Some Text" to be formatted using the `doom.flf` font
+</td></tr><tr><td valign="top">
+<details><summary> JS </summary><p>
+
+```javascript
+    art.font("Some Text", 'doom', true) //returns String
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> CL </summary><p>
+
+```bash
+    ascii-art font -F doom "Some Text"
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
+
+```html
+    <ascii-art-font
+		font="doom"
+	>Some Text</ascii-art-font>
+```
+</p></details></td></tr></table>
 
 Outputs
 
