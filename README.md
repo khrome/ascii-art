@@ -167,7 +167,9 @@ Create an image from the passed image and append that to the buffer
 <details><summary> CL </summary><p>
 
 ```bash
-    ascii-art image posterized stippled --rows=80 --cols=80 --stipple="#000000" --threshold=40 "Some Text"
+    ascii-art image posterized stippled
+        --rows=80 --cols=80 --stipple="#000000"
+        --threshold=40 "Some Text"
 ```
 
 </p></details></td><td valign="top">
