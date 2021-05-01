@@ -1,9 +1,9 @@
-	                   _  _                       _
-	                  (_)(_)                     | |
-	  __ _  ___   ___  _  _  ______   __ _  _ __ | |_
-	 / _` |/ __| / __|| || ||______| / _` || '__|| __|
-	| (_| |\__ \| (__ | || |        | (_| || |   | |_
-	 \__,_||___/ \___||_||_|         \__,_||_|    \__|
+                       _  _                       _
+                      (_)(_)                     | |
+      __ _  ___   ___  _  _  ______   __ _  _ __ | |_
+     / _` |/ __| / __|| || ||______| / _` || '__|| __|
+    | (_| |\__ \| (__ | || |        | (_| || |   | |_
+     \__,_||___/ \___||_||_|         \__,_||_|    \__|
 
 ascii-art.js
 ============
@@ -93,7 +93,7 @@ Fonts
 Render a string using a figlet font and add that to the buffer. There is a batch version of this function which does not chain and takes an array( `.strings()`).
 
 <table><tr><td colspan="3">
-	Change "Some Text" to be formatted using the `doom.flf` font
+	Change "Some Text" to be formatted using the `doom.flf` font, which it will load from the predefined localtion (defaults to `/Fonts`)
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
@@ -146,10 +146,45 @@ Images
 
 Create an image from the passed image and append that to the buffer
 
+<table><tr><td colspan="3">
+	Create an image from the passed image and append that to the buffer
+</td></tr><tr><td valign="top">
+<details><summary> JS </summary><p>
 
-|In your code                                     |         In the [Terminal](docs/Terminal.md)       |
-|-------------------------------------------------|---------------------------------------------------|
-| `.image(options[, callback])`                   | `ascii-art image path/to/my/file.jpg`             |
+```javascript
+    art.image({
+        src: "myImage.jpg",
+        rows:80,
+        cols:80,
+        stipple:"#000000",
+        posterize: true,
+        threshold:40
+    }, cb)
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> CL </summary><p>
+
+```bash
+    ascii-art image posterized stippled --rows=80 --cols=80 --stipple="#000000" --threshold=40 "Some Text"
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
+
+```html
+    <ascii-art-image
+        src="myImage.jpg"
+        rows="80" cols="80"
+        stipple="#000000"
+        posterize
+        threshold="40"
+    ></ascii-art-image>
+```
+</p></details></td></tr></table>
+
 
 There are 2 options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are:
 
