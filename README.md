@@ -27,7 +27,7 @@ Why would I use this?
 - handles the ugly [intersection of **multiline text and ansi codes**](https://github.com/khrome/ascii-art-docs/blob/master/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals, webpack, or webcomponents)
 - **Other libraries** out there **do too little**, focus on logging and have inconsistent ANSI handling <sup>*</sup>.
-- **JS + Canvas** Ascii image libraries in node often call out to a binary... we are 100% JS, with a common code path in browser and server <sup>†</sup>.
+- **JS + Canvas** No binaries... we are 100% JS, with a common code path in browser and server <sup>†</sup>.
 - It **works like a package manager** for figlet fonts.
 - **flexible output** Supports 4bit, 8bit and 32bit output
 - **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own <sup>‡</sup>.<sub><definition><br/><br/>
