@@ -221,27 +221,27 @@ ascii-art image
 
 Here's a comparison of various color output modes:
 
- ![Zero Cool Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/zero-cool-compare.png?raw=true)
-
  <table><tr><td colspan="4">
+<img align="right"src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/z-cool-example.png">
 
- This takes [`zero-cool.jpg`](https://www.youtube.com/watch?v=2efhrCxI4J0), converts the colors to ansi foreground color in solid block characters.
+ This takes [`zero-cool.jpg`](https://www.youtube.com/watch?v=2efhrCxI4J0), converts the colors to ansi foreground color in solid block characters. Note that you will need to tune your distance function in 8bit mode, as what looks good varies by the type of imagery that goes through it. The default distance function only covers ~1/3 of the samples we've done. you can merge algorithms by asking for `algorithm1+algorithm2` (it uses equal weighting).
+
  </td></tr><tr><td valign="top">img</td><td valign="top">
  <details><summary> 4 </summary><p>
 
- IMAGE HERE
+ <img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/z-cool-4.png">
 
  </p></details></td><td valign="top">
 
  <details><summary> 8 </summary><p>
 
- IMAGE HERE
+ <img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/z-cool-8.png">
 
  </p></details></td><td valign="top">
 
  <details><summary> 32 </summary><p>
 
- IMAGE HERE
+ <img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/z-cool-32.png">
  </p></details></td></tr><tr><td valign="top">JS</td><td valign="top">
  <details><summary> 4 </summary><p>
 
