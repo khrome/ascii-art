@@ -191,17 +191,27 @@ This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipp
 </p></details></td></tr></table>
 
 
-There are 2 options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are:
+There are some options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are:
 
-- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <table><tr><td valign="top">
+- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p>
 
-<details><summary> Example </summary><p>
+Add Example
+
+</p></details>
+
+- `stipple` : a boolean option which outputs lineart using braille characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p>
 
 ![Mucha Stipple](https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png)
 
-</p></details></td></tr></table>
-- `stipple` : a boolean option which outputs lineart using braille characters (which may be colored with `stroke` and customized with `threshold`(0-255))
-- `posterize` : use lineart on top of colored backgrounds to retain as much detail as possible
+</p></details>
+- `posterize` : use stipple on top of colored backgrounds to retain as much detail as possible <details><summary> Example </summary><p>
+
+![Peewee Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/peewee-posterized.png)
+
+</p></details>
+- `blended` : use posterize with both lineart and braille at relative thresholds to each other.
+
+### Downsampling and detail loss
 
 Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
 
@@ -215,13 +225,7 @@ ascii-art image
 
 ![Grendel Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/grendel-compare.png?raw=true)
 
-Here's an example of `lineart` output:
-
-![Mucha Stipple](https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png)
-
-Here's an example of `posterize` output:
-
-![Peewee Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/peewee-posterized.png)
+### Color Modes
 
 Here's a comparison of various color output modes:
 
