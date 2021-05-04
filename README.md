@@ -217,14 +217,14 @@ ascii-art image
 
 ![Grendel Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/grendel-compare.png?raw=true)
 
-### Color Modes
-
-Here's a comparison of various color output modes:
-
  <table><tr><td colspan="4">
 <img align="right"src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/z-cool-example.png">
 
- This takes [`zero-cool.jpg`](https://www.youtube.com/watch?v=2efhrCxI4J0), converts the colors to ansi foreground color in solid block characters. Note that you will need to tune your distance function in 8bit mode, as what looks good varies by the type of imagery that goes through it. The default distance function only covers ~1/3 of the samples we've done. you can merge algorithms by asking for `algorithm1+algorithm2` (it uses equal weighting).
+### Color Modes
+
+ This takes [`zero-cool.jpg`](https://www.youtube.com/watch?v=2efhrCxI4J0), converts the colors to ansi foreground color in solid block characters. Note that you will need to tune your distance function in 8bit mode, as what looks good varies by the type of imagery that goes through it.
+
+ Anecdotally, the default distance function only covers ~1/3 of the samples we've done. But helpfully, you can merge algorithms by asking for `algorithm1+algorithm2` (it uses equal weighting), or make your own.
 
  </td></tr><tr><td valign="top">img</td><td valign="top">
  <details><summary> 4 </summary><p>
