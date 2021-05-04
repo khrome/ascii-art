@@ -25,11 +25,11 @@ Why would I use this?
 - **color profiles** support - other libraries assume you are running x11
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
 - handles the ugly [intersection of **multiline text and ansi codes**](https://github.com/khrome/ascii-art-docs/blob/master/Multiline.md) for you.
-- runs in the **browser and Node.js** (CommonJS, AMD, globals or webpack)
+- runs in the **browser and Node.js** (CommonJS, AMD, globals, webpack, or webcomponents)
 - **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways (In node this renders in cairo, via a Canvas shim).
 - It **works like a package manager** for figlet fonts.
 - The **other libraries** out there **do too little**, focus on logging above other domains and often unaware of ANSI controls(for example: style text, then put it in a table).
-- **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (where we reserve chaining for utility rather than code aesthetics).
+- **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (while both have [fluent apis](https://en.wikipedia.org/wiki/Fluent_interface) we use a grid and are asynchronous, which enables large image processing and complex compositing scenarios, whereas the chalk API focuses on immediate string mutations).
 - **flexible output** Supports 4bit, 8bit and 32bit output
 
 
@@ -193,7 +193,13 @@ This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipp
 
 There are 2 options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are:
 
-- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255))
+- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <table><tr><td valign="top">
+
+<details><summary> Example </summary><p>
+
+![Mucha Stipple](https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png)
+
+</p></details></td></tr></table>
 - `stipple` : a boolean option which outputs lineart using braille characters (which may be colored with `stroke` and customized with `threshold`(0-255))
 - `posterize` : use lineart on top of colored backgrounds to retain as much detail as possible
 
