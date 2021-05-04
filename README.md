@@ -26,8 +26,8 @@ Why would I use this?
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
 - handles the ugly [intersection of **multiline text and ansi codes**](https://github.com/khrome/ascii-art-docs/blob/master/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals, webpack, or webcomponents)
-- **Other libraries** out there **do too little**, focus on logging above other domains and often unaware of ANSI controls <sup>*</sup>.
-- **JS + Canvas** Ascii image generation utilities in node often call out to a binary... we do 100% of our transform in JS <sup>†</sup>.
+- **Other libraries** out there **do too little**, focus on logging and have inconsistent ANSI handling <sup>*</sup>.
+- **JS + Canvas** Ascii image libraries in node often call out to a binary... we are 100% JS, with a common code path in browser and server <sup>†</sup>.
 - It **works like a package manager** for figlet fonts.
 - **flexible output** Supports 4bit, 8bit and 32bit output
 - **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own <sup>‡</sup>.<sub><definition><br/><br/>
@@ -138,15 +138,10 @@ Outputs
 	| |/ / |  __/| | | | | || (_) ||_|
 	|___/   \___||_| |_| |_| \___/ (_)
 
+### UTF Fonts
+
 If you use UTF fonts(Which are part of your systm fonts) your output looks more like:
-
-![Gothic UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-gothic.png)
-
-or
-
-![Sans Serif UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-sansserif.png)
-
-by using `u:<utf font name>` where the font names are: `default`, `script`, `script+bold`, `gothic`, `gothic+bold`, `serif+bold+italic`, `serif+bold`, `serif+italic`, `monospace`, `sansserif`, `sansserif+bold+italic`, `sansserif+bold`, `sansserif+italic`, `doublestrike`
+![Gothic UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-gothic.png) or ![Sans Serif UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-sansserif.png) by using `u:<utf font name>` where the font names are: `default`, `script`, `script+bold`, `gothic`, `gothic+bold`, `serif+bold+italic`, `serif+bold`, `serif+italic`, `monospace`, `sansserif`, `sansserif+bold+italic`, `sansserif+bold`, `sansserif+italic`, `doublestrike`
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-font) for more examples!
 
