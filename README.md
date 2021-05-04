@@ -223,11 +223,49 @@ Here's a comparison of various color output modes:
 
  ![Zero Cool Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/zero-cool-compare.png?raw=true)
 
- <table><tr><td colspan="3">
+ <table><tr><td colspan="4">
 
  This takes [`zero-cool.jpg`](https://www.youtube.com/watch?v=2efhrCxI4J0), converts the colors to ansi foreground color in solid block characters.
- </td></tr><tr><td valign="top">
- <details><summary> 4bit </summary><p>
+ </td></tr><tr><td valign="top">img</td><td valign="top">
+ <details><summary> 4 </summary><p>
+
+ IMAGE HERE
+
+ </p></details></td><td valign="top">
+
+ <details><summary> 8 </summary><p>
+
+ IMAGE HERE
+
+ </p></details></td><td valign="top">
+
+ <details><summary> 32 </summary><p>
+
+ IMAGE HERE
+ </p></details></td></tr><tr><td valign="top">JS</td><td valign="top">
+ <details><summary> 4 </summary><p>
+
+ ```javascript
+     //tbd
+ ```
+
+ </p></details></td><td valign="top">
+
+ <details><summary> 8 </summary><p>
+
+ ```javascript
+     //tbd
+ ```
+
+ </p></details></td><td valign="top">
+
+ <details><summary> 32 </summary><p>
+
+ ```javascript
+     //tbd
+ ```
+ </p></details></td></tr><tr><td valign="top">CL</td><td valign="top">
+ <details><summary> 4 </summary><p>
 
  ```bash
      ascii-art image
@@ -238,7 +276,7 @@ Here's a comparison of various color output modes:
 
  </p></details></td><td valign="top">
 
- <details><summary> 8bit </summary><p>
+ <details><summary> 8 </summary><p>
 
  ```bash
      ascii-art image
@@ -250,13 +288,35 @@ Here's a comparison of various color output modes:
 
  </p></details></td><td valign="top">
 
- <details><summary> 32bit </summary><p>
+ <details><summary> 32 </summary><p>
 
  ```bash
      ascii-art image
         -B 32
         -a solid
         node_modules/ascii-art/Images/zero-cool.jpg
+ ```
+ </p></details></td></tr><tr><td valign="top">Web</td><td valign="top">
+ <details><summary> 4 </summary><p>
+
+ ```html
+     <!-- todo -->
+ ```
+
+ </p></details></td><td valign="top">
+
+ <details><summary> 8 </summary><p>
+
+ ```html
+     <!-- todo -->
+ ```
+
+ </p></details></td><td valign="top">
+
+ <details><summary> 32 </summary><p>
+
+ ```html
+     <!-- todo -->
  ```
  </p></details></td></tr></table>
 
