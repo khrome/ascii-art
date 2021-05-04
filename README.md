@@ -204,11 +204,13 @@ Add Example
 ![Mucha Stipple](https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png)
 
 </p></details>
+
 - `posterize` : use stipple on top of colored backgrounds to retain as much detail as possible <details><summary> Example </summary><p>
 
 ![Peewee Lineart](https://github.com/khrome/ascii-art-docs/raw/master/Examples/peewee-posterized.png)
 
 </p></details>
+
 - `blended` : use posterize with both lineart and braille at relative thresholds to each other.
 
 ### Downsampling and detail loss
