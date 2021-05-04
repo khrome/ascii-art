@@ -34,8 +34,7 @@ Why would I use this?
 <b>*</b> - <b>Example</b>: Style text, then put it in a table. It displays based on it's ansi string width, but balances cell widths based on the string width, leading to crazy looking output.
 </definition><definition><br/>
 <b>†</b> - This allows us plug into averaging, distance and other logic dynamically, in powerful ways (In node this renders in cairo, via a Canvas shim)
-</definition>
-<definition><br/>
+</definition><definition><br/>
 <b>‡</b> - while both have <a href="https://en.wikipedia.org/wiki/Fluent_interface">fluent apis</a> we use a grid and are asynchronous, which enables large image processing and complex compositing scenarios, whereas the chalk API focuses on immediate string mutations
 </definition>
 </sub>
