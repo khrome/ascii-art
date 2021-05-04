@@ -22,15 +22,23 @@ It features support for [Images](https://www.npmjs.com/package/ascii-art-image),
 Why would I use this?
 ----------------------------------
 - **modular** - small set of purpose built modules all interacting through a common ansi library.
-- **color profiles** support - other libraries assume you are running x11
+- **color profiles** support - other libraries mostly assume you are running x11.
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
 - handles the ugly [intersection of **multiline text and ansi codes**](https://github.com/khrome/ascii-art-docs/blob/master/Multiline.md) for you.
 - runs in the **browser and Node.js** (CommonJS, AMD, globals, webpack, or webcomponents)
-- **JS + Canvas** Ascii image generation utilities in node don't actually touch any pixels, but usually call out to a binary, we do 100% of our transform in JS, which allows us plug into averaging, distance and other logic dynamically, in powerful ways (In node this renders in cairo, via a Canvas shim).
+- **Other libraries** out there **do too little**, focus on logging above other domains and often unaware of ANSI controls <sup>*</sup>.
+- **JS + Canvas** Ascii image generation utilities in node often call out to a binary... we do 100% of our transform in JS <sup>†</sup>.
 - It **works like a package manager** for figlet fonts.
-- The **other libraries** out there **do too little**, focus on logging above other domains and often unaware of ANSI controls(for example: style text, then put it in a table).
-- **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own (while both have [fluent apis](https://en.wikipedia.org/wiki/Fluent_interface) we use a grid and are asynchronous, which enables large image processing and complex compositing scenarios, whereas the chalk API focuses on immediate string mutations).
 - **flexible output** Supports 4bit, 8bit and 32bit output
+- **Supports your existing API** We allow you to use the colors.js/chalk API *or* our own <sup>‡</sup>.<sub><definition><br/><br/>
+<b>*</b> - <b>Example</b>: Style text, then put it in a table. It displays based on it's ansi string width, but balances cell widths based on the string width, leading to crazy looking output.
+</definition><definition><br/>
+<b>†</b> - This allows us plug into averaging, distance and other logic dynamically, in powerful ways (In node this renders in cairo, via a Canvas shim)
+</definition>
+<definition><br/>
+<b>‡</b> - while both have <a href="https://en.wikipedia.org/wiki/Fluent_interface">fluent apis</a> we use a grid and are asynchronous, which enables large image processing and complex compositing scenarios, whereas the chalk API focuses on immediate string mutations
+</definition>
+</sub>
 
 
 Installation
@@ -203,7 +211,7 @@ There are some options that are available which are not in the [image core](http
 
 ### Downsampling and detail loss
 
-Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example in 256 color (primarily greyscale):
+Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example of [some sequential art](https://en.wikipedia.org/wiki/Grendel_(comics)) in 256 color (primarily greyscale):
 
 ```bash
 ascii-art image
@@ -223,7 +231,7 @@ Here's a comparison of various color output modes:
 
  <table><tr><td colspan="3">
 
- This takes `zero-cool.jpg`, converts the colors to ansi foreground color in solid block characters.
+ This takes [`zero-cool.jpg`](https://www.youtube.com/watch?v=2efhrCxI4J0), converts the colors to ansi foreground color in solid block characters.
  </td></tr><tr><td valign="top">
  <details><summary> 4bit </summary><p>
 
