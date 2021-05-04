@@ -203,19 +203,40 @@ There are some options that are available which are not in the [image core](http
 
 - `blended` : use posterize with both lineart and braille at relative thresholds to each other.
 
+<table><tr><td colspan="3">
+
 ### Downsampling and detail loss
 
 Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example of [some sequential art](https://en.wikipedia.org/wiki/Grendel_(comics)) in 256 color (primarily greyscale):
+</td></tr><tr><td colspan="3"><details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/blob/master/Examples/grendel-compare.png?raw=true">
 
-```bash
-ascii-art image
-    -B 8
-    -C rankedChannel
-    -a blocks
-    node_modules/ascii-art/Images/grendel.jpg
+</p></details></td></tr><tr><td valign="top">
+<details><summary> JS </summary><p>
+
+```javascript
+    //todo
 ```
 
-![Grendel Compare](https://github.com/khrome/ascii-art-docs/blob/master/Examples/grendel-compare.png?raw=true)
+</p></details></td><td valign="top">
+
+<details><summary> CL </summary><p>
+
+```bash
+    ascii-art image
+        -B 8
+        -C rankedChannel
+        -a blocks
+        node_modules/ascii-art/Images/grendel.jpg
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
+
+```html
+    <!-- todo -->
+```
+</p></details></td></tr></table>
 
  <table><tr><td colspan="4">
 <img align="right"src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/z-cool-example.png">
