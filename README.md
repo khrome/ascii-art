@@ -49,6 +49,49 @@ If you'd like to use the command-line tool make sure to use `-g`
 
 If you want to use `.image()` or `.Image` you must install [`canvas`](https://www.npmjs.com/package/canvas) and if you want to run the chalk tests... you'll need to to install `require-uncached` as well.
 
+Call Style
+----------
+
+<table><tr><td colspan="3">
+
+All chains in `ascii-art` can be called in one of 3 ways. In this example we change "Some Text" to be formatted using the `doom.flf` font.
+</td></tr><tr><td valign="top">
+<details><summary> Callback </summary><p>
+
+```javascript
+    art.font("Some Text", 'doom', (err, rendered)=>{
+        //if err, err is the error that occured
+        //if !err rendered is the ascii
+    });
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Promise </summary><p>
+
+```javascript
+    art.font("Some Text", 'doom')
+       .then((rendered)=>{
+           //rendered is the ascii
+       })).catch((err)=>{
+           //err is an error
+       }));
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Await </summary><p>
+
+```javascript
+    try{
+        let rendered = await art.font("Some Text", 'doom').completed()
+        //rendered is the ascii
+    }catch(err){
+        //err is an error
+    }
+```
+</p></details></td></tr></table>
+
 
 Styles
 ------
@@ -94,49 +137,6 @@ Color defaults to 8 bit (most compatible), to enable other modes set booleans in
 - `isTrueColor` : do not constrain color and directly output RGB to the console.
 
 Color Tables may be found in the style [documentation](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md)
-
-Call Style
-----------
-
-<table><tr><td colspan="3">
-
-All chains in Ascii Art can be called in one of 3 ways. In this example we change "Some Text" to be formatted using the `doom.flf` font.
-</td></tr><tr><td valign="top">
-<details><summary> Callback </summary><p>
-
-```javascript
-    art.font("Some Text", 'doom', (err, rendered)=>{
-        //if err, err is the error that occured
-        //if !err rendered is the ascii
-    });
-```
-
-</p></details></td><td valign="top">
-
-<details><summary> Promise </summary><p>
-
-```javascript
-    art.font("Some Text", 'doom')
-       .then((rendered)=>{
-           //rendered is the ascii
-       })).catch((err)=>{
-           //err is an error
-       }));
-```
-
-</p></details></td><td valign="top">
-
-<details><summary> Await </summary><p>
-
-```javascript
-    try{
-        let rendered = await art.font("Some Text", 'doom').completed()
-        //rendered is the ascii
-    }catch(err){
-        //err is an error
-    }
-```
-</p></details></td></tr></table>
 
 Fonts
 -----
