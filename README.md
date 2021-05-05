@@ -95,6 +95,49 @@ Color defaults to 8 bit (most compatible), to enable other modes set booleans in
 
 Color Tables may be found in the style [documentation](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md)
 
+Call Style
+----------
+
+<table><tr><td colspan="3">
+
+All chains in Ascii Art can be called in one of 3 ways. In this example we change "Some Text" to be formatted using the `doom.flf` font.
+</td></tr><tr><td valign="top">
+<details><summary> Callback </summary><p>
+
+```javascript
+    art.font("Some Text", 'doom', (err, rendered)=>{
+        //if err, err is the error that occured
+        //if !err rendered is the ascii
+    });
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Promise </summary><p>
+
+```javascript
+    art.font("Some Text", 'doom')
+       .then((rendered)=>{
+           //rendered is the ascii
+       })).catch((err)=>{
+           //err is an error
+       }));
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Await </summary><p>
+
+```javascript
+    try{
+        let rendered = await art.font("Some Text", 'doom').completed()
+        //rendered is the ascii
+    }catch(err){
+        //err is an error
+    }
+```
+</p></details></td></tr></table>
+
 Fonts
 -----
 
@@ -102,7 +145,7 @@ Render a string using a figlet font and add that to the buffer. There is a batch
 
 <table><tr><td colspan="3">
 
-Change "Some Text" to be formatted using the `doom.flf` font, which it will load from the predefined localtion (defaults to `/Fonts`)
+Change "Some Text" to be formatted using the `doom.flf` font, which it will load from the predefined location (defaults to `/Fonts`)
 </td></tr><tr><td valign="top">
 <details><summary> JS </summary><p>
 
@@ -458,23 +501,6 @@ We also support combining all these nifty elements you've made into a single com
 ![Mixed Content Example](http://patternweaver.com/Github/Ascii/Images/serious-business.png)
 
 Check out the [documentation](https://github.com/khrome/ascii-art-docs/blob/master/Compositing.md) for detailed examples!
-
-
-Promises
---------
-
-Instead of providing a callback, you can also get a from the top level by calling `then` which lazily produces a promise.
-
-| In your code(using .font() as an example)                       |
-|-----------------------------------------------------------------|
-| `art.font(text, font[, style]).then(handler).catch(errHandler)` |
-
-Await
------
-
-| In your code(using .font() as an example)                       |
-|-----------------------------------------------------------------|
-| `let rendered = await art.font(text, font[, style]).completed()`|
 
 Compatibility
 -------------
