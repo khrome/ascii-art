@@ -213,7 +213,7 @@ Outputs
 
 ### UTF Fonts
 
-If you use UTF fonts(Which are part of your systm fonts) your output looks more like:
+If you use UTF fonts(Which are part of your system fonts) your output looks more like:
 ![Gothic UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-gothic.png) or ![Sans Serif UTF font](https://github.com/khrome/ascii-art-docs/raw/master/Examples/u-sansserif.png) by using `u:<utf font name>` where the font names are: `default`, `script`, `script+bold`, `gothic`, `gothic+bold`, `serif+bold+italic`, `serif+bold`, `serif+italic`, `monospace`, `sansserif`, `sansserif+bold+italic`, `sansserif+bold`, `sansserif+italic`, `doublestrike`
 
 Check out the [documentation](https://www.npmjs.com/package/ascii-art-font) for more examples!
@@ -287,7 +287,13 @@ Because of the [resolution downsampling](https://en.wikipedia.org/wiki/Pixel#Sam
 <details><summary> JS </summary><p>
 
 ```javascript
-    //todo
+var art = require('ascii-art');
+var Color = require('ascii-art-ansi/colors');
+Color.is256 = true;
+art.image({
+    src: "node_modules/ascii-art/Images/grendel.jpg",
+    alphabet:"blocks"
+}, cb);
 ```
 
 </p></details></td><td valign="top">
