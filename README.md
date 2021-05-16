@@ -322,11 +322,11 @@ art.image({
 
 ### Color Modes
 
-Multiple output modes are available including [4bit](https://en.wikipedia.org/wiki/Color_depth#4-bit_color), [8bit](https://en.wikipedia.org/wiki/8-bit_color), [32bit](https://en.wikipedia.org/wiki/Color_depth#Deep_color_(30-bit)) (equivalent to [24bit](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit))). [16bit](https://en.wikipedia.org/wiki/Color_depth#High_color_(15/16-bit)) color was intentionally excluded, as there is no direct terminal support and the cost of including color definitions for such a large set. It would be feasible to implement as an optional import, should the need exist.
+Multiple output modes are available including [4bit](https://en.wikipedia.org/wiki/Color_depth#4-bit_color), [8bit](https://en.wikipedia.org/wiki/8-bit_color), [32bit](https://en.wikipedia.org/wiki/Color_depth#Deep_color_(30-bit)) (equivalent to [24bit](https://en.wikipedia.org/wiki/Color_depth#True_color_(24-bit))). [16bit](https://en.wikipedia.org/wiki/Color_depth#High_color_(15/16-bit)) color was intentionally excluded, as there is no direct terminal support and the cost of including color definitions for such a large set would not be justified. It would be feasible to implement as an optional import, should the need exist.
 
 The following example takes [`zero-cool.jpg`](https://www.youtube.com/watch?v=2efhrCxI4J0), converts the colors to ansi foreground color in solid block characters. Note that you will need to tune your distance function in 8bit mode, as what looks good varies by the type of imagery that goes through it.
 
-Anecdotally, the default distance function only covers ~1/3 of the samples we've done. But helpfully, you can merge algorithms by asking for `algorithm1+algorithm2` (it uses equal weighting), or make your own.
+Anecdotally, the default distance function only covers ~1/3 of the samples we've done, but we support many methods(`euclideanDistance`, `classic`, `ratioDistance`, `classicByValue`, `CIE76Difference`, `closestByIntensity`, `rankedChannel`, `simple`, `minDeviation`, `luminosity`, `saturation`, `hue`, `original`). But helpfully, you can merge algorithms by asking for `algorithm1+algorithm2` (it uses equal weighting), or make your own.
 
  </td></tr><tr><td valign="top">img</td><td valign="top">
  <details><summary> 4 </summary><p>
