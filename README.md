@@ -19,7 +19,7 @@ In the beginning there was [colors.js](https://github.com/Marak/colors.js) but i
 
 It features support for [Images](https://www.npmjs.com/package/ascii-art-image), [Styles](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md), [Tables](https://www.npmjs.com/package/ascii-art-table), [Graphs](https://www.npmjs.com/package/ascii-art-graph) and [Figlet Fonts](https://www.npmjs.com/package/ascii-art-font) as well as handling multi-line joining and compositing automatically.
 
-<details><summary> Why would I use this? </summary><p>
+<details><summary> <h3>Why would I use this?</h3> </summary><p>
 
 - **modular** - small set of purpose built modules all interacting through a common ansi library.
 - **color profiles** support - other libraries mostly assume you are running x11.
