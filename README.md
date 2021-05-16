@@ -19,8 +19,8 @@ In the beginning there was [colors.js](https://github.com/Marak/colors.js) but i
 
 It features support for [Images](https://www.npmjs.com/package/ascii-art-image), [Styles](https://github.com/khrome/ascii-art-docs/blob/master/Styles.md), [Tables](https://www.npmjs.com/package/ascii-art-table), [Graphs](https://www.npmjs.com/package/ascii-art-graph) and [Figlet Fonts](https://www.npmjs.com/package/ascii-art-font) as well as handling multi-line joining and compositing automatically.
 
-Why would I use this?
-----------------------------------
+<details><summary> Why would I use this? </summary><p>
+
 - **modular** - small set of purpose built modules all interacting through a common ansi library.
 - **color profiles** support - other libraries mostly assume you are running x11.
 - **no prototype manipulation** - No `String.prototype` usage. No `__proto__` usage. No BS.
@@ -39,15 +39,44 @@ Why would I use this?
 </definition>
 </sub>
 
+</p></details>
 
 Installation
 ------------
 
-	npm install ascii-art
+<table><tr><td colspan="3">
 
-If you'd like to use the command-line tool make sure to use `-g`
+`ascii-art` supports many usage styles but the different use cases require slightly different installations:
+</td></tr><tr><td valign="top">
+<details><summary> In Code </summary><p>
 
-If you want to use `.image()` or `.Image` you must install [`canvas`](https://www.npmjs.com/package/canvas) and if you want to run the chalk tests... you'll need to to install `require-uncached` as well.
+```bash
+    npm install --save ascii-art
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> CLI </summary><p>
+
+```bash
+    npm install -g ascii-art
+```
+
+or (Beta):
+
+```bash
+    npm install -g ascii-art-cl
+```
+
+</p></details></td><td valign="top">
+
+<details><summary> Web </summary><p>
+
+```bash
+    npm install --save ascii-art-webcomponents
+```
+</p></details></td></tr></table>
+
 
 Call Style
 ----------
@@ -250,7 +279,7 @@ There are some options that are available which are not in the [image core](http
 
 ### Downsampling and detail loss
 
-Because of the resolution downsampling, some finer details may be lost. Plan accordingly. Here's an example of [some sequential art](https://en.wikipedia.org/wiki/Grendel_(comics)) in 256 color (primarily greyscale):
+Because of the [resolution downsampling](https://en.wikipedia.org/wiki/Pixel#Sampling_patterns) from the [original dimensions](https://en.wikipedia.org/wiki/Image_resolution#Pixel_count) to the [destination width](https://en.wikipedia.org/wiki/Characters_per_line), some finer details may be lost. Plan accordingly. Here's an example of [some sequential art](https://en.wikipedia.org/wiki/Grendel_(comics)) in 256 color (primarily greyscale):
 </td></tr><tr><td colspan="3"><details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/blob/master/Examples/grendel-compare.png?raw=true">
 
 </p></details></td></tr><tr><td valign="top">
@@ -310,7 +339,11 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
  <details><summary> 4 </summary><p>
 
  ```javascript
-     //tbd
+ var art = require('ascii-art');
+ art.image({
+     src: "node_modules/ascii-art/Images/zero-cool.jpg",
+     alphabet:"solid"
+ }, cb);
  ```
 
  </p></details></td><td valign="top">
@@ -318,7 +351,13 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
  <details><summary> 8 </summary><p>
 
  ```javascript
-     //tbd
+ var art = require('ascii-art');
+ var Color = require('ascii-art-ansi/colors');
+ Color.is256 = true;
+ art.image({
+     src: "node_modules/ascii-art/Images/zero-cool.jpg",
+     alphabet:"solid"
+ }, cb);
  ```
 
  </p></details></td><td valign="top">
@@ -326,7 +365,13 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
  <details><summary> 32 </summary><p>
 
  ```javascript
-     //tbd
+ var art = require('ascii-art');
+ var Color = require('ascii-art-ansi/colors');
+ Color.isTrueColor = true;
+ art.image({
+     src: "node_modules/ascii-art/Images/zero-cool.jpg",
+     alphabet:"solid"
+ }, cb);
  ```
  </p></details></td></tr><tr><td valign="top">CL</td><td valign="top">
  <details><summary> 4 </summary><p>
@@ -364,7 +409,12 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
  <details><summary> 4 </summary><p>
 
  ```html
-     <!-- todo -->
+ <ascii-art-image
+     src="node_modules/ascii-art/Images/zero-cool.jpg"
+     rows="80" cols="80"
+     alphabet="solid"
+     bit-depth="4"
+ ></ascii-art-image>
  ```
 
  </p></details></td><td valign="top">
@@ -372,7 +422,13 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
  <details><summary> 8 </summary><p>
 
  ```html
-     <!-- todo -->
+ <ascii-art-image
+     src="node_modules/ascii-art/Images/zero-cool.jpg"
+     rows="80" cols="80"
+     alphabet="solid"
+     bit-depth="8"
+     color-distance="closestByIntensity"
+ ></ascii-art-image>
  ```
 
  </p></details></td><td valign="top">
@@ -380,7 +436,12 @@ Because of the resolution downsampling, some finer details may be lost. Plan acc
  <details><summary> 32 </summary><p>
 
  ```html
-     <!-- todo -->
+ <ascii-art-image
+     src="node_modules/ascii-art/Images/zero-cool.jpg"
+     rows="80" cols="80"
+     alphabet="solid"
+     bit-depth="32"
+ ></ascii-art-image>
  ```
  </p></details></td></tr></table>
 
