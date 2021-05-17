@@ -275,6 +275,7 @@ There are some options that are available which are not in the [image core](http
 - `posterize` : use stipple on top of colored backgrounds to retain as much detail as possible <details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/peewee-posterized.png" ></p></details>
 
 - `blended` : use posterize with both lineart and braille at relative thresholds to each other.
+: use stipple on top of colored backgrounds to retain as much detail as possible <details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/job-poster.jpg" ></p></details>
 
 <table><tr><td colspan="3">
 
