@@ -268,7 +268,7 @@ This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipp
 
 There are some options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are:
 
-- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-line.jpg" ></p></details>
+- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/job-line.jpg" ></p></details>
 
 - `stipple` : a boolean option which outputs lineart using braille characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png" ></p></details>
 
