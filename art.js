@@ -510,8 +510,8 @@
             }
         }else return AsciiArt.Font.create(str, font, callback);
     }
-    AsciiArt.style = function(text, styles){
-        return Ansi.codes(text, styles);
+    AsciiArt.style = function(text, styles, terminate){
+        return Ansi.codes(text, styles, terminate);
     }
     AsciiArt.Image.newReturnContext = function(options){
         var chain = fontChain.apply({});
@@ -533,6 +533,19 @@
     }
     AsciiArt.graph = function(options, callback){
         return AsciiArt.Graph.create(options, callback);
+    }
+
+    AsciiArt.use = function(interfaceName, implementation){
+        switch(interfaceName.toLowerCase()){
+            case 'request':
+                AsciiArt.Image.useRequest(implementation);
+                AsciiArt.Artwork.useRequest(implementation);
+                break;
+            case 'artwork':
+                AsciiArt.Artwork = implementation;
+                break;
+            default : throw new Error('Unknown interface: '+interfaceName)
+        }
     }
 
     AsciiArt.artwork = function(options, callback){
