@@ -47,7 +47,7 @@ Installation
 
 <table><tr><td colspan="3">
 
-`ascii-art` supports many usage styles but the different use cases require slightly different installations:
+`ascii-art` supports many usage styles, but the different use cases require slightly different installations. If you have any questions, please ask.
 </td></tr><tr><td valign="top">
 <details><summary> In Code </summary><p>
 
@@ -268,7 +268,7 @@ This takes `myImage.jpg`, converts the colors to ansi backgrounds and then stipp
 
 There are some options that are available which are not in the [image core](https://www.npmjs.com/package/ascii-art-image), they are:
 
-- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p>Add Example</p></details>
+- `lineart` : a boolean option which outputs lineart using block characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-line.jpg" ></p></details>
 
 - `stipple` : a boolean option which outputs lineart using braille characters (which may be colored with `stroke` and customized with `threshold`(0-255)) <details><summary> Example </summary><p><img src="https://github.com/khrome/ascii-art-docs/raw/master/Examples/mucha-lineart.png" ></p></details>
 
