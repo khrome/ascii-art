@@ -1,14 +1,14 @@
 (function (root, factory){
     if(typeof define === 'function' && define.amd){
         // AMD. Register as an anonymous module.
-        define(['async/eachOfLimit'], factory);
+        define(['async-arrays'], factory);
     }else if (typeof module === 'object' && module.exports){
-        module.exports = factory(require('async/eachOfLimit'));
+        module.exports = factory(require('async-arrays'));
     }else{
         // Browser globals (root is window)
-        root.AsciiArtArtwork = factory(root.eachOfLimit);
+        root.AsciiArtArtwork = factory(root.AsyncArrays);
     }
-}(this, function(eachOfLimit){
+}(this, function(arrays){
     var sources = [];
     var request;
     var cache;
@@ -24,7 +24,7 @@
         },
         search : function(query, cb){
             var results = [];
-            eachOfLimit(sources, 3, function(source, index, done){
+            arrays.forEachEmission(sources, function(source, index, done){
                 source.search(query, function(err, res){
                     if(err) return cb(err);
                     res.forEach(function(item){
