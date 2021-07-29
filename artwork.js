@@ -15,9 +15,13 @@
     return {
         addSource : function(source){
             sources.push(source);
+            source.useRequest(request);
         },
         useRequest : function(instance){
             request = instance;
+            sources.forEach(function(source){
+                source.useRequest(instance);
+            });
         },
         useCache : function(instance){
             cache = instance;

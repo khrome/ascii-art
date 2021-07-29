@@ -10,7 +10,9 @@
     }
 }(this, function(list){
     var art;
-    var request;
+    var request = function(){
+        throw new Error('request not set!');
+    }
     return {
         define : function(definition){
             return {
@@ -22,6 +24,9 @@
                 },
                 fetch : definition.fetch || function(location, callback){
 
+                },
+                useRequest : definition.useRequest || function(instance){
+                    request = instance;
                 }
             }
         },
