@@ -16,6 +16,8 @@
     return {
         define : function(definition){
             return {
+                //todo: make non-collidable
+                name: definition.name || ('object_'+Math.floor(Math.random()*10000)),
                 search : definition.search || function(query, callback){
 
                 },
