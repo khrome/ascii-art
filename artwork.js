@@ -40,14 +40,14 @@
                 cb(null, results);
             });
         },
-        get : function(src, target, cb){
+        get : function(src, path, file, cb){
             var source = src;
             if(typeof source === 'string'){
                 source = sources.find(function(item){
                     return item.name === src;
                 });
             }
-            source.fetch(target, cb);
+            source.fetch(path, file, cb);
         }
     };
 }));
