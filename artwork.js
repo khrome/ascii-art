@@ -33,12 +33,12 @@
                     if(err) return cb(err);
                     res.forEach(function(item){
                         results.push(item);
-                        done();
                     });
+                    done();
                 })
             }, function(){
                 cb(null, results);
-            })
+            });
         },
         get : function(source, target, cb){
 
